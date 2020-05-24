@@ -1,14 +1,14 @@
 package iot.pojo;
 
 public class RegisterReq {
-	private int misi;
+    private int imsi;
 
-	public int getMisi() {
-		return misi;
-	}
+    public int getImsi() {
+        return imsi;
+    }
 
-	public void setMisi(int misi) {
-		this.misi = misi;
-	}
-	
+    public void setImsi(int misi) {
+        this.imsi = misi;
+    }
+
 }
