@@ -3,7 +3,7 @@ package iot.pojo;
 public class PhysicalData {
     private int heartRate;
     private int bloodPressuer;
-    private int temperature;
+    private double temperature;
 
     public int getHeartRate() {
         return heartRate;
@@ -17,10 +17,19 @@ public class PhysicalData {
     public void setBloodPressuer(int bloodPressuer) {
         this.bloodPressuer = bloodPressuer;
     }
-    public int getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
-    public void setTemperature(int temperature) {
+    public void setTemperature(double temperature) {
         this.temperature = temperature;
+    }
+    
+    @Override
+    public String toString() {
+        String physical = "{PhysicalData = " + super.toString() 
+                + ", heartRate = " + heartRate 
+                + ", bloodPressuer = " + bloodPressuer 
+                + ", temperature = " + temperature + "}";
+        return physical;
     }
 }

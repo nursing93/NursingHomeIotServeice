@@ -25,12 +25,33 @@
     </plugins>
   </build>
   
+  <properties>
+    <jackson.library>2.7.5</jackson.library>
+  </properties>
+  
   <dependencies>
 
     <dependency>
        <groupId>io.netty</groupId>
        <artifactId>netty-all</artifactId>
        <version>4.1.10.Final</version>
+    </dependency>
+
+    <!-- json包引入-->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>${jackson.library}</version>
+    </dependency>
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>${jackson.library}</version>
+    </dependency>
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.library}</version>
     </dependency>
 
   </dependencies>

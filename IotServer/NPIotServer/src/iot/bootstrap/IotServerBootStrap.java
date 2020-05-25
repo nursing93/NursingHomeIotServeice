@@ -16,7 +16,7 @@ import iot.emergency.OverstepEmergencyListener;
 import iot.emergency.PhysicalEmergencyListener;
 import iot.handler.EmergencyRecognizeHandler;
 import iot.handler.PersistenceHandler;
-import iot.handler.RegroupMsgDecoder;
+import iot.handler.RegroupMsgHandler;
 import iot.handler.RingObjDecoder;
 
 public class IotServerBootStrap {
@@ -36,7 +36,7 @@ public class IotServerBootStrap {
         ServerBootstrap boot=new ServerBootstrap();
         boot.group(bossGroup, workGroup)
             .channel(NioServerSocketChannel.class)
-            .option(ChannelOption.SO_BACKLOG, 100)    //TODO 后续定制服务端Channel
+            .option(ChannelOption.SO_BACKLOG, 100)    //TODO 配置缓冲区大小，后续定制服务端Channel
             .handler(new LoggingHandler(LogLevel.INFO))
             .childHandler(getChildChannelHandler());
         
@@ -60,7 +60,7 @@ public class IotServerBootStrap {
             @Override
             protected void initChannel(SocketChannel ch) throws Exception {
                 ch.pipeline()
-                  .addLast(new RegroupMsgDecoder())
+                  .addLast(new RegroupMsgHandler())    //TODO 考虑使用Decoder
                   .addLast(new RingObjDecoder())
                   .addLast(getEmergencyHandler())    //TODO 考虑持久化与告警的顺序
                   .addLast(new PersistenceHandler());

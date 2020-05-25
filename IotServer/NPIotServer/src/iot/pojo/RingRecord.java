@@ -1,12 +1,21 @@
 package iot.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import iot.tools.DateAndTime;
+
 public class RingRecord {
     private int id;
     private int battery;
     private PhysicalData physical;
     private Position position;
     private Kinestate kinestat;
-    private String time;    //TODO ≈‰÷√Œ™≤ªΩ‚Œˆjson
+    @JsonIgnore
+    private String time;
+    
+    public RingRecord() {
+        setTime(DateAndTime.getCurrentTimeAsStr());
+    }
     
     public int getId() {
         return id;
@@ -45,4 +54,14 @@ public class RingRecord {
         this.time = time;
     }
 
+    @Override
+    public String toString() {
+        String record = "{RingRecord:" + super.toString()
+                        + ", id = " + id + ", battery = " + battery
+                        + ", physical = " + physical.toString()
+                        + ", position = " + position.toString()
+                        + ", kinestat = " + kinestat.toString()
+                        + ", time = " + time + "}";
+        return record;
+    }
 }

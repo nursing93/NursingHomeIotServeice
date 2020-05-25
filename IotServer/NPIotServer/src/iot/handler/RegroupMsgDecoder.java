@@ -11,13 +11,16 @@ public class RegroupMsgDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         //TODO 解决拆包粘包问题，生成Json串
-        
         String ringJson = getRingJson(in);
+        
+        System.out.print("[---] RegroupMsgDecoder:");
+        System.out.println(ringJson);
         out.add(ringJson);
     }
     
     String getRingJson(ByteBuf in) {
-        
-        return in.toString();
+        byte[] bytes = new byte[in.readableBytes()];
+        in.getBytes(0, bytes);
+        return new String(bytes);
     }
 }

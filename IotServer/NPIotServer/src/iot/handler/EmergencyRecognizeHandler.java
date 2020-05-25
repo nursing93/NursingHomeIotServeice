@@ -16,9 +16,9 @@ public class EmergencyRecognizeHandler extends ChannelInboundHandlerAdapter impl
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         RingRecordAdaptor record = new RingRecordAdaptor((RingRecord)msg);
+        System.out.println("[----------- EmergencyRecognizeHandler -----------]");
         handleEmergency(record);
-        
-        ctx.fireChannelRead(record);
+        ctx.fireChannelRead(record.getRecord());
     }
 
     void handleEmergency(RingRecordAdaptor record) {

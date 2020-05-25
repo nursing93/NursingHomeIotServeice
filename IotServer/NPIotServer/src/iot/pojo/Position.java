@@ -17,4 +17,12 @@ public class Position {
     public void setLat(double lat) {
         this.lat = lat;
     }
+    @Override
+    public String toString() {
+        String position = "{Position = " + super.toString() 
+                        + ", lng = " + lng 
+                        + ", lat = " + lat + "}";
+        return position;
+    }
+    
 }
