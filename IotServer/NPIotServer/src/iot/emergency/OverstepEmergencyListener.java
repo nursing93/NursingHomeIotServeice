@@ -1,20 +1,17 @@
 package iot.emergency;
 
+import iot.observer.Event;
+import iot.observer.EventListener;
 import iot.pojo.RingRecord;
+import iot.pojo.RingRecordAdaptor;
 
-public class OverstepEmergencyListener extends EmergencyListener {
-
-    @Override
-    protected EmergencyEvent getEmergency(RingRecord record) {
-        EmergencyEvent emergency = new EmergencyEvent();
-        //TODO 配置越界信息
-        return emergency;
-    }
+public class OverstepEmergencyListener implements EventListener {
 
     @Override
-    protected boolean abnormal(RingRecord record) {
-      //TODO 越界逻辑
-        return false;
+    public void notify(Event e) {
+        RingRecord record = ((RingRecordAdaptor)e).getRecord();
+        //TODO 越界逻辑
+        System.out.println("[-- Emergency --] OverstepEmergencyListener:" + record.getPosition().toString());
     }
 
 }

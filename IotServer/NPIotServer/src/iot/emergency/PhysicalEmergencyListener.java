@@ -1,20 +1,17 @@
 package iot.emergency;
 
+import iot.observer.Event;
+import iot.observer.EventListener;
 import iot.pojo.RingRecord;
+import iot.pojo.RingRecordAdaptor;
 
-public class PhysicalEmergencyListener extends EmergencyListener {
-
-    @Override
-    protected EmergencyEvent getEmergency(RingRecord record) {
-        EmergencyEvent emergency = new EmergencyEvent();
-        //TODO 配置生理参数异常信息
-        return emergency;
-    }
+public class PhysicalEmergencyListener implements EventListener {
 
     @Override
-    protected boolean abnormal(RingRecord record) {
-      //TODO 生理参数异常判断
-        return false;
+    public void notify(Event e) {
+        RingRecord record = ((RingRecordAdaptor)e).getRecord();
+        //TODO 生理参数异常逻辑
+        System.out.println("[-- Emergency --] PhysicalEmergencyListener:" + record.getPhysical().toString());
     }
 
 }

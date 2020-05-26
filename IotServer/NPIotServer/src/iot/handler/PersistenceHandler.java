@@ -9,10 +9,14 @@ public class PersistenceHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         RingRecord record = (RingRecord)msg;
-        //TODO 手环数据持久化
         System.out.println("[----------- PersistenceHandler -----------]");
-        System.out.println(record.toString());
+        persistence(record);
         ctx.fireChannelRead(record);
+    }
+    
+    private void persistence(RingRecord record) {
+        //TODO 持久化手环数据
+        System.out.println(record.toString());
     }
     
 }

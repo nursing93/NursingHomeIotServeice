@@ -22,7 +22,7 @@ public class RingObjDecoder extends ChannelInboundHandlerAdapter {
     }
     
     RingRecord readObject(String json) throws JsonParseException, JsonMappingException, IOException {
-        //TODO 确认是否存在更优的方式
+        //TODO 是否存在更优的反序列化方式
         ObjectMapper mapper = new ObjectMapper();
         RingRecord obj = mapper.readValue(json, RingRecord.class);
         return obj;
