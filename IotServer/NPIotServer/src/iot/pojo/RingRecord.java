@@ -10,6 +10,7 @@ public class RingRecord {
     private PhysicalData physical;
     private Position position;
     private Kinestate kinestat;
+    private KeyEvent keyEvent;
     @JsonIgnore
     private String time;
     
@@ -47,6 +48,12 @@ public class RingRecord {
     public void setKinestat(Kinestate kinestat) {
         this.kinestat = kinestat;
     }
+    public KeyEvent getKeyEvent() {
+        return keyEvent;
+    }
+    public void setKeyEvent(KeyEvent keyEvent) {
+        this.keyEvent = keyEvent;
+    }
     public String getTime() {
         return time;
     }
@@ -61,6 +68,7 @@ public class RingRecord {
                         + ", physical = " + physical.toString()
                         + ", position = " + position.toString()
                         + ", kinestat = " + kinestat.toString()
+                        + ", keyEvent = " + keyEvent.toString()
                         + ", time = " + time + "}";
         return record;
     }
