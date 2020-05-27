@@ -1,0 +1,1 @@
+D:\RNA\VS_practice\C#\PCClint_1\LogingWindow\bin\Debug\LogingWindow.exe.config
