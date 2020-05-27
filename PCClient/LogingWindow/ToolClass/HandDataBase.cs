@@ -1,4 +1,4 @@
-﻿using PCClintSoftware.BaseClass;
+﻿using LogingWindow.BaseClass;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -479,10 +479,10 @@ namespace LogingWindow.ToolClass
            switch (BOXID)
            {
                    //判断调用者身份，是修改（删除）的ID下拉框或者是name下拉框
-               case ConstantMember.NameComboBox: cmmStr = "SELECT [name] FROM ElderBaseData WHERE [name] LIKE  @姓名 ";
+               case ComboBoxDropDownCaller.NameComboBox: cmmStr = "SELECT [name] FROM ElderBaseData WHERE [name] LIKE  @姓名 ";
                          drItemStr = "name";
                    break;
-               case ConstantMember.IDComboBox: cmmStr = "SELECT [ID] FROM ElderBaseData WHERE [name] =  @编号 ";
+               case ComboBoxDropDownCaller.IDComboBox: cmmStr = "SELECT [ID] FROM ElderBaseData WHERE [name] =  @编号 ";
                          drItemStr = "ID";
                          IsNullItem = true;   //当jiansuo为空时，不做操作
                    break;

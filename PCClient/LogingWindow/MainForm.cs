@@ -1,5 +1,5 @@
-﻿using LogingWindow.ToolClass;
-using PCClintSoftware.BaseClass;
+﻿using LogingWindow.BaseClass;
+using LogingWindow.ToolClass;
 using PCClintSoftware.ToolClass;
 using System;
 using System.Collections;
@@ -58,7 +58,7 @@ namespace LogingWindow
         }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            HttpProvider logoutRequest = new HttpProvider(ConstantMember.LOGOUTURL, ConstantMember.GET);
+            HttpProvider logoutRequest = new HttpProvider(HttpURLs.LOGOUTURL, HttpMethod.GET);
             try
             {
                 logoutRequest.HttpGetResponseStr();         //请求注销用户session
@@ -190,8 +190,8 @@ namespace LogingWindow
             try
             {
                 //向服务器查询该老人的最新一条手环数据
-                HttpProvider addRecordReq = new HttpProvider(ConstantMember.GRRINGDATAURL + elderRing.curID, ConstantMember.GET);
-                elderRing = (RingData)addRecordReq.HttpRequestObj(elderRing, ConstantMember.RINGDATAOBJ);
+                HttpProvider addRecordReq = new HttpProvider(HttpURLs.GRRINGDATAURL + elderRing.curID, HttpMethod.GET);
+                elderRing = (RingData)addRecordReq.HttpRequestObj(elderRing, JsonToObjectType.RINGDATAOBJ);
                 //将该条数据添加到对应老人的手环数据表中
                 //************************************该句是否需要用另外异常语句处理
                 //如果已经有最后一条数据，则不用保存
@@ -402,27 +402,27 @@ namespace LogingWindow
 
         private void newRecord_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowManageElderWindow(ConstantMember.EMFORMCREATRTAB);    //以修改的命令调用打开人员管理窗口的方法，并打开修改窗口
+            ShowManageElderWindow(WinformName.EMFORMCREATRTAB);    //以修改的命令调用打开人员管理窗口的方法，并打开修改窗口
         }
 
         private void amendRecord_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowManageElderWindow(ConstantMember.EMFORMAMENDRTAB);    //以修改的命令调用打开人员管理窗口的方法，并打开修改窗口
+            ShowManageElderWindow(WinformName.EMFORMAMENDRTAB);    //以修改的命令调用打开人员管理窗口的方法，并打开修改窗口
         }
 
         private void deleteRecord_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowManageElderWindow(ConstantMember.EMFORMDELETRTAB);    //以删除的命令调用打开人员管理窗口的方法，并打开删除窗口
+            ShowManageElderWindow(WinformName.EMFORMDELETRTAB);    //以删除的命令调用打开人员管理窗口的方法，并打开删除窗口
         }
 
         private void manageDetails_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowUserDetailForm(ConstantMember.UDFORMDETAILTAB);    //以修改密码的命令打开个人信息窗口
+            ShowUserDetailForm(WinformName.UDFORMDETAILTAB);    //以修改密码的命令打开个人信息窗口
         }
 
         private void changePassword_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowUserDetailForm(ConstantMember.UDFORMPASSWORDTAB);    //以修改密码的命令打开个人信息窗口
+            ShowUserDetailForm(WinformName.UDFORMPASSWORDTAB);    //以修改密码的命令打开个人信息窗口
         }
 
         private void layoutControlBtn_Click(object sender, EventArgs e)
@@ -442,12 +442,12 @@ namespace LogingWindow
 
         private void checkUser_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowAdminForm(ConstantMember.ADFORMUSERLISTTAB);    //以用户列表的命令打开管理员窗口
+            ShowAdminForm(WinformName.ADFORMUSERLISTTAB);    //以用户列表的命令打开管理员窗口
         }
 
         private void manageUser_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowAdminForm(ConstantMember.ADFORMUSERMANAGETAB);  //以管理用户的命令打开管理员窗口
+            ShowAdminForm(WinformName.ADFORMUSERMANAGETAB);  //以管理用户的命令打开管理员窗口
         }
 
         private void updateElderList_ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -464,8 +464,5 @@ namespace LogingWindow
         {
             this.Close();
         }
-
-
-
     }
 }

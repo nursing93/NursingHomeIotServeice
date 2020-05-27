@@ -1,4 +1,5 @@
-﻿using PCClintSoftware.BaseClass;
+﻿using LogingWindow.BaseClass;
+using LogingWindow.ToolClass;
 using PCClintSoftware.ToolClass;
 using System;
 using System.Collections.Generic;
@@ -57,12 +58,12 @@ namespace LogingWindow
         /// <param name="amendUser">所需要修改的用户对象</param>
         private void InvokeAmendDetails(string amendState, LogUser amendUser)
         {
-            if (amendState == ConstantMember.AMENDUSER_SUCCESS)
+            if (amendState == HttpRspState.AMENDUSER_SUCCESS)
             {//*****************************有待完善
                 user = amendUser;   //如果修改成功则令该用户信息成为最新信息
                 MessageBox.Show("个人信息修改成功");
             }
-            else if (amendState == ConstantMember.AMENDUSER_FAILD)
+            else if (amendState == HttpRspState.AMENDUSER_FAILD)
             {
                 //*****************************有待完善
                 MessageBox.Show("个人信息修改失败");
@@ -79,7 +80,7 @@ namespace LogingWindow
         /// <param name="state">由服务器返回的修改状态</param>
         private void InvokeAmendDetails(string state)
         {
-            if (state == ConstantMember.AMENDPASSWORD_SUCCESS)
+            if (state == HttpRspState.AMENDPASSWORD_SUCCESS)
             {
                 //*********************************有待优化
                 user.userPassword = this.pNewPasswordBox.Text;        //将密码置为新密码
@@ -88,7 +89,7 @@ namespace LogingWindow
                 this.pConfirmPasswordBox.Text="";
                 this.pOldPasswordBox.Text = "";
             }
-            else if (state == ConstantMember.AMENDPASSWORD_FAILD)
+            else if (state == HttpRspState.AMENDPASSWORD_FAILD)
             {
                 //*********************************有待优化
                 MessageBox.Show("密码修改失败，请重试");
@@ -138,11 +139,11 @@ namespace LogingWindow
             this.user = theUser;     //获取用户信息到本窗口
             this.user_1 = user;      //辅助功能，判断user内容是否改变
             //根据调用者的参数显示丢应的页面
-            if (tableName == ConstantMember.UDFORMDETAILTAB)
+            if (tableName == WinformName.UDFORMDETAILTAB)
             {
                 this.userDetailsTab.SelectedTab = userDetails;   //将当先选项卡设置为人员档案修改选项卡
             }
-            else if (tableName == ConstantMember.UDFORMPASSWORDTAB)
+            else if (tableName == WinformName.UDFORMPASSWORDTAB)
             {
                 this.userDetailsTab.SelectedTab = amendPassword;   //将当先选项卡设置为人员档案删除选项卡           
             }
@@ -161,7 +162,7 @@ namespace LogingWindow
             LogUser puser = user.copy();
             puser.userPassword = newPassw;
             string state = "";
-            HttpProvider amendPassword = new HttpProvider(ConstantMember.AMENDPASSWORDURL, ConstantMember.POST);   //新建请求连接
+            HttpProvider amendPassword = new HttpProvider(HttpURLs.AMENDPASSWORDURL, HttpMethod.POST);   //新建请求连接
             //****************************************异常处理过于粗糙，有待改善
             try
             {
@@ -233,7 +234,7 @@ namespace LogingWindow
             LogUser amendUser = (LogUser)objSend;
             //请求体
             string amendState = "";
-            HttpProvider amendUserReq = new HttpProvider(ConstantMember.AMENDUSERURL, ConstantMember.POST);
+            HttpProvider amendUserReq = new HttpProvider(HttpURLs.AMENDUSERURL, HttpMethod.POST);
             try
             {
                 amendState = amendUserReq.HttpRquestStr(amendUser);   //发出请求并返回请求状态

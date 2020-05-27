@@ -58,6 +58,13 @@
     <Compile Include="AreaSetWindow.Designer.cs">
       <DependentUpon>AreaSetWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="BaseClass\ElderInfor.cs" />
+    <Compile Include="BaseClass\KeyEvent.cs" />
+    <Compile Include="BaseClass\Kinestate.cs" />
+    <Compile Include="BaseClass\LogUser.cs" />
+    <Compile Include="BaseClass\PhysicalData.cs" />
+    <Compile Include="BaseClass\Position.cs" />
+    <Compile Include="BaseClass\RingRecord.cs" />
     <Compile Include="ElderManageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,16 +89,16 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BaseClass\ConstantMember.cs" />
-    <Compile Include="BaseClass\POJO.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\HttpTest.cs" />
     <Compile Include="ToolClass\HandDataBase.cs" />
     <Compile Include="ToolClass\HandMap.cs" />
+    <Compile Include="ToolClass\HttpConstant.cs" />
     <Compile Include="ToolClass\JSON.cs" />
     <Compile Include="ToolClass\OtherTools.cs" />
     <Compile Include="ToolClass\HttpProvider.cs" />
+    <Compile Include="ToolClass\WinformConstant.cs" />
     <Compile Include="UserDetailsForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -8,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PCClintSoftware.ToolClass;
-using PCClintSoftware.BaseClass;
 using LogingWindow.ToolClass;
 using System.Threading;
 using System.Net;
+using LogingWindow.BaseClass;
 
 namespace LogingWindow
 {
@@ -238,8 +238,8 @@ namespace LogingWindow
             {
                 return;
             }
-            HttpProvider logRequest = new HttpProvider(ConstantMember.LOGINGURL);  //新建RequestPostURL对象，用于向服务器发送“登录”请求
-            HttpProvider userDetails = new HttpProvider(ConstantMember.QUERYUSERDETAILURL + user.userName,ConstantMember.GET);  //新建RequestPostURL对象，用于请求该用户的详细资料
+            HttpProvider logRequest = new HttpProvider(HttpURLs.LOGINGURL);  //新建RequestPostURL对象，用于向服务器发送“登录”请求
+            HttpProvider userDetails = new HttpProvider(HttpURLs.QUERYUSERDETAILURL + user.userName, HttpMethod.GET);  //新建RequestPostURL对象，用于请求该用户的详细资料
             try   //********************************************，异常处理不完整，有待改善
             {
                 logRequest.setcontentType("application/x-www-form-urlencoded");     //设置传输格式
@@ -253,7 +253,7 @@ namespace LogingWindow
             {
                 //由于网络问题，或者url错误引起的异常，导致登录不成功
                 Console.Write("出现异常：\r" + e);
-                permissionStr = ConstantMember.WEBEXCEPTION;    //将状态码设置为“网络异常”
+                permissionStr = LogingResult.WEBEXCEPTION;    //将状态码设置为“网络异常”
                 MethodCell_WE mcWebException = new MethodCell_WE(Invoke_WebException);
                 this.Invoke(mcWebException,e);    //同步通信，必须采用该方式
             }
@@ -266,40 +266,40 @@ namespace LogingWindow
             }
             finally
             {
-                if (permissionStr == ConstantMember.ADMINISTRATOR)
+                if (permissionStr == LogingResult.ADMINISTRATOR)
                 {//********************************************有待改善
                     //以管理员身份运行
-                    user = (LogUser)userDetails.HttpGetResponseObj(ConstantMember.LOGUSEROBJ);    //向服务器请求该用户的详细资料
+                    user = (LogUser)userDetails.HttpGetResponseObj(JsonToObjectType.LOGUSEROBJ);    //向服务器请求该用户的详细资料
                     HandDataBase.UserData(user, checkBox.Checked);     //保存用户名（密码可选是否保存）
                     //采用多线程通信，用主线程实现被屏蔽代码的方法——打开主窗口
                     MethodInvoker mi = new MethodInvoker(this.InvokeLog_Admin);    //创建委托
                     this.Invoke(mi);
                 }
-                else if (permissionStr == ConstantMember.USERPERMIT)
+                else if (permissionStr == LogingResult.USERPERMIT)
                 {
                     //以普通用户身份运行
-                    user = (LogUser)userDetails.HttpGetResponseObj(ConstantMember.LOGUSEROBJ);    //向服务器请求该用户的详细资料
+                    user = (LogUser)userDetails.HttpGetResponseObj(JsonToObjectType.LOGUSEROBJ);    //向服务器请求该用户的详细资料
                     HandDataBase.UserData(user, checkBox.Checked);        //保存用户名（密码可选是否保存）
                     //采用多线程通信，用主线程实现被屏蔽代码的方法——打开主窗口
                     MethodInvoker mi = new MethodInvoker(this.InvokeLog_User);    //创建委托
                     this.Invoke(mi);
 
                 }
-                else if (permissionStr == ConstantMember.NOPERMISSION)
+                else if (permissionStr == LogingResult.NOPERMISSION)
                 {
                     //禁止登陆，身份不合格
                     //采用多线程通信，用主线程实现被屏蔽代码的方法——没有用户
                     MethodInvoker mi = new MethodInvoker(this.InvokeLog_NoMission);    //创建委托
                     this.Invoke(mi);
                 }
-                else if (permissionStr == ConstantMember.WRONGPASSWORD)
+                else if (permissionStr == LogingResult.WRONGPASSWORD)
                 {
                     //提示密码错误
                     //采用多线程通信，用主线程实现被屏蔽代码的方法——密码错误
                     MethodInvoker mi = new MethodInvoker(this.InvokeLog_WrongPassword);    //创建委托
                     this.Invoke(mi);
                 }
-                else if(permissionStr ==ConstantMember.WEBEXCEPTION)
+                else if (permissionStr == LogingResult.WEBEXCEPTION)
                 {
                     //不作处理，此时的结果为网络异常处理之后的结果
                 }

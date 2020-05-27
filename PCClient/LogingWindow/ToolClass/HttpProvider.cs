@@ -1,5 +1,4 @@
-﻿using PCClintSoftware.BaseClass;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,6 +6,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using LogingWindow.Test;
+using LogingWindow.BaseClass;
+using LogingWindow.ToolClass;
 
 namespace PCClintSoftware.ToolClass
 {
@@ -195,17 +196,17 @@ namespace PCClintSoftware.ToolClass
             Object jsonObject=null;   //临时变量，用于传输json数据流转换后的对象
             switch(objType)    //判断需要返回的
             {
-                case ConstantMember.ELDERINFOROBJ: jsonObject = JSON.parse<ElderInfor>(jsonStr);  //将对象赋值为老人对象
+                case JsonToObjectType.ELDERINFOROBJ: jsonObject = JSON.parse<ElderInfor>(jsonStr);  //将对象赋值为老人对象
                     break;
-                case ConstantMember.RINGDATAOBJ: jsonObject = JSON.parse<RingData>(jsonStr);   //将对象赋值为手环数据对象
+                case JsonToObjectType.RINGDATAOBJ: jsonObject = JSON.parse<RingData>(jsonStr);   //将对象赋值为手环数据对象
                     break;
-                case ConstantMember.LOGUSEROBJ: jsonObject = JSON.parse<LogUser>(jsonStr);    //将对象赋值为用户对象
+                case JsonToObjectType.LOGUSEROBJ: jsonObject = JSON.parse<LogUser>(jsonStr);    //将对象赋值为用户对象
                     break;
-                case ConstantMember.LISTELDEROBJ: jsonObject = JSON.parse<List<ElderInfor>>(jsonStr);   //将对象赋值为老人对象集合
+                case JsonToObjectType.LISTELDEROBJ: jsonObject = JSON.parse<List<ElderInfor>>(jsonStr);   //将对象赋值为老人对象集合
                     break;
-                case ConstantMember.LISTRINGDATAOBJ: jsonObject = JSON.parse<List<RingData>>(jsonStr); //将对象赋值为手环数据对象集合
+                case JsonToObjectType.LISTRINGDATAOBJ: jsonObject = JSON.parse<List<RingData>>(jsonStr); //将对象赋值为手环数据对象集合
                     break;
-                case ConstantMember.LISTLOGUSEROBJ: jsonObject = JSON.parse<List<LogUser>>(jsonStr);   //将对象赋值为用户对象集合
+                case JsonToObjectType.LISTLOGUSEROBJ: jsonObject = JSON.parse<List<LogUser>>(jsonStr);   //将对象赋值为用户对象集合
                     break;
                 default:
                     break;

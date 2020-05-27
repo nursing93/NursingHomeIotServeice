@@ -1,5 +1,5 @@
-﻿using LogingWindow.ToolClass;
-using PCClintSoftware.BaseClass;
+﻿using LogingWindow.BaseClass;
+using LogingWindow.ToolClass;
 using PCClintSoftware.ToolClass;
 using System;
 using System.Collections.Generic;
@@ -138,12 +138,12 @@ namespace LogingWindow
         /// </summary>
         private void UpdateLocalElderList()
         {
-            HttpProvider queryAllElder = new HttpProvider(ConstantMember.QUERYALLELDERURL, ConstantMember.GET);  //get方式向服务器请求所有用户信息
+            HttpProvider queryAllElder = new HttpProvider(HttpURLs.QUERYALLELDERURL, HttpMethod.GET);  //get方式向服务器请求所有用户信息
             List<ElderInfor> elderList = new List<ElderInfor>();
             //*******************************异常处理太粗糙，待优化
             try
             {
-                elderList = (List<ElderInfor>)queryAllElder.HttpGetResponseObj(ConstantMember.LISTELDEROBJ);
+                elderList = (List<ElderInfor>)queryAllElder.HttpGetResponseObj(JsonToObjectType.LISTELDEROBJ);
                 //*********************************测试代码，待删除
                 //elderList = LogingWindow.Test.HttpTest.UserListTest.getElderList();
             }
@@ -227,13 +227,13 @@ namespace LogingWindow
             string endTime = (string)objArry[2];
             //**************************************URL不全，缺少参数
             //以get方式，请求对应老人的指定时间段内的手环数据
-            HttpProvider queryElderAllRingData = new HttpProvider(ConstantMember.QEALLRINGDATAURL + elderID + "/" + startTime + "/" + endTime, ConstantMember.GET);
+            HttpProvider queryElderAllRingData = new HttpProvider(HttpURLs.QEALLRINGDATAURL + elderID + "/" + startTime + "/" + endTime, HttpMethod.GET);
             //Console.WriteLine(queryElderAllRingData.ToString());
             List<RingData> ringDataList = new List<RingData>();    
             //********************************异常处理太粗糙，有待改善
             try
             {
-                ringDataList = (List<RingData>)queryElderAllRingData.HttpGetResponseObj(ConstantMember.LISTRINGDATAOBJ);        //
+                ringDataList = (List<RingData>)queryElderAllRingData.HttpGetResponseObj(JsonToObjectType.LISTRINGDATAOBJ);        //
                 //************************************测试代码段，待删除
                 //ringDataList = LogingWindow.Test.HttpTest.UserListTest.getRingDataList(elderID);
                 //Console.WriteLine(ringDataList.Count);

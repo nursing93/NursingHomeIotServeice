@@ -1,5 +1,5 @@
-﻿using LogingWindow.ToolClass;
-using PCClintSoftware.BaseClass;
+﻿using LogingWindow.BaseClass;
+using LogingWindow.ToolClass;
 using PCClintSoftware.ToolClass;
 using System;
 using System.Collections.Generic;
@@ -81,17 +81,17 @@ namespace LogingWindow
         /// <param name="creatUserState">服务器返回的结果</param>
         private void InvokeAddUser(string creatUserState)
         {
-            if (creatUserState == ConstantMember.CREATUSER_SUCCESS)
+            if (creatUserState == HttpRspState.CREATUSER_SUCCESS)
             {
                 //******************************待优化
                 MessageBox.Show("添加用户成功");
             }
-            else if (creatUserState == ConstantMember.CREATUSER_FAILD)
+            else if (creatUserState == HttpRspState.CREATUSER_FAILD)
             {
                 //******************************待优化
                 MessageBox.Show("添加用户失败");
             }
-            else if (creatUserState == ConstantMember.CREATUSER_SAMENAME)
+            else if (creatUserState == HttpRspState.CREATUSER_SAMENAME)
             {
                 MessageBox.Show("用户名已存在\r请更换用户名后重试");
             }
@@ -107,12 +107,12 @@ namespace LogingWindow
         /// <param name="deleteUserState"></param>
         private void InvokeDeleteUser(string deleteUserState)
         {
-            if (deleteUserState == ConstantMember.DELETEUSER_SUCCESS)
+            if (deleteUserState == HttpRspState.DELETEUSER_SUCCESS)
             {
                 //******************************待优化
                 MessageBox.Show("删除用户成功");
             }
-            else if (deleteUserState == ConstantMember.DELETEUSER_FAILD)
+            else if (deleteUserState == HttpRspState.DELETEUSER_FAILD)
             {
                 //******************************待优化
                 MessageBox.Show("删除用户失败");
@@ -134,11 +134,11 @@ namespace LogingWindow
         public void InitialForm(string tabSelect,LogUser theUser)
         {
             user = theUser;   //设置用户
-            if(tabSelect==ConstantMember.ADFORMUSERLISTTAB)
+            if (tabSelect == WinformName.ADFORMUSERLISTTAB)
             {
                 this.AdminTabControl.SelectedTab = userListPage;
             }
-            else if (tabSelect ==ConstantMember.ADFORMUSERMANAGETAB )
+            else if (tabSelect == WinformName.ADFORMUSERMANAGETAB)
             {
                 this.AdminTabControl.SelectedTab = userManagePage;
                 this.nSuperiorBox.Text = user.userName;
@@ -149,13 +149,13 @@ namespace LogingWindow
         /// </summary>
         private void ShowUserNameList()
         {
-            HttpProvider queryAllUserList = new HttpProvider(ConstantMember.QUERYALLUSERURL, ConstantMember.GET);  //get方式向服务器请求所有用户信息
+            HttpProvider queryAllUserList = new HttpProvider(HttpURLs.QUERYALLUSERURL, HttpMethod.GET);  //get方式向服务器请求所有用户信息
             List<LogUser> userList = new List<LogUser>();
             //*****************************测试代码段，待删除
             //userList = LogingWindow.Test.HttpTest.UserListTest.getUserList();
             try
             {
-                userList = (List<LogUser>)queryAllUserList.HttpGetResponseObj(ConstantMember.LISTLOGUSEROBJ);
+                userList = (List<LogUser>)queryAllUserList.HttpGetResponseObj(JsonToObjectType.LISTLOGUSEROBJ);
                 //*****************************测试代码段，待删除
                 //userList = LogingWindow.Test.HttpTest.UserListTest.getUserList();
             }
@@ -188,7 +188,7 @@ namespace LogingWindow
         {
             LogUser creatUser = (LogUser)objSend;
             //请求体
-            HttpProvider creatUserReq = new HttpProvider(ConstantMember.ADDUSERURL, ConstantMember.POST);  //向服务器发出请求，新增用户
+            HttpProvider creatUserReq = new HttpProvider(HttpURLs.ADDUSERURL, HttpMethod.POST);  //向服务器发出请求，新增用户
             string creatUserState = "";        //获取请求状态的字符串
             //********************************************异常处理过于粗糙，有待改善
             try
@@ -243,7 +243,7 @@ namespace LogingWindow
         {
             LogUser deleteUser = (LogUser)objSend;
             //请求体
-            HttpProvider deleteUserReq = new HttpProvider(ConstantMember.DELETEUSERURL + deleteUser.userName, ConstantMember.GET);  //向服务器发出请求，新增用户
+            HttpProvider deleteUserReq = new HttpProvider(HttpURLs.DELETEUSERURL + deleteUser.userName, HttpMethod.GET);  //向服务器发出请求，新增用户
             string deleteUserState = "";        //获取请求状态的字符串
             try
             {

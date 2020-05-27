@@ -1,5 +1,5 @@
-﻿using LogingWindow.ToolClass;
-using PCClintSoftware.BaseClass;
+﻿using LogingWindow.BaseClass;
+using LogingWindow.ToolClass;
 using PCClintSoftware.ToolClass;
 using System;
 using System.Collections.Generic;
@@ -79,22 +79,22 @@ namespace LogingWindow
         private void InvokeUpdateRecord(string StatuteStr,ElderInfor elder)
         {
             //根据服务器返回的情况，执行本地数据库的相关操作
-            if (StatuteStr == ConstantMember.ADDELDER_SUCCESS)
+            if (StatuteStr == HttpRspState.ADDELDER_SUCCESS)
             {
                 HandDataBase.CreatElderRecord(elder);    //若服务器添加成功，则本地也添加
                 MessageBox.Show("服务器存储成功，本地数据库更新成功");
             }
-            else if (StatuteStr == ConstantMember.ADDELDER_FAILD)
+            else if (StatuteStr == HttpRspState.ADDELDER_FAILD)
             {
                 //*******************************待完善该部分代码，应当具备向用户提示服务器报错的情况
                 MessageBox.Show("服务器存储失败，请重试");
             }
-            else if (StatuteStr == ConstantMember.AMENDELDER_SUCCESS)
+            else if (StatuteStr == HttpRspState.AMENDELDER_SUCCESS)
             {
                 HandDataBase.AmendElderRecord(elder);     //若服务器修改成功，则本地也修改
                 MessageBox.Show("服务器修改成功，本地数据库更新成功");
             }
-            else if (StatuteStr == ConstantMember.AMENDELDER_FAILD)
+            else if (StatuteStr == HttpRspState.AMENDELDER_FAILD)
             {
                 //*******************************待完善该部分代码，应当具备向用户提示服务器报错的情况
                 MessageBox.Show("服务器修改失败，请重试");
@@ -111,13 +111,13 @@ namespace LogingWindow
         /// <param name="stateStr">请求删除状态</param>
         /// <param name="elder">对应老人对象</param>
         private void InvokeDeleteRecord(string stateStr,ElderInfor elder)
-        { 
-            if (stateStr == ConstantMember.DELETEELDER_SUCCESS)
+        {
+            if (stateStr == HttpRspState.DELETEELDER_SUCCESS)
                 {
                     HandDataBase.DeleteElderRecord(elder);      //根据服务器删除状况决定是否操作本地数据库
                     MessageBox.Show("服务器删除成功，本地数据库删除成功");
                 }
-                else if (stateStr == ConstantMember.DELETEELDER_FAILD)
+            else if (stateStr == HttpRspState.DELETEELDER_FAILD)
                 {
                     //********************************有待改善，若服务器删除失败，交互内容
                     MessageBox.Show("服务器删除失败，请重试");
@@ -180,11 +180,11 @@ namespace LogingWindow
         /// <param name="tableName"></param>
         public void showTablech(string tableName)  //被主场口调用，设置当前窗口为指定的选项卡，tableName为指定选项卡的名称
         {
-            if (tableName == ConstantMember.EMFORMAMENDRTAB)
+            if (tableName == WinformName.EMFORMAMENDRTAB)
             {
                 this.manTab.SelectedTab = amendRecord;   //将当先选项卡设置为人员档案修改选项卡
             }
-            else if (tableName == ConstantMember.EMFORMDELETRTAB)
+            else if (tableName == WinformName.EMFORMDELETRTAB)
             {
                 this.manTab.SelectedTab = deleteRecord;   //将当先选项卡设置为人员档案删除选项卡           
             }
@@ -199,7 +199,7 @@ namespace LogingWindow
         private void AddRecordRequest() 
         {
             //****************************有待改善，若服务器响应超时，如何处理
-            HttpProvider addRecordReq = new HttpProvider(ConstantMember.ADDRECORDURL, ConstantMember.GET);  //get方式向服务器请求添加一个老人档案
+            HttpProvider addRecordReq = new HttpProvider(HttpURLs.ADDRECORDURL, HttpMethod.GET);  //get方式向服务器请求添加一个老人档案
             string newElderId = "";
             try
             {
@@ -291,13 +291,13 @@ namespace LogingWindow
 
             if (boolean == true)   //以新建档案的方式发出请求的对象
             {
-                saveRecordReq = new HttpProvider(ConstantMember.SAVERECORDURL, ConstantMember.POST);
+                saveRecordReq = new HttpProvider(HttpURLs.SAVERECORDURL, HttpMethod.POST);
                 //********************************测试
                 //test=new Test.HttpTest.SQLTest("ADD_SUCCESS");
             }
             else
             {    //以修改档案的方式发出请求的对象
-                saveRecordReq = new HttpProvider(ConstantMember.AMENDRECORDURL, ConstantMember.POST);
+                saveRecordReq = new HttpProvider(HttpURLs.AMENDRECORDURL, HttpMethod.POST);
                 //********************************测试
                 //test=new Test.HttpTest.SQLTest("ADD_SUCCESS");
 
@@ -366,7 +366,7 @@ namespace LogingWindow
             if (elderID == "") { return; }         //如果字符为空，则不进行以下操作
             ElderInfor elder = new ElderInfor(elderID);
             HandDataBase.GetElderRecord(elder);//完善该老人信息
-            HttpProvider deleteReq = new HttpProvider(ConstantMember.DELETRECORDURL, ConstantMember.POST);
+            HttpProvider deleteReq = new HttpProvider(HttpURLs.DELETRECORDURL, HttpMethod.POST);
             string stateStr = "";
             try
             {
@@ -496,23 +496,23 @@ namespace LogingWindow
         private void scRecordNameBox_DropDown(object sender, EventArgs e)
         {
             //this.scRecordIdBox.Items.Clear();     //执行方法之前先将scRecordIdBox框清空，防止ID与姓名不匹配
-            this.scRecordNameBox = HandDataBase.ComboBoxDropDown(this.scRecordNameBox, this.scRecordNameBox.Text,ConstantMember.NameComboBox);
+            this.scRecordNameBox = HandDataBase.ComboBoxDropDown(this.scRecordNameBox, this.scRecordNameBox.Text, ComboBoxDropDownCaller.NameComboBox);
         }
 
         private void scRecordIdBox_DropDown(object sender, EventArgs e)
         {
-            this.scRecordIdBox = HandDataBase.ComboBoxDropDown(this.scRecordIdBox, this.scRecordNameBox.Text,ConstantMember.IDComboBox);
+            this.scRecordIdBox = HandDataBase.ComboBoxDropDown(this.scRecordIdBox, this.scRecordNameBox.Text, ComboBoxDropDownCaller.IDComboBox);
         }
 
         private void sdRecordNameBox_DropDown(object sender, EventArgs e)
         {
             //this.sdRecordIdBox.Items.Clear();        //执行方法之前先将sdRecordIdBox框清空，防止ID与姓名不匹配
-            this.sdRecordNameBox = HandDataBase.ComboBoxDropDown(this.sdRecordNameBox, this.sdRecordNameBox.Text,ConstantMember.NameComboBox);
+            this.sdRecordNameBox = HandDataBase.ComboBoxDropDown(this.sdRecordNameBox, this.sdRecordNameBox.Text, ComboBoxDropDownCaller.NameComboBox);
         }
 
         private void sdRecordIdBox_DropDown(object sender, EventArgs e)
         {
-            this.sdRecordIdBox = HandDataBase.ComboBoxDropDown(this.sdRecordIdBox,this.sdRecordNameBox.Text,ConstantMember.IDComboBox);
+            this.sdRecordIdBox = HandDataBase.ComboBoxDropDown(this.sdRecordIdBox, this.sdRecordNameBox.Text, ComboBoxDropDownCaller.IDComboBox);
         }
 
         private void scRecordNameBox_MouseClick(object sender, MouseEventArgs e)
