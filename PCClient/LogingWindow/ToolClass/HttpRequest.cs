@@ -13,16 +13,13 @@ namespace LogingWindow.ToolClass
     {
         private static string session = "";
         private UTF8Encoding encoding = new UTF8Encoding(false);   //注明utf-8去除BOM
-
         private HttpWebRequest httpReq = null;
-
-
         private HttpResponse response = null;
 
-        public HttpRequest(string urlStr)
+        public HttpRequest(string urlStr, string method = HttpMethod.POST)
         {
             httpReq = (HttpWebRequest)WebRequest.Create(new Uri(urlStr));
-            setMethod(HttpMethod.POST);
+            setMethod(method);
             httpReq.Timeout = 10000;
             httpReq.ProtocolVersion = HttpVersion.Version11;
             setContentType("application/json");
@@ -48,13 +45,23 @@ namespace LogingWindow.ToolClass
         public HttpResponse request(Object obj)
         {
             string reqMsg = JSON.stringify(obj);
-            return request(reqMsg);
+            return doRequest(reqMsg);
         }
 
-        private HttpResponse request(string reqMsg)
+        public HttpResponse request()
         {
-            Console.WriteLine("请求url：" + httpReq.RequestUri);
-            Console.WriteLine("请求内容：" + reqMsg);
+            return doRequest("");  //TODO 空串定义为常量
+        }
+
+        public HttpResponse request(string reqMsg)
+        {
+            return doRequest(reqMsg);
+        }
+
+        private HttpResponse doRequest(string reqMsg)
+        {
+            Console.WriteLine("url：" + httpReq.RequestUri);
+            Console.WriteLine("content：" + reqMsg);
             if (method() == HttpMethod.POST)
             {
                 Stream myRequestStream = httpReq.GetRequestStream();
@@ -72,7 +79,7 @@ namespace LogingWindow.ToolClass
 
         private string method()
         {
-            return httpReq.Method;
+            return httpReq.Method.ToLower();
         }
 
     }

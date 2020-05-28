@@ -49,7 +49,7 @@ namespace LogingWindow.ToolClass
         public const string POST = "post";
     }
 
-    public static class LogingResult
+    public static class LogingResult    //TODO json反序列化方式已优化，删除
     {
         public const string ADMINISTRATOR = "ADMINISTRATOR";
 
