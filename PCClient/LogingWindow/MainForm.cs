@@ -115,28 +115,13 @@ namespace LogingWindow
                 this.statusLabel_Main.ForeColor = Color.Red;
             }
         }
-        /// <summary>
-        /// 子线程调用主线程时采取的方法，主线程完成查询最后一条数据并显示
-        /// </summary>
-        /// <param name="theElder"></param>
-        /// <param name="theRingDT"></param>
+
         private void InvokeGetLastRingDT(ElderInfor elder, RingData elderRing)
         {
-            //线程开启后，直接从数据库读最后一条数据
             elderRing = HandDataBase.GetRingData(elderRing);        //查询手环的最后一条
             HandMap.ShowElderPoint(this.mainWebBrowser, elder, elderRing);    //调用人员地图显示函数，参数为通过查询获得的手环信息
-            //***********************************待删除
-            // MessageBox.Show(elder.elderName + "\r" + elderRing.curID + "\r" + 
-            //elderRing.datetime + "\r" + elderRing.lng + "\r" + elderRing.lat + "\r" + elderRing.heartRate);
         }
-        /*********************************************************************
-         * 自定义代码块
-         * ******************************************************************/
-        /// <summary>
-        /// 登录成功后，判断用户是否为管理员身份，以实现不同用户可操作的功能不同，由登录窗口调用
-        /// </summary>
-        /// <param name="boolean">true 管理员身份，false一般用户身份</param>
-        /// <param name="theUser">本次登录的用户</param>
+
         public void UserPermission(Boolean boolean,LogUser theUser)
         {
             this.ISADMIN = boolean;
@@ -177,66 +162,58 @@ namespace LogingWindow
                 this.dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
         }
-        /// <summary>
-        /// 该方法只有ShowElderPoint可以调用，多线程处理数据请求时用
-        /// </summary>
-        /// <param name="objSend"></param>
+
         private void HttpGetRingDT(Object objSend)
         {
             Object[] objArry = (Object[])objSend;
-            RingData elderRing = (RingData)objArry[0];
+            RingData record = (RingData)objArry[0];
             ElderInfor elder = (ElderInfor)objArry[1];
-            Boolean IFREQ = false;  //状态值，表示是否有查询结果
+            Boolean hasRecord = false;
             try
             {
-                //向服务器查询该老人的最新一条手环数据
-                HttpProvider addRecordReq = new HttpProvider(HttpURLs.GRRINGDATAURL + elderRing.curID, HttpMethod.GET);
-                elderRing = (RingData)addRecordReq.HttpRequestObj(elderRing, JsonToObjectType.RINGDATAOBJ);
-                //将该条数据添加到对应老人的手环数据表中
-                //************************************该句是否需要用另外异常语句处理
-                //如果已经有最后一条数据，则不用保存
-                RingData ringData = new RingData(elderRing.curID);
-                ringData.datetime = elderRing.datetime;      //令两者的时间一样
-                if (HandDataBase.GetRingDataByTime(ringData).lat == "")
-                {
-                    //如果该时间点的数据，插入数据
-                    Console.WriteLine(elderRing.curID + "  " + elderRing.datetime + "  " + elderRing.lat
-                                      + "  " + elderRing.lng + "  " + elderRing.heartRate);
-                    HandDataBase.SaveRingData(elderRing);     //如果没有改时间点的数据，就插入该数据
-                }
-                else
-                {
-                    //如果有该时间点数据，不作其他处理
-                    Console.WriteLine(elderRing.curID + "  的数据是最新的");
-                }
-                //HandDataBase.SaveRingData(elderRing);   //更新最新手环数据
-                IFREQ = true;
+                HttpRequest request = new HttpRequest(HttpURLs.GRRINGDATAURL + record.curID, HttpMethod.GET);
+                HttpResponse response = request.request();
+                record = response.getResultAsObj<RingData>();
+                updateRingRecords(record);
+                hasRecord = true;
             }
             catch (WebException e)
             {
                 MethodCell_WE mcWebException = new MethodCell_WE(Invoke_WebException);
-                this.Invoke(mcWebException, e);    //同步通信，必须采用该方式
-                IFREQ = false;
+                this.Invoke(mcWebException, e);
+                hasRecord = false;
             }
             catch (Exception e)
             {
-                //其他异常指导访问数据失败
-                MessageBox.Show("主窗口   其他错误:\r" + e);
-                IFREQ = false;
+                MessageBox.Show("MainForm Other Error:\n" + e);
+                hasRecord = false;
             }
             finally
             {
-                if (!IFREQ)
-                {
-                    Console.WriteLine("无返回值");
-                }
-                else
+                if (hasRecord)
                 {
                     MethodCallerNYY ceGetLastRDT = new MethodCallerNYY(InvokeGetLastRingDT);
-                    this.BeginInvoke(ceGetLastRDT, elder, elderRing);
-                } 
+                    this.BeginInvoke(ceGetLastRDT, elder, record);
+                }
             }
         }
+
+        private void updateRingRecords(RingData record)
+        {
+            RingData ringData = new RingData(record.curID);
+            ringData.datetime = record.datetime;
+            if (HandDataBase.GetRingDataByTime(ringData).lat == "")
+            {
+                Console.WriteLine(record.curID + "  " + record.datetime + "  " + record.lat
+                                  + "  " + record.lng + "  " + record.heartRate);
+                HandDataBase.SaveRingData(record);
+            }
+            else
+            {
+                Console.WriteLine(record.curID + "  的数据是最新的");
+            }
+        }
+
         /// <summary>
         /// 显示对应的人员的坐标位置和身体参数，由本窗口的
         /// dataGridView1_RowHeaderMouseDoubleClick事件调用
