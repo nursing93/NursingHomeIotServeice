@@ -140,7 +140,7 @@ namespace LogingWindow
 
         private void IniNameBox()
         {
-            this.userNameBox = HandDataBase.GetUserList(this.userNameBox);
+            this.userNameBox = DataBaseHandler.GetUserList(this.userNameBox);
             if(userNameBox.Items.Count==0)
             {
                 return;
@@ -227,7 +227,7 @@ namespace LogingWindow
             {
                 Console.WriteLine("Getting User Infomation Failed!");
             }
-            HandDataBase.UserData(user, checkBox.Checked);
+            DataBaseHandler.UserData(user, checkBox.Checked);
         }
 
         private void logingBtn_Click(object sender, EventArgs e) {
@@ -251,7 +251,7 @@ namespace LogingWindow
         {
             LogUser user = new LogUser();
             user.userName = userNameBox.Text;
-            user = HandDataBase.GetUserObj(user);
+            user = DataBaseHandler.GetUserObj(user);
             this.userPassWordBox.Text = user.userPassword;
             if (user.isSavePassword == 1)
             {

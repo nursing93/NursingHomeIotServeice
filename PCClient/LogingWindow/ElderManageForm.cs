@@ -70,7 +70,7 @@ namespace LogingWindow
         {
             if (StatuteStr == HttpRspState.ADDELDER_SUCCESS)
             {
-                HandDataBase.CreatElderRecord(elder);
+                DataBaseHandler.CreatElderRecord(elder);
                 MessageBox.Show("Insert Success!, Local Datas Has been Updated!");
             }
             else if (StatuteStr == HttpRspState.ADDELDER_FAILD)
@@ -79,7 +79,7 @@ namespace LogingWindow
             }
             else if (StatuteStr == HttpRspState.AMENDELDER_SUCCESS)
             {
-                HandDataBase.AmendElderRecord(elder);
+                DataBaseHandler.AmendElderRecord(elder);
                 MessageBox.Show("Modify Success!  Local Datas Has been Updated!");
             }
             else if (StatuteStr == HttpRspState.AMENDELDER_FAILD)
@@ -96,7 +96,7 @@ namespace LogingWindow
         {
             if (stateStr == HttpRspState.DELETEELDER_SUCCESS)
                 {
-                    HandDataBase.DeleteElderRecord(elder);      //根据服务器删除状况决定是否操作本地数据库
+                    DataBaseHandler.DeleteElderRecord(elder);      //根据服务器删除状况决定是否操作本地数据库
                     MessageBox.Show("服务器删除成功，本地数据库删除成功");
                 }
             else if (stateStr == HttpRspState.DELETEELDER_FAILD)
@@ -309,7 +309,7 @@ namespace LogingWindow
             string elderID = (string)objSend;
             if (elderID == "") { return; }
             ElderInfor elder = new ElderInfor(elderID);
-            HandDataBase.GetElderRecord(elder);
+            DataBaseHandler.GetElderRecord(elder);
             HttpRequest request = new HttpRequest(HttpURLs.DELETRECORDURL, HttpMethod.POST);
             string stateStr = "";
             try
@@ -339,7 +339,7 @@ namespace LogingWindow
             if (isAmendTab)
             {
                 ElderInfor elder = new ElderInfor(this.scRecordIdBox.Text);    //传入一个老人的ID以新建老人对象
-                HandDataBase.GetElderRecord(elder);      //完善该老人的所有信息
+                DataBaseHandler.GetElderRecord(elder);      //完善该老人的所有信息
                 {//将修改人员窗口的人员信息赋值
                     this.celderIdBox.Text = elder.elderID;
                     this.celderNameBox.Text = elder.elderName;
@@ -353,7 +353,7 @@ namespace LogingWindow
             else 
             {
                 ElderInfor elder = new ElderInfor(this.sdRecordIdBox.Text);    //传入一个老人的ID以新建老人对象
-                HandDataBase.GetElderRecord(elder);      //完善该老人的所有信息
+                DataBaseHandler.GetElderRecord(elder);      //完善该老人的所有信息
                 {//将删除人员窗口的人员信息赋值
                     this.delderIdBox.Text = elder.elderID;
                     this.delderNameBox.Text = elder.elderName;
@@ -432,23 +432,23 @@ namespace LogingWindow
         private void scRecordNameBox_DropDown(object sender, EventArgs e)
         {
             //this.scRecordIdBox.Items.Clear();     //执行方法之前先将scRecordIdBox框清空，防止ID与姓名不匹配
-            this.scRecordNameBox = HandDataBase.ComboBoxDropDown(this.scRecordNameBox, this.scRecordNameBox.Text, ComboBoxDropDownCaller.NameComboBox);
+            this.scRecordNameBox = DataBaseHandler.ComboBoxDropDown(this.scRecordNameBox, this.scRecordNameBox.Text, ComboBoxDropDownCaller.NameComboBox);
         }
 
         private void scRecordIdBox_DropDown(object sender, EventArgs e)
         {
-            this.scRecordIdBox = HandDataBase.ComboBoxDropDown(this.scRecordIdBox, this.scRecordNameBox.Text, ComboBoxDropDownCaller.IDComboBox);
+            this.scRecordIdBox = DataBaseHandler.ComboBoxDropDown(this.scRecordIdBox, this.scRecordNameBox.Text, ComboBoxDropDownCaller.IDComboBox);
         }
 
         private void sdRecordNameBox_DropDown(object sender, EventArgs e)
         {
             //this.sdRecordIdBox.Items.Clear();        //执行方法之前先将sdRecordIdBox框清空，防止ID与姓名不匹配
-            this.sdRecordNameBox = HandDataBase.ComboBoxDropDown(this.sdRecordNameBox, this.sdRecordNameBox.Text, ComboBoxDropDownCaller.NameComboBox);
+            this.sdRecordNameBox = DataBaseHandler.ComboBoxDropDown(this.sdRecordNameBox, this.sdRecordNameBox.Text, ComboBoxDropDownCaller.NameComboBox);
         }
 
         private void sdRecordIdBox_DropDown(object sender, EventArgs e)
         {
-            this.sdRecordIdBox = HandDataBase.ComboBoxDropDown(this.sdRecordIdBox, this.sdRecordNameBox.Text, ComboBoxDropDownCaller.IDComboBox);
+            this.sdRecordIdBox = DataBaseHandler.ComboBoxDropDown(this.sdRecordIdBox, this.sdRecordNameBox.Text, ComboBoxDropDownCaller.IDComboBox);
         }
 
         private void scRecordNameBox_MouseClick(object sender, MouseEventArgs e)

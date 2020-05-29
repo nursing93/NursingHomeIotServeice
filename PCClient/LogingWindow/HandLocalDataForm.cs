@@ -109,7 +109,7 @@ namespace LogingWindow
                 this.changeLayoutBtn.Text = "<<";          //将按钮的样式换成缩小指示
                 this.panel1.Width = this.Width;
                 this.panel2.Width = this.Width - this.panel1.Width;
-                this.dataGridView1.DataSource = HandDataBase.GetNameList_AllColums("");     //返回本地数据库的人员列表
+                this.dataGridView1.DataSource = DataBaseHandler.GetNameList_AllColums("");     //返回本地数据库的人员列表
                 for (int i = 0; i < this.dataGridView1.Columns.Count; i++)
                 {
                     this.dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -126,7 +126,7 @@ namespace LogingWindow
                 this.changeLayoutBtn.Text = ">>";          //将按钮的样式换成放大指示
                 this.panel1.Width = 170;
                 this.panel2.Width = this.Width - this.panel1.Width;
-                this.dataGridView1.DataSource = HandDataBase.GetNameList("");     //返回本地数据库的人员列表
+                this.dataGridView1.DataSource = DataBaseHandler.GetNameList("");     //返回本地数据库的人员列表
                 for (int i = 0; i < this.dataGridView1.Columns.Count; i++)
                 {
                     this.dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -178,12 +178,12 @@ namespace LogingWindow
                     Console.WriteLine(j);
                 }
                 ElderInfor elder_Select = new ElderInfor(elder.elderID);
-                if (HandDataBase.GetElderRecord(elder_Select).elderID == "")
+                if (DataBaseHandler.GetElderRecord(elder_Select).elderID == "")
                 {
                     Console.WriteLine("Has no Elder's Info with id = " + elder.elderID + ", name = " + elder.elderName + ".");
-                    HandDataBase.CreatElderRecord(elder);
+                    DataBaseHandler.CreatElderRecord(elder);
                 }
-                else if (elder.equals(HandDataBase.GetElderRecord(elder_Select)))
+                else if (elder.equals(DataBaseHandler.GetElderRecord(elder_Select)))
                 {
                     Console.WriteLine("Elder：id = " + elder.elderID + ", name = " + elder.elderName
                                       + " Info is latest" + ", chileds: " + elder_Select.elderChild);
@@ -192,7 +192,7 @@ namespace LogingWindow
                 {
                     Console.WriteLine("Updating Elder：id = " + elder.elderID + ", name = " + elder.elderName
                                      + "Info..." + ", childs: " + elder_Select.elderChild);
-                    HandDataBase.AmendElderRecord(elder);
+                    DataBaseHandler.AmendElderRecord(elder);
                 }
             }
 
@@ -254,11 +254,11 @@ namespace LogingWindow
                 //实际操作
                 RingData ringData = new RingData(elderRing.curID);
                 ringData.datetime = elderRing.datetime;
-                if (HandDataBase.GetRingDataByTime(ringData).lat == "")
+                if (DataBaseHandler.GetRingDataByTime(ringData).lat == "")
                 {
                     Console.WriteLine(elderRing.curID + "  " + elderRing.datetime + "  " + elderRing.lat
                                       + "  " + elderRing.lng + "  " + elderRing.heartRate);
-                    HandDataBase.SaveRingData(elderRing);
+                    DataBaseHandler.SaveRingData(elderRing);
                 }
                 else
                 {

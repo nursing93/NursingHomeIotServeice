@@ -53,7 +53,7 @@ namespace LogingWindow
             this.ISMIN = true;
             LayoutControl();
             InitTheForm();
-            HandMap.ShowBaseMap(this.mainWebBrowser);
+            MapHandler.ShowBaseMap(this.mainWebBrowser);
             forms=new ArrayList();
         }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -117,8 +117,8 @@ namespace LogingWindow
 
         private void InvokeGetLastRingDT(ElderInfor elder, RingData elderRing)
         {
-            elderRing = HandDataBase.GetRingData(elderRing);        //查询手环的最后一条
-            HandMap.ShowElderPoint(this.mainWebBrowser, elder, elderRing);    //调用人员地图显示函数，参数为通过查询获得的手环信息
+            elderRing = DataBaseHandler.GetRingData(elderRing);        //查询手环的最后一条
+            MapHandler.ShowElderPoint(this.mainWebBrowser, elder, elderRing);    //调用人员地图显示函数，参数为通过查询获得的手环信息
         }
 
         public void UserPermission(Boolean boolean,LogUser theUser)
@@ -155,7 +155,7 @@ namespace LogingWindow
                 this.newRecord_ToolStripMenuItem.Visible = false;
                 this.manager_ToolStripMenuItem.Visible = false;
             }
-            this.dataGridView1.DataSource = HandDataBase.GetNameList("");//调用静态方法将本窗体的DataGridView内容填充，展示全部人员
+            this.dataGridView1.DataSource = DataBaseHandler.GetNameList("");//调用静态方法将本窗体的DataGridView内容填充，展示全部人员
             for (int i = 0; i < dataGridView1.Columns.Count; i++)     //设定dataGridView1的列宽设定方式
             {
                 this.dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -201,11 +201,11 @@ namespace LogingWindow
         {
             RingData ringData = new RingData(record.curID);
             ringData.datetime = record.datetime;
-            if (HandDataBase.GetRingDataByTime(ringData).lat == "")
+            if (DataBaseHandler.GetRingDataByTime(ringData).lat == "")
             {
                 Console.WriteLine(record.curID + "  " + record.datetime + "  " + record.lat
                                   + "  " + record.lng + "  " + record.heartRate);
-                HandDataBase.SaveRingData(record);
+                DataBaseHandler.SaveRingData(record);
             }
             else
             {
@@ -223,7 +223,7 @@ namespace LogingWindow
             string selectedElderID = (string)this.dataGridView1.SelectedRows[0].Cells[0].Value;   
             RingData elderRing = new RingData(selectedElderID);
             ElderInfor elder = new ElderInfor(selectedElderID);
-            elder = HandDataBase.GetElderRecord(elder);    //通过数据库获取老人信息
+            elder = DataBaseHandler.GetElderRecord(elder);    //通过数据库获取老人信息
             //尝试向服务器请求最新数据，否则度本地缓存的最新数据
             //*********************************设置合适的请求时间，防止等待时间过长
             this.statusLabel_Main.ForeColor = Color.Blue;
@@ -353,8 +353,8 @@ namespace LogingWindow
                 string elderIDs = (string)this.dataGridView1.Rows[e.RowIndex].Cells[0].Value;   //获取鼠标划过列的老人ID值
                 ElderInfor elder = new ElderInfor(elderIDs);    //新建对应的老人对象
                 RingData elderRing = new RingData(elderIDs);
-                elder = HandDataBase.GetElderRecord(elder);      //异常已经在下级代码中处理，未完善
-                elderRing = HandDataBase.GetRingData(elderRing);   //异常已经在下级代码中处理，未完善
+                elder = DataBaseHandler.GetElderRecord(elder);      //异常已经在下级代码中处理，未完善
+                elderRing = DataBaseHandler.GetRingData(elderRing);   //异常已经在下级代码中处理，未完善
                 this.IDLabel.Text = elder.elderID;
                 this.nameLabel.Text = elder.elderName;
                 this.yearLabel.Text = Convert.ToString(OtherTools.BirthdayToYear(elder));
@@ -368,7 +368,7 @@ namespace LogingWindow
         //按姓名检索按钮处理事件
         private void searchByNameBut_Click(object sender, EventArgs e)
         {
-            this.dataGridView1.DataSource = HandDataBase.GetNameList(searchBox.Text);//调用静态方法将本窗体的DataGridView内容填充
+            this.dataGridView1.DataSource = DataBaseHandler.GetNameList(searchBox.Text);//调用静态方法将本窗体的DataGridView内容填充
         }
 
         private void dataGridView1_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
