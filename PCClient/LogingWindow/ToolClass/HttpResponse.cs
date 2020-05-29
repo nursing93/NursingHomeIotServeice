@@ -42,7 +42,7 @@ namespace LogingWindow.ToolClass
             return result;
         }
 
-        public T getResultAsObj<T>()
+        public T getResultAsObj<T>()    //TODO 设置空对象保护
         {
             return JSON.parse<T>(result); ;
         }

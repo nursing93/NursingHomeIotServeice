@@ -48,65 +48,45 @@ namespace LogingWindow
                 MainForm.mainForm.UserDetails(user);  //如果user内容有所改变，关闭窗口时将本窗口的用户传给主窗口，方便调用
             }
         }
-        /**************************************************
-        * 多线程通信处理块
-        ****************************************************/
-        /// <summary>
-        /// 子线程通知主线程调用的方法，请求修改用户个人信息
-        /// </summary>
-        /// <param name="amendState">由服务器返回的修改状态</param>
-        /// <param name="amendUser">所需要修改的用户对象</param>
+
         private void InvokeAmendDetails(string amendState, LogUser amendUser)
         {
             if (amendState == HttpRspState.AMENDUSER_SUCCESS)
-            {//*****************************有待完善
-                user = amendUser;   //如果修改成功则令该用户信息成为最新信息
-                MessageBox.Show("个人信息修改成功");
+            {
+                user = amendUser; 
+                MessageBox.Show("Amend Success!");
             }
             else if (amendState == HttpRspState.AMENDUSER_FAILD)
             {
-                //*****************************有待完善
-                MessageBox.Show("个人信息修改失败");
+                MessageBox.Show("Amend Failed!");
             }
             else
             {
-                //*****************************有待完善
-                //MessageBox.Show("请求超时，请重试");
+                MessageBox.Show("Timeout...");
             }
         }
-        /// <summary>
-        /// 子线程通知主线程调用的方法，请求修改用户个人信息
-        /// </summary>
-        /// <param name="state">由服务器返回的修改状态</param>
+
         private void InvokeAmendDetails(string state)
         {
             if (state == HttpRspState.AMENDPASSWORD_SUCCESS)
             {
-                //*********************************有待优化
-                user.userPassword = this.pNewPasswordBox.Text;        //将密码置为新密码
-                MessageBox.Show("密码修改成功");
-                this.pNewPasswordBox.Text = "";     //设置成功后，清空密码框
+                user.userPassword = this.pNewPasswordBox.Text;
+                MessageBox.Show("Change Password Success!");
+                this.pNewPasswordBox.Text = "";
                 this.pConfirmPasswordBox.Text="";
                 this.pOldPasswordBox.Text = "";
             }
             else if (state == HttpRspState.AMENDPASSWORD_FAILD)
             {
                 //*********************************有待优化
-                MessageBox.Show("密码修改失败，请重试");
+                MessageBox.Show("Change Password Failed!");
             }
             else
             {
-                //*********************************有待优化
-                //MessageBox.Show("请求超时，请重试");
+                MessageBox.Show("Timeout...");
             }
         }
-        /***********************************************
-         * 自定义代码块
-         * *********************************************/
-        /// <summary>
-        /// 设置userDetails中控件的可用性
-        /// </summary>
-        /// <param name="isEnable"></param>
+
         private void ControlInfo(Boolean isEnable)
         {
             foreach (Control ct in this.userDetails.Controls)
@@ -153,43 +133,36 @@ namespace LogingWindow
                 //this.userDetailsTab.SelectedTab = newRecord;   //将当先选项卡设置为人员档案删除选项卡  
             }
         }
-        /// <summary>
-        /// 多线程启动的方法，向服务器请求修改密码，只有方法AmendPassword可以调用
-        /// </summary>
+
         private void HttpAmendPassword(Object objSend)
         {
             string newPassw = (string)objSend;
             LogUser puser = user.copy();
             puser.userPassword = newPassw;
             string state = "";
-            HttpProvider amendPassword = new HttpProvider(HttpURLs.AMENDPASSWORDURL, HttpMethod.POST);   //新建请求连接
-            //****************************************异常处理过于粗糙，有待改善
+            HttpRequest request = new HttpRequest(HttpURLs.AMENDPASSWORDURL, HttpMethod.POST);
             try
             {
-                state = amendPassword.HttpRquestStr(puser);
+                HttpResponse response = request.request(puser);
+                state = response.getResult();
             }
             catch (WebException e)
             {
-                //由于网络问题，或者url错误引起的异常，导致登录不成功
-                Console.Write("修改密码  出现网络异常：\r" + e);
-                MessageBox.Show("由于网络异常\r修改密码失败    请重试");
+                Console.Write("Change Password Faild due to a WebException! Try Again...\n" + e);
+                MessageBox.Show("Change Password Faild due to a WebException! Try Again...");
             }
             catch (Exception e)
             {
-                //其他异常导致修改失败
-                Console.WriteLine("修改密码：\r" + e);
-                MessageBox.Show("修改密码   其他异常");
+                Console.WriteLine("Change Password Faild due to an Other Exception!" + e);
+                MessageBox.Show("Change Password Faild due to an Other Exception!");
             }
             finally
             {
-                //子线程将服务器返回结果通知给主线程，由主线程决定后屋操作
                 MethodCallerNY mcAmendPassword = new MethodCallerNY(InvokeAmendDetails);
                 this.BeginInvoke(mcAmendPassword, state);
             }
         }
-        /// <summary>
-        /// 向服务器请求修改本用户的密码，由本窗口的修改密码窗口的保存按钮的单击事件调用
-        /// </summary>
+
         private void AmendPassword()
         {
             if(this.pOldPasswordBox.Text=="")
@@ -225,42 +198,34 @@ namespace LogingWindow
                 thdAmendPassword.Start(pConfirmPasswordBox.Text);
             }
         }
-        /// <summary>
-        /// 多线程调用的方法，向服务器发出请求，只有方法AmendUserDetails可以调用
-        /// </summary>
-        /// <param name="objSend">用户对象，请求时所需要</param>
+
         private void HttpAmendDetails(Object objSend)
         {
             LogUser amendUser = (LogUser)objSend;
-            //请求体
             string amendState = "";
-            HttpProvider amendUserReq = new HttpProvider(HttpURLs.AMENDUSERURL, HttpMethod.POST);
+            HttpRequest request = new HttpRequest(HttpURLs.AMENDUSERURL, HttpMethod.POST);
             try
             {
-                amendState = amendUserReq.HttpRquestStr(amendUser);   //发出请求并返回请求状态
+                HttpResponse response = request.request(amendUser);
+                amendState = response.getResult();
             }
             catch (WebException e)
             {
-                //由于网络问题，或者url错误引起的异常，导致登录不成功
-                Console.Write("修改个人资料  出现网络异常：\r" + e);
-                MessageBox.Show("由于网络异常\r修改个人资料失败    请重试"+e);
+                Console.Write("Amend User Infomation Failed due to a WebException! Try Again...\n" + e);
+                MessageBox.Show("Amend User Infomation Failed due to a WebException! Try Again..." + e);
             }
             catch (Exception e)
             {
-                //由于其他异常，导致修改失败
-                Console.WriteLine("修改个人资料   其他异常：\r" + e);
-                MessageBox.Show("修改个人资料   其他异常");
+                Console.WriteLine("Amend User Infomation Failed due to an Other Exception!\n" + e);
+                MessageBox.Show("Amend User Infomation Failed due to an Other Exception!");
             }
             finally
             {
-                //将服务器返回的修改状态通知给主线程，并由主线程决定后续操作
                 MethodCallerNYY mcAmendDetails = new MethodCallerNYY(InvokeAmendDetails);
                 this.BeginInvoke(mcAmendDetails, amendState, amendUser);
             }
         }
-        /// <summary>
-        /// 向服务器发起修改本用户基本信息的请求，并由返回结果进行提示
-        /// </summary>
+
         private void AmendUserDetails()
         {
             if (this.userNameBox.Text == "" || this.userRealNameBox.Text == "" || this.userIDBox.Text==""||this.userIDcardBox.Text=="")
@@ -279,11 +244,10 @@ namespace LogingWindow
             amendUser.superior = this.user.superior;
             amendUser.userPassword = this.user.userPassword;
             amendUser.isAdmin = this.user.isAdmin;
-            //采用多线程发送修改个人信息的请求
             ParameterizedThreadStart PTSAmendDetails = new ParameterizedThreadStart(HttpAmendDetails);
             Thread thdAmendDetails = new Thread(PTSAmendDetails);
-            thdAmendDetails.IsBackground = true;             //防止程序结束时线程还在继续运行
-            thdAmendDetails.Start(amendUser);    //将手环对象传给多线程的方法
+            thdAmendDetails.IsBackground = true;
+            thdAmendDetails.Start(amendUser);
         }
 
 

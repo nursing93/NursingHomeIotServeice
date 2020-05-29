@@ -96,19 +96,4 @@ namespace LogingWindow.ToolClass
 
         public const string AMENDPASSWORD_FAILD = "UPDATE_FAILD";
     }
-
-    public static class JsonToObjectType
-    {
-        public const string LOGUSEROBJ = "LOGUSER";
-
-        public const string ELDERINFOROBJ = "ELDERINFOR";
-
-        public const string RINGDATAOBJ = "RINGDATA";
-
-        public const string LISTELDEROBJ = "LISTELDER";
-
-        public const string LISTRINGDATAOBJ = "LISTRINGDATA";
-
-        public const string LISTLOGUSEROBJ = "LISTLOGUSER";
-    }
 }

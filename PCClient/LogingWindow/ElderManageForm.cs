@@ -60,56 +60,38 @@ namespace LogingWindow
             ControlInfo(false);      //将新建人员列表的控件设为不可用
             this.csetAreaBtn.Enabled = false;  //修改人员窗口的设置区域按钮禁用
         }
-        /**************************************************
-         * 多线程通信处理块
-         ****************************************************/
-        /// <summary>
-        /// 子线程通知主线程调用的方法，请求添加老人
-        /// </summary>
-        /// <param name="strElderID"></param>
+
         private void InvokeNewElderID(string strElderID)
         {
             this.elderIdBox.Text = strElderID;
         }
-        /// <summary>
-        /// 子线程通知主线程调用的方法，申请新建（修改）老人信息
-        /// </summary>
-        /// <param name="StatuteStr">新建老人信息，服务器返回的结果</param>
-        /// <param name="elder">老人信息</param>
-        private void InvokeUpdateRecord(string StatuteStr,ElderInfor elder)
+
+        private void InvokeUpdateRecord(string StatuteStr, ElderInfor elder)
         {
-            //根据服务器返回的情况，执行本地数据库的相关操作
             if (StatuteStr == HttpRspState.ADDELDER_SUCCESS)
             {
-                HandDataBase.CreatElderRecord(elder);    //若服务器添加成功，则本地也添加
-                MessageBox.Show("服务器存储成功，本地数据库更新成功");
+                HandDataBase.CreatElderRecord(elder);
+                MessageBox.Show("Insert Success!, Local Datas Has been Updated!");
             }
             else if (StatuteStr == HttpRspState.ADDELDER_FAILD)
             {
-                //*******************************待完善该部分代码，应当具备向用户提示服务器报错的情况
-                MessageBox.Show("服务器存储失败，请重试");
+                MessageBox.Show("Insert Failed! Try Again...");
             }
             else if (StatuteStr == HttpRspState.AMENDELDER_SUCCESS)
             {
-                HandDataBase.AmendElderRecord(elder);     //若服务器修改成功，则本地也修改
-                MessageBox.Show("服务器修改成功，本地数据库更新成功");
+                HandDataBase.AmendElderRecord(elder);
+                MessageBox.Show("Modify Success!  Local Datas Has been Updated!");
             }
             else if (StatuteStr == HttpRspState.AMENDELDER_FAILD)
             {
-                //*******************************待完善该部分代码，应当具备向用户提示服务器报错的情况
-                MessageBox.Show("服务器修改失败，请重试");
+                MessageBox.Show("Modify Failed! Try Again...");
             }
             else
             {
-                //*******************************待完善该部分代码，应当具备向用户提示服务器报错的情况
-                MessageBox.Show("服务器没有响应，请重试\r"+StatuteStr);
+                MessageBox.Show("No Response! Try Again..." + StatuteStr);
             }
         }
-        /// <summary>
-        /// 子线程通知主线程调用的方法，申请删除老人信息
-        /// </summary>
-        /// <param name="stateStr">请求删除状态</param>
-        /// <param name="elder">对应老人对象</param>
+
         private void InvokeDeleteRecord(string stateStr,ElderInfor elder)
         {
             if (stateStr == HttpRspState.DELETEELDER_SUCCESS)
@@ -193,44 +175,38 @@ namespace LogingWindow
                 this.manTab.SelectedTab = newRecord;   //将当先选项卡设置为人员档案删除选项卡  
             }
         }
-        /// <summary>
-        /// 向服务器发起新建老人档案请求，并返回系统给定的ID
-        /// </summary>
+
         private void AddRecordRequest() 
         {
-            //****************************有待改善，若服务器响应超时，如何处理
-            HttpProvider addRecordReq = new HttpProvider(HttpURLs.ADDRECORDURL, HttpMethod.GET);  //get方式向服务器请求添加一个老人档案
+            //TODO 若服务器响应超时，如何处理
+            HttpRequest request = new HttpRequest(HttpURLs.ADDRECORDURL, HttpMethod.GET);
             string newElderId = "";
             try
             {
-                newElderId = addRecordReq.HttpGetResponseStr();    //获取系统返回的新建老人ID
-                //将控件设置为可用
+                HttpResponse response = request.request();
+                newElderId = response.getResult();
                 MethodCallerNY_B controlInFor = new MethodCallerNY_B(ControlInfo);
-                this.Invoke(controlInFor, true);     //必须是同步处理方式
+                this.Invoke(controlInFor, true);
             }
             catch (WebException e)
             {
-                //将控件设置为不可用
                 MethodCallerNY_B controlInFor = new MethodCallerNY_B(ControlInfo);
                 this.Invoke(controlInFor, false);
-                //由于网络问题，或者url错误引起的异常，导致登录不成功
-                Console.Write("请求添加新人员  出现网络异常：\r" + e);
-                MessageBox.Show("由于网络原因\r请求添加新人员失败   请重试. . . . . .");
+                Console.Write("Get new ElderId Failed due to a WebException!\n" + e);
+                MessageBox.Show("Get new ElderId Failed due to a WebException!Try Again...");
             }
             catch (Exception e)
             {
-                //将控件设置为不可用
                 MethodCallerNY_B controlInFor = new MethodCallerNY_B(ControlInfo);
                 this.Invoke(controlInFor, false);
-                //其他异常导致添加失败
-                Console.Write("请求添加新人员  由于其他异常导致失败：\r" + e);
-                MessageBox.Show("请求添加新人员   其他异常导致失败");
+                Console.Write("Get new ElderId Failed due to an Other Exception!\n" + e);
+                MessageBox.Show("Get new ElderId Failed due to an Other Exception!");
             }
             finally 
             {
-                if (newElderId == "")
+                if (newElderId == "")    //TODO 判断新ID的合法性
                 {
-                    //未得到新建老人id，不作操作
+                    //TODO 未得到新建老人id，不作操作
                 }
                 else 
                 {
@@ -239,12 +215,7 @@ namespace LogingWindow
                 }
             }
         }
-        /// <summary>
-        /// 新建老人对象，并向调用者返回一个已经完善了信息的老人对象
-        /// 参数"boolean"用于判定完善老人信息的途径，true为从新建窗口完善，false为从修改窗口完善
-        /// </summary>
-        /// <param name="boolean">用于判别是新建或者修改档案，true为新建，false为修改</param>
-        /// <returns>返回一个信息完整的老人对象</returns>
+
         private object NewElderRecord(Boolean boolean) 
         {
             //新建老人对象，并从新建档案窗口完善该老人的信息
@@ -275,67 +246,44 @@ namespace LogingWindow
             //返回该老人对象给调用者
             return newElder;
         }
-        /// <summary>
-        /// 只被方法UpdataRecordState通过多线程的方式调用
-        /// </summary>
-        /// <param name="objSend">发起请求所需数据，包括布尔值和老人对象</param>
+
         private void HTTPUpdataRecord(Object objSend)
         {
             Object[] objArry = (Object[])objSend;    //将参数转化为对象组后便于利用
             Boolean boolean = (Boolean)objArry[0];
             ElderInfor elder = (ElderInfor)objArry[1];
-            //判断接下来执行新建操作或者修改操作
-            HttpProvider saveRecordReq = null;
-            //**********************************测试代码段
-            //LogingWindow.Test.HttpTest.SQLTest test;
-
-            if (boolean == true)   //以新建档案的方式发出请求的对象
+            HttpRequest request = null;
+            if (boolean == true)
             {
-                saveRecordReq = new HttpProvider(HttpURLs.SAVERECORDURL, HttpMethod.POST);
-                //********************************测试
-                //test=new Test.HttpTest.SQLTest("ADD_SUCCESS");
+                request = new HttpRequest(HttpURLs.SAVERECORDURL, HttpMethod.POST);
             }
             else
-            {    //以修改档案的方式发出请求的对象
-                saveRecordReq = new HttpProvider(HttpURLs.AMENDRECORDURL, HttpMethod.POST);
-                //********************************测试
-                //test=new Test.HttpTest.SQLTest("ADD_SUCCESS");
-
+            {
+                request = new HttpRequest(HttpURLs.AMENDRECORDURL, HttpMethod.POST);
             }
             string StatuteStr = "";
             try
             {
-                StatuteStr = saveRecordReq.HttpRquestStr(elder);  //用上述对象发送请求，并获取新建或修改的状态
-                //***********************************测试代码
-                //StatuteStr = test.STATE;
+                HttpResponse response = request.request(elder);
+                StatuteStr = response.getResult();
             }
             catch (WebException e)
             {
-                //由于网络问题，或者url错误引起的异常，导致登录不成功
-                Console.Write("更新档案  出现异常：\r" + e);
-                MessageBox.Show("由于网络原因\r请求更新档案失败   请重试. . . . . .");
+                Console.Write("Updating Elder Info Faild due to a WebException! Try Again...\n" + e);
+                MessageBox.Show("Updating Elder Info Faild due to a WebException! Try Again...\n");
             }
             catch (Exception e)
             {
-                //由于其他异常，导致保存新建档案失败
-                Console.Write("更新档案  由于其他异常失败：\r" + e);
-                MessageBox.Show("更新档案   其他异常失败\r");
+                Console.Write("Updating Elder Info Faild due to an Other Exception!\n" + e);
+                MessageBox.Show("Updating Elder Info Faild due to an Other Exception!");
             }
             finally
             {
-                //向主线程发送请求结果，并由主线程做出相应的响应
                 MethodCallerNYY mcAddRecord = new MethodCallerNYY(InvokeUpdateRecord);
-                this.BeginInvoke(mcAddRecord, StatuteStr,elder);     //将参数传给主线程，由主线程做响应后的其他操作
+                this.BeginInvoke(mcAddRecord, StatuteStr, elder);
             }
         }
 
-        /// <summary>
-        /// 向服务器提交老人的信息--可能是修改信息，也可能是新建信息
-        /// 参数boolean用于判别提交的是新建档案还是修改档案，true为新建，false为修改
-        /// 参数为true时，返回新建档案的状态，为false时返回修改档案的状态
-        /// </summary>
-        /// <param name="boolean">用于判别提交的是新建档案还是修改档案，true为新建，false为修改</param>
-        /// <returns>返回提交信息的状态--新建状态或者修改状态</returns>
         private void UpdataRecordState(Boolean boolean) 
         {
             ElderInfor elder = (ElderInfor)NewElderRecord(boolean);  //
@@ -355,49 +303,37 @@ namespace LogingWindow
             thdUpdataRecord.IsBackground = true;
             thdUpdataRecord.Start(objSend);
         }
-        /// <summary>
-        /// 向服务器请求删除对应ID老人的信息，并删除本地信息
-        /// </summary>
-        /// <returns></returns>
+
         private void DeleteRecordState(Object objSend)
         {
-            //*****************************有待改善，尚未对接接口，建议用post方式
             string elderID = (string)objSend;
-            if (elderID == "") { return; }         //如果字符为空，则不进行以下操作
+            if (elderID == "") { return; }
             ElderInfor elder = new ElderInfor(elderID);
-            HandDataBase.GetElderRecord(elder);//完善该老人信息
-            HttpProvider deleteReq = new HttpProvider(HttpURLs.DELETRECORDURL, HttpMethod.POST);
+            HandDataBase.GetElderRecord(elder);
+            HttpRequest request = new HttpRequest(HttpURLs.DELETRECORDURL, HttpMethod.POST);
             string stateStr = "";
             try
             {
-                stateStr = deleteReq.HttpRquestStr(elder);     //请求删除并返回删除状态
-                //*******************************测试
-                //stateStr = "DEL_SUCCESS";
+                HttpResponse response = request.request(elder);
+                stateStr = response.getResult();
             }
             catch (WebException e)
             {
-                //由于网络问题，或者url错误引起的异常，导致登录不成功
-                Console.Write("删除档案  出现异常：\r" + e);
-                MessageBox.Show("由于网络原因\r请求删除档案失败   请重试. . . . . .");
+                Console.Write("Delete Failed due to a WebException! Try Again...\n" + e);
+                MessageBox.Show("Delete Failed due to a WebException! Try Again...");
             }
             catch (Exception e)
             {
-                //其他异常导致删除失败
-                Console.Write("删除档案  由于其他异常失败：\r" + e);
-                MessageBox.Show("删除档案    其他异常失败");
+                Console.Write("Delete Failed due to an Other Exception! \n" + e);
+                MessageBox.Show("Delete Failed due to an Other Exception!");
             }
             finally
             {
-                //将删除状态告诉主线程，并由主线程决定之后的行为
                 MethodCallerNYY mcDeleteRecord = new MethodCallerNYY(InvokeDeleteRecord);
                 this.BeginInvoke(mcDeleteRecord, stateStr,elder);
             }    
         }
-        /// <summary>
-        /// 在修改（删除）选项卡中选取人员后，将对应老人的信息填充到对应的框中,true为修改，false为删除,
-        /// 由本窗口的两个cobbox的items点击事件调用
-        /// </summary>
-        /// <param name="isAmendTab">判断调用者是修改按钮还是删除按钮</param>
+
         private void FillRecordBoxes(Boolean isAmendTab)
         {
             if (isAmendTab)

@@ -48,33 +48,32 @@ namespace LogingWindow
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
-            LogingWindown.logingWin.Hide();   //隐藏登录窗口
-            mainForm = this;      //方便其他窗口调用本窗口的部分方法
+            LogingWindown.logingWin.Hide();
+            mainForm = this;
             this.ISMIN = true;
             LayoutControl();
-            InitTheForm();   //根据身份不同，初始化该窗口
-            HandMap.ShowBaseMap(this.mainWebBrowser);   ////调用页面刷新方法，将该窗口的webbroser加载成地图首页
+            InitTheForm();
+            HandMap.ShowBaseMap(this.mainWebBrowser);
             forms=new ArrayList();
         }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            HttpProvider logoutRequest = new HttpProvider(HttpURLs.LOGOUTURL, HttpMethod.GET);
+            HttpRequest request = new HttpRequest(HttpURLs.LOGOUTURL, HttpMethod.GET);
             try
             {
-                logoutRequest.HttpGetResponseStr();         //请求注销用户session
+                request.request();
             }
             catch (WebException exception)
             {
                 Console.WriteLine(exception.Status);
-                //暂时不作处理
             }
             finally 
             {
                 foreach (Form form in forms) {
-                    form.Close();                           //关闭所有由本窗口打开的窗口
+                    form.Close();
                 }
 
-                LogingWindown.logingWin.Show();             //关闭登录窗口
+                LogingWindown.logingWin.Show();
             }
         }
         /***********************************************************************

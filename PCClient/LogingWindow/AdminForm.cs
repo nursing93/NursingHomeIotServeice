@@ -75,62 +75,43 @@ namespace LogingWindow
                 dataGridView1.Rows.Add(dr);                        //向dataGridView1添加新行
             }
         }
-        /// <summary>
-        /// 子线程通知主线程调用的方法,根据服务器返回的添加状况决策
-        /// </summary>
-        /// <param name="creatUserState">服务器返回的结果</param>
+
         private void InvokeAddUser(string creatUserState)
         {
             if (creatUserState == HttpRspState.CREATUSER_SUCCESS)
             {
-                //******************************待优化
-                MessageBox.Show("添加用户成功");
+                MessageBox.Show("Add User Success!");
             }
             else if (creatUserState == HttpRspState.CREATUSER_FAILD)
             {
-                //******************************待优化
-                MessageBox.Show("添加用户失败");
+                MessageBox.Show("Add User Failed!");
             }
             else if (creatUserState == HttpRspState.CREATUSER_SAMENAME)
             {
-                MessageBox.Show("用户名已存在\r请更换用户名后重试");
+                MessageBox.Show("Username already Existed, Try Again with another Username");
             }
             else
             {
-                //******************************待优化
-                MessageBox.Show("请求超时，请重试");
+                MessageBox.Show("Timeout...");
             }
         }
-        /// <summary>
-        /// 子线程通知主线程调用的方法,根据服务器返回的删除状况决策
-        /// </summary>
-        /// <param name="deleteUserState"></param>
+
         private void InvokeDeleteUser(string deleteUserState)
         {
             if (deleteUserState == HttpRspState.DELETEUSER_SUCCESS)
             {
-                //******************************待优化
-                MessageBox.Show("删除用户成功");
+                MessageBox.Show("Delete Success!");
             }
             else if (deleteUserState == HttpRspState.DELETEUSER_FAILD)
             {
-                //******************************待优化
-                MessageBox.Show("删除用户失败");
+                MessageBox.Show("Delete Faild!");
             }
             else
             {
-                //******************************待优化
-                MessageBox.Show("请求超时，请重试");
+                MessageBox.Show("Timout...");
             }
         }
-        /****************************************************
-         * 自定义方法
-         * ************************************************/
-        /// <summary>
-        /// 启动窗口前先初始化该窗口，确定需要打开哪个选项卡,由主窗口调用
-        /// </summary>
-        /// <param name="tabSelect">将要显示的选项卡的名称</param>
-        /// <param name="theUser">本次登录用户</param>
+
         public void InitialForm(string tabSelect,LogUser theUser)
         {
             user = theUser;   //设置用户
@@ -144,79 +125,60 @@ namespace LogingWindow
                 this.nSuperiorBox.Text = user.userName;
             }
         }
-        /// <summary>
-        /// 向服务器请求用户列表，并显示在控件中，该方法只有在“显示用户”选项卡启用时才调用
-        /// </summary>
+
         private void ShowUserNameList()
         {
-            HttpProvider queryAllUserList = new HttpProvider(HttpURLs.QUERYALLUSERURL, HttpMethod.GET);  //get方式向服务器请求所有用户信息
+            HttpRequest request = new HttpRequest(HttpURLs.QUERYALLUSERURL, HttpMethod.GET);
             List<LogUser> userList = new List<LogUser>();
-            //*****************************测试代码段，待删除
-            //userList = LogingWindow.Test.HttpTest.UserListTest.getUserList();
             try
             {
-                userList = (List<LogUser>)queryAllUserList.HttpGetResponseObj(JsonToObjectType.LISTLOGUSEROBJ);
-                //*****************************测试代码段，待删除
-                //userList = LogingWindow.Test.HttpTest.UserListTest.getUserList();
+                HttpResponse response = request.request();
+                userList = response.getResultAsObjList<LogUser>();
             }
             catch (WebException e)
             {
-                //由于网络问题，或者url错误引起的异常，导致登录不成功
-                Console.Write("请求用户列表  出现异常：\r" + e);
-                MessageBox.Show("由于网络原因\r添刷新用户列表失败  请重试. . . . . .");
+                Console.Write("Getting All Users Faild due to a WebException! Try Again...\n" + e);
+                MessageBox.Show("Getting All Users Faild due to a WebException! Try Again...");
             }
             catch (Exception e)
             {
-                //其他异常导致请求失败
-                Console.Write("请求用户列表  其他异常导致失败：\r" + e);
-                MessageBox.Show("请求用户列表   其他异常导致失败");
-                //*****************************测试代码段，待删除
-                userList = LogingWindow.Test.HttpTest.UserListTest.getUserList();
+                Console.Write("Getting All Users Faild due to an Other Exception!\n" + e);
+                MessageBox.Show("Getting All Users Faild due to an Other Exception!");
             }
             finally
             {
-                //向主线程发送服务器的返回结果，并由主线程来决定后续操作
                 MethodCallerNY_UL mcGetUserList = new MethodCallerNY_UL(InvokeGetUserList);
                 this.BeginInvoke(mcGetUserList,userList);
             }
         }
-        /// <summary>
-        /// 多线程启动的方法，向服务器发起请求，只有方法CreatUser可以调用
-        /// </summary>
-        /// <param name="objSend"></param>
+
         private void HttpAddUser(Object objSend)
         {
             LogUser creatUser = (LogUser)objSend;
-            //请求体
-            HttpProvider creatUserReq = new HttpProvider(HttpURLs.ADDUSERURL, HttpMethod.POST);  //向服务器发出请求，新增用户
-            string creatUserState = "";        //获取请求状态的字符串
-            //********************************************异常处理过于粗糙，有待改善
+            HttpRequest request = new HttpRequest(HttpURLs.ADDUSERURL, HttpMethod.POST);
+            string creatUserState = "";
             try
             {
-                creatUserState = creatUserReq.HttpRquestStr(creatUser);     //发送请求
+                HttpResponse response = request.request(creatUser);
+                creatUserState = response.getResult();
             }
             catch (WebException e)
             {
-                //由于网络问题，或者url错误引起的异常，导致登录不成功
-                Console.Write("添加新用户  出现异常：\r" + e);
-                MessageBox.Show("由于网络原因\r添加新用户失败  请重试. . . . . .");
+                Console.Write("Add User Failed due to a WebException! Try Again...\n" + e);
+                MessageBox.Show("Add User Failed due to a WebException! Try Again...");
             }
             catch (Exception exception)
             {
-                //其他异常导致添加失败
-                Console.Write("添加新用户  其他异常导致新建失败：\r" + exception);
-                MessageBox.Show("添加新用户   其他异常导致新建失败：\r");
+                Console.Write("Add User Failed due to an Other Exception!\n" + exception);
+                MessageBox.Show("Add User Failed due to an Other Exception!");
             }
             finally
             {
-                //通知主线程，将服务器返回的状态反馈给主线程，并由主线程决定后续操作
                 MethodCallerNY mcAddUser = new MethodCallerNY(InvokeAddUser);
                 this.BeginInvoke(mcAddUser, creatUserState);
             }
         }
-        /// <summary>
-        /// 请求添加新成员的方法
-        /// </summary>
+
         private void CreatUser()
         {
             LogUser creatUser = new LogUser();
@@ -229,70 +191,56 @@ namespace LogingWindow
             creatUser.idCard = this.nIDCardBox.Text;
             creatUser.realName = this.nRealNameBox.Text;
             creatUser.birthday = OtherTools.DateTimeToString(this.nBirthdayBox.Value);
-            //使用多线程的方式发送新建用户的请求
             ParameterizedThreadStart PTHAddUser = new ParameterizedThreadStart(HttpAddUser);
             Thread thdAddUser = new Thread(PTHAddUser);
             thdAddUser.IsBackground = true;
             thdAddUser.Start(creatUser);
         }
-        /// <summary>
-        /// 多线程启动的方法，向服务器发起请求，只有方法DeleteUser可以调用
-        /// </summary>
-        /// <param name="objSend"></param>
+
         private void HttpDeleteUser(Object objSend)
         {
             LogUser deleteUser = (LogUser)objSend;
-            //请求体
-            HttpProvider deleteUserReq = new HttpProvider(HttpURLs.DELETEUSERURL + deleteUser.userName, HttpMethod.GET);  //向服务器发出请求，新增用户
-            string deleteUserState = "";        //获取请求状态的字符串
+            HttpRequest request = new HttpRequest(HttpURLs.DELETEUSERURL + deleteUser.userName, HttpMethod.GET);
+            string deleteUserState = "";
             try
             {
-                deleteUserState = deleteUserReq.HttpRquestStr(deleteUser);     //发送请求
+                HttpResponse response = request.request(deleteUser);
+                deleteUserState = response.getResult();
             }
             catch (WebException e)
             {
-                //由于网络问题，或者url错误引起的异常，导致登录不成功
-                Console.Write("删除用户  出现异常：\r" + e);
-                MessageBox.Show("由于网络原因\r删除用户失败  请重试. . . . . .");
+                Console.Write("Delete User Faild due to a WebException! Try Again...\n" + e);
+                MessageBox.Show("Delete User Faild due to a WebException! Try Again...");
             }
             catch (Exception exception)
             {
-                //其他异常导致删除失败
-                Console.Write("删除用户  其他异常导致删除失败：\r" + exception);
-                MessageBox.Show("删除用户     其他异常导致删除失败：\r");
+                Console.Write("Delete User Faild due to an Other Exception!" + exception);
+                MessageBox.Show("Delete User Faild due to an Other Exception!");
             }
             finally
             {
-                //通知主线程，将服务器返回的状态反馈给主线程，并由主线程决定后续操作
                 MethodCallerNY mcDeleteUser = new MethodCallerNY(InvokeDeleteUser);
                 this.BeginInvoke(mcDeleteUser, deleteUserState);
             }
         }
-        /// <summary>
-        /// 向服务器请求删除指定用户的方法
-        /// </summary>
+
         private void DeleteUser()
         {
             LogUser deleteUser = new LogUser();
             deleteUser.superior = this.dSuperiorBox.Text;
             deleteUser.userName = this.dUserNameBox.Text;
-            //deleteUser.userPassword = this.dPasswordBox.Text;    //无password的编辑框
             deleteUser.number = this.dUserIDBox.Text;
             deleteUser.sex = this.dSexBox.Text;
             deleteUser.isAdmin = IsAdminBoxToInt(this.dIsAdminBox.Text);
             deleteUser.idCard = this.dIDCardBox.Text;
             deleteUser.realName = this.dRealNameBox.Text;
             deleteUser.birthday = this.dBirthdayBox.Text;
-            //采取多线程的方式调用删除用户的请求
             ParameterizedThreadStart TSDeleteUser = new ParameterizedThreadStart(HttpDeleteUser);
             Thread thdDeleteUser = new Thread(TSDeleteUser);
             thdDeleteUser.IsBackground = true;
             thdDeleteUser.Start(deleteUser);
         }
-        /// <summary>
-        /// 当右键点击dataGridView1时的处理函数
-        /// </summary>
-        /// <param name="e"></param>
+
         private void DataGridRightClick(DataGridViewCellMouseEventArgs e)
         {
             this.Focus();
@@ -307,13 +255,10 @@ namespace LogingWindow
                 usersDetail.idCard = this.dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
                 usersDetail.birthday = this.dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
                 usersDetail.superior = this.dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString();
-                //显示右键菜单
-                contextMenuStrip1.Show(MousePosition.X, MousePosition.Y);     //
+                contextMenuStrip1.Show(MousePosition.X, MousePosition.Y);
             }
         }
-        /// <summary>
-        /// 显示删除用户页面
-        /// </summary>
+
         private void ShowDeleteUsersLayout()
         {
             this.dUserNameBox.Text = usersDetail.userName;
@@ -327,11 +272,7 @@ namespace LogingWindow
             this.AdminTabControl.SelectedTab = userManagePage;
             this.userManageTabControl.SelectedTab = deleteUserTab;
         }
-        /// <summary>
-        /// 根据填写情况将新增用户的管理员权限转换成0,1两种数字，方便发送
-        /// </summary>
-        /// <param name="isAdminStr">新增用户是否管理员，汉字“是”或者“无”</param>
-        /// <returns></returns>
+
         private int IsAdminBoxToInt(string isAdminStr)
         {
             int isUserAdmin = -1;    //判断新建用户是否管理员的辅助变量
@@ -349,9 +290,7 @@ namespace LogingWindow
             }
             return isUserAdmin;
         }
-        /*****************************************
-         * 事件处理代码块
-         * ************************************/
+
         private void userListPage_Enter(object sender, EventArgs e)
         {
             if (this.dataGridView1.Rows.Count != 0)

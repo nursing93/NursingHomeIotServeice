@@ -218,8 +218,15 @@ namespace LogingWindow
 
         private void getUserDetails() {
             HttpRequest request = new HttpRequest(HttpURLs.QUERYUSERDETAILURL + user.userName, HttpMethod.GET);
-            HttpResponse response = request.request();  //TODO 异常处理
-            user = response.getResultAsObj<LogUser>();
+            try
+            {
+                HttpResponse response = request.request();  //TODO 异常处理
+                user = response.getResultAsObj<LogUser>();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Getting User Infomation Failed!");
+            }
             HandDataBase.UserData(user, checkBox.Checked);
         }
 

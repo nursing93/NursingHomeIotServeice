@@ -114,7 +114,6 @@
     <Compile Include="ToolClass\HttpResponse.cs" />
     <Compile Include="ToolClass\JSON.cs" />
     <Compile Include="ToolClass\OtherTools.cs" />
-    <Compile Include="ToolClass\HttpProvider.cs" />
     <Compile Include="ToolClass\WinformConstant.cs" />
     <Compile Include="UserDetailsForm.cs">
       <SubType>Form</SubType>
