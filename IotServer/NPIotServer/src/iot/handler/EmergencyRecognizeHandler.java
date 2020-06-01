@@ -21,7 +21,7 @@ public class EmergencyRecognizeHandler extends ChannelInboundHandlerAdapter impl
         ctx.fireChannelRead(record.getRecord());
     }
 
-    void handleEmergency(RingRecordAdaptor record) {
+    private void handleEmergency(RingRecordAdaptor record) {
         for(EventListener listener : listeners) {
             listener.notify(record);
         }

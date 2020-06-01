@@ -1,17 +1,18 @@
 package iot.emergency;
 
-import iot.observer.Event;
-import iot.observer.EventListener;
 import iot.pojo.RingRecord;
-import iot.pojo.RingRecordAdaptor;
 
-public class KinestateEmergencyListener implements EventListener {
+public class KinestateEmergencyListener extends EmergencyListener  {
 
     @Override
-    public void notify(Event e) {
-        RingRecord record = ((RingRecordAdaptor)e).getRecord();
-        // TODO ×ËÌ¬Òì³£Âß¼­
-        System.out.println("[-- Emergency --] KinestateEmergencyListener:" + record.getKinestat().toString());
+    protected boolean abnormal(RingRecord record) {
+        // TODO implement the Kinestate condition
+        return false;
     }
 
+    @Override
+    protected EmergencyEvent newEmergency(RingRecord record) {
+        return new EmergencyEvent(EmergencyType.KINESTATE, record);
+    }
+    
 }
