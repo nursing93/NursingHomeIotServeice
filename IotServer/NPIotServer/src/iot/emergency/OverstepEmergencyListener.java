@@ -1,15 +1,14 @@
 package iot.emergency;
 
 import iot.pojo.RingRecord;
+import iot.tools.PositionJudge;
 
 public class OverstepEmergencyListener extends EmergencyListener {
 
     @Override
     protected boolean abnormal(RingRecord record) {
-        
-        
-        
-        return false;
+        PositionJudge judge = new PositionJudge(record);
+        return judge.judge();
     }
 
     @Override
