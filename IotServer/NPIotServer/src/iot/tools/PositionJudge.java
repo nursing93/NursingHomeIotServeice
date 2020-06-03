@@ -1,34 +1,28 @@
 package iot.tools;
 
 import iot.pojo.Position;
-import iot.pojo.RingRecord;
 
 public class PositionJudge {
     private Position position;
     private Position[] polygon;
     
-    public PositionJudge(RingRecord record) {
-        position = record.getPosition();
-        polygon = getPolygon(record.getId());
-    }
-    
-    //TODO  µœ÷
-    private Position[] getPolygon(int elderId) {
-        return new Position[3];
+    public PositionJudge(Position position, Position[] polygon) {
+        this.position = position;
+        this.polygon = polygon;
     }
     
     public boolean judge() {
         return isPointInPoly(position, polygon);
     }
     
-  //TODO ”≈ªØ
+    //TODO ÔøΩ≈ªÔøΩ
     private boolean isPointInPoly(Position point, Position[] polygon) {
         int N = polygon.length;
-        boolean boundOrVertex = true; //»Áπ˚µ„Œª”⁄∂‡±ﬂ–Œµƒ∂•µ„ªÚ±ﬂ…œ£¨“≤À„◊ˆµ„‘⁄∂‡±ﬂ–Œƒ⁄£¨÷±Ω”∑µªÿtrue
+        boolean boundOrVertex = true;
         int intersectCount = 0;//cross points count of x 
-        float precision = (float) 2e-10; //∏°µ„¿‡–Õº∆À„ ±∫Ú”Î0±»Ωœ ±∫Úµƒ»›≤Ó
+        float precision = (float) 2e-10;
         Position p1, p2;//neighbour bound vertices
-        Position p = point; //≤‚ ‘µ„
+        Position p = point;
         p1=polygon[0];      //left vertex
         for(int i=1;i<=N;++i) {
             if(p.equals(p1)) {
@@ -72,9 +66,9 @@ public class PositionJudge {
             }            
             p1 = p2;//next ray left point
         }
-        if(intersectCount % 2 == 0){//≈º ˝‘⁄∂‡±ﬂ–ŒÕ‚
+        if(intersectCount % 2 == 0){//≈ºÔøΩÔøΩÔøΩ⁄∂ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
             return false;
-        } else { //∆Ê ˝‘⁄∂‡±ﬂ–Œƒ⁄
+        } else { //ÔøΩÔøΩÔøΩÔøΩÔøΩ⁄∂ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
             return true;
         }       
     }
