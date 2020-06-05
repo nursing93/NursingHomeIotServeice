@@ -15,7 +15,6 @@ public class PersistenceHandler extends ChannelInboundHandlerAdapter {
     }
     
     private void persistence(RingRecord record) {
-        //TODO 持久化手环数据
         System.out.println(record.toString());
     }
     

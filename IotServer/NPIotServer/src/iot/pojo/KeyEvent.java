@@ -12,4 +12,8 @@ public enum KeyEvent {
     public int getValue() {
         return value;
     }
+    
+    public boolean normal() {
+        return this == NON;
+    }
 }

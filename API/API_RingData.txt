@@ -1,0 +1,53 @@
+http://localhost:8080
+/ElderLinkWebServer/ring
+手环数据相关
+1、查询指定老人的最后一条数据（最新位置信息）
+   /*/ring/lastRecord/{elderID}
+   GET
+   参数：{elderID}
+   返回：1、null     //查找失败，或者没有数据
+	     2、RingRecord（json）
+
+2、查询指定老人某时间段内的所有数据
+   /*/ring/listByTime/{elderID}/{startTime}/{endTime}
+   GET
+   参数：{elderID}、{startTime}、{endTime}
+   返回：1、null    //查找失败，或没有数据，返回
+	     2、list<RingRecord> （json）
+
+3、查询所有老人的最后一条数据    //缺
+   /*/ring/listByTime/lastRecords
+   GET
+   参数：无
+   返回：1、null    //查找失败，或没有数据，返回
+	     2、list<RingRecord> （json）
+
+
+
+{
+	"id": 93010001,
+	"battery": 90,
+	"physical": {
+		"heartRate": 75,
+		"bloodPressuer": 120,
+		"temperature": 36
+	},
+	"position": {
+		"lng": 108.33265,
+		"lat": 34.21254
+	},
+	"kinestat": {
+		"acc": {
+			"x": 10,
+			"y": 20,
+			"z": 30
+		},
+		"pal": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		}
+	},
+	"keyEvent":0
+}
+

@@ -1,0 +1,74 @@
+http://localhost:8080
+/ElderLinkWebServer/user
+系统用户API：
+1、登录    //修改url, 修改参数携带方式
+   /*/login
+   POST
+   contentType=application/x-www-form-urlencoded
+   参数：username={username}&password={password}
+   返回：1.NOPERMISSION    //用户名 或 密码为空
+         2.NOPERMISSION    //没有该用户
+	     3.WRONGPASSWORD   //用户存在但密码错误
+	     4.USERPERMIT      //登陆成功、普通用户用
+		 5.ADMINISTRATOR   //登陆成功、管理员
+
+2、根据用户名查询用户信息
+   /*/user/find/{userName}
+   GET
+   参数：{userName}    //username具有唯一性
+   返回：1、LogUser（json）    //查询成功
+ 	     2、null               //查不到username
+
+3、查询所有用户信息
+   /*/user/listAll
+   GET
+   参数：无
+   返回：list<LogUser>  //查询成功。————不能存在列表为空的情况
+
+4、新建用户
+   /*/user/create
+   POST
+   参数：LogUser（json）
+   返回：1、REPEATNAME    //用户名重复
+	     2、ADD_SUCCESS   //新建成功
+	     3、ADD_FAILD     //新建失败
+
+5、修改用户信息
+   /*/user/update
+   POST
+   参数：LogUser（json）  //目前只修改realname和password
+   返回：1、null              //无法查到用户
+	     2、UPDATE_SUCCESS    //修改成功
+	     3、UPDATE_FAILD      //修改失败
+
+6、修改用户密码
+   /*/user/password
+   POST
+   参数：LogUser（json） //目前采用update()方法修改
+   返回：1、UPDATE_FAILD     //无法查到用户
+	     2、UPDATE_FAILD     //修改失败
+	     3、UPDATE_SUCCESS   //修改成功
+
+7、删除用户
+   /*/user/delete/{name}
+   GET
+   参数：{name}     //只有管理员有权限，过滤
+   返回：1、DEL_SUCCESS    //删除成功，
+	     2、DEL_FAILD      //删除失败，
+
+8、注销登录    //缺
+   /*/logout
+   GET
+   参数：无    //需要包含sessionID
+   返回：LOGOUTSECCESS
+
+
+
+{
+  "id": 0,
+  "nid": "string",
+  "password": "string",
+  "phone": "string",
+  "role": {},
+  "userName": "string"
+}
