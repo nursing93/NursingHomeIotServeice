@@ -1,0 +1,61 @@
+http://localhost:8080
+/ElderLinkWebServer/elder
+老人相关
+1、根据id查询老人
+   /*/elder/find/{elderID}
+   GET
+   参数：{elderID}
+   返回：1、Elder（json）
+         2、null    //查不到信息
+
+2、列举所有老人信息
+   /*/elder/listAll
+   GET
+   参数：无
+   返回：1、list<Elder>（json）
+         2、null    //没有任何老人信息
+
+3、返回一个新的老人ID
+   /*/elder/newID
+   GET
+   参数：无
+   返回：1.{newElderId}    //返回当前养老院最后一条elderId + 1。如最后一条记录为93060001，那么返回93060002;
+         2.93060001        //当前养老院下没有老人信息
+
+4、新增老人信息
+   /*/elder/create
+   POST
+   参数：Elder（json）
+   返回：1、ADD_SUCCESS    //添加成功
+	     2、ADD_FAILD      //添加失败
+
+5、修改老人信息
+   /*/elder/update
+   POST
+   参数：Elder（json）
+   返回：1、UPDATE_SUCCESS     //添加成功
+	     2、UPDATE_FAILD       //添加失败
+	     3、null               //未找到对应老人
+
+6、删除老人信息
+   /*/elder/delete
+   POST
+   参数：Elder（json）
+   返回：1、DEL_SUCCESS    //添加成功
+	     2、DEL_FAILD      //添加失败
+	     3、null           //未找到对应老人
+
+
+
+{
+  "address": "string",
+  "area": "string",
+  "birthday": "2020-06-05T15:11:26.339Z",
+  "id": "string",
+  "idCard": "string",
+  "name": "string",
+  "nid": "string",
+  "phone": "string",
+  "sex": "string",
+  "startTime": "string"
+}
