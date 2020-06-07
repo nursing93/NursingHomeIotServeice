@@ -1,0 +1,14 @@
+class LogUser {
+	private String id;    //格式"u + nursHomeId + localId" 如 "u 01 0001"
+	private String password;
+	private Role role;
+	private int nursHomeId;
+	private String realName;
+	private String sex;
+	private String birthday;    //"2020-06-07"  只显示到日期
+	private String phone;
+}
+
+enum Role {
+	...
+}

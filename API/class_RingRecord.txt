@@ -1,0 +1,20 @@
+class RingRecord {
+	private int id;
+	private int battery;
+	private PhysicalData physical;
+	private Position position;
+	private String time;    //"2020-06-07 16:27:20"  显示到秒
+}
+
+class PhysicalData
+{
+	private int heartRate;
+	private int bloodPressuer;
+	private double temperature;
+}
+
+class Position
+{
+	private double lng;
+	private double lat;
+}

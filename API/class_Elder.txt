@@ -1,0 +1,10 @@
+class Elder {
+	private int id;
+	private String name; 
+	private String sex;
+	private String idCard;
+	private String birthday;    //"2020-06-07"  只显示到日期
+	private String phone;
+	private String area;
+	private Relative[] relatives;
+}

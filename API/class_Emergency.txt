@@ -1,0 +1,9 @@
+class EmergencyEvent {
+	private EmergencyType emergencyType;
+	private RingRecord ringRecord;
+	private String time;    //"2020-06-07 16:27:20"  显示到秒
+}
+
+enum EmergencyType {
+	...
+}
