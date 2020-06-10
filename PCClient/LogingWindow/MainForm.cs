@@ -355,11 +355,11 @@ namespace LogingWindow
                 RingData elderRing = new RingData(elderIDs);
                 elder = DataBaseHandler.GetElderRecord(elder);      //异常已经在下级代码中处理，未完善
                 elderRing = DataBaseHandler.GetRingData(elderRing);   //异常已经在下级代码中处理，未完善
-                this.IDLabel.Text = elder.elderID;
-                this.nameLabel.Text = elder.elderName;
+                this.IDLabel.Text = elder.id;
+                this.nameLabel.Text = elder.name;
                 this.yearLabel.Text = Convert.ToString(OtherTools.BirthdayToYear(elder));
                 this.hardRateLabel.Text = Convert.ToString(elderRing.heartRate);
-                this.sexLabel.Text = elder.elderSex;
+                this.sexLabel.Text = elder.sex;
             }
         }
         /**************************************************************************

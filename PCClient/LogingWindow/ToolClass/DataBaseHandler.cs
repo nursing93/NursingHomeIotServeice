@@ -224,24 +224,24 @@ namespace LogingWindow.ToolClass
             {
                 con.Open();
             }
-            SqlCeCommand cmmdID, cmmdName, cmmdBirthday, cmmdSex, cmmdChild, cmmdChildnum, cmmdArea;
-            string jiansuo = elder.elderID;
+            SqlCeCommand cmmdID, cmmdName, cmmdBirthday, cmmdSex, cmmdIdCard, cmmdPhone, cmmdArea;
+            string jiansuo = elder.id;
             cmmdID = new SqlCeCommand("SELECT [ID] from ElderBaseData WHERE [ID] = '" + jiansuo + "' ", con);
             cmmdName = new SqlCeCommand("SELECT [name] from ElderBaseData WHERE [ID] = '" + jiansuo + "' ", con);
             cmmdBirthday = new SqlCeCommand("SELECT [birthday] from ElderBaseData WHERE [ID] = '" + jiansuo + "' ", con);
             cmmdSex = new SqlCeCommand("SELECT [sex] from ElderBaseData WHERE [ID] = '" + jiansuo + "' ", con);
-            cmmdChild = new SqlCeCommand("SELECT [child] from ElderBaseData WHERE [ID] = '" + jiansuo + "' ", con);
-            cmmdChildnum = new SqlCeCommand("SELECT [childnum] from ElderBaseData WHERE [ID] = '" + jiansuo + "' ", con);
+            cmmdIdCard = new SqlCeCommand("SELECT [idCard] from ElderBaseData WHERE [ID] = '" + jiansuo + "' ", con);
+            cmmdPhone = new SqlCeCommand("SELECT [phone] from ElderBaseData WHERE [ID] = '" + jiansuo + "' ", con);
             cmmdArea = new SqlCeCommand("SELECT [area] from ElderBaseData WHERE [ID] = '" + jiansuo + "' ", con);
             try
             {
-                elder.elderID = Convert.ToString(cmmdID.ExecuteScalar());
-                elder.elderName = Convert.ToString(cmmdName.ExecuteScalar());
-                elder.elderBirthday = OtherTools.DateTimeToString(Convert.ToDateTime(cmmdBirthday.ExecuteScalar()));
-                elder.elderSex = Convert.ToString(cmmdSex.ExecuteScalar());
-                elder.elderChild = Convert.ToString(cmmdChild.ExecuteScalar());
-                elder.elderChildNumber = Convert.ToString(cmmdChildnum.ExecuteScalar());
-                elder.elderArea = Convert.ToString(cmmdArea.ExecuteScalar());
+                elder.id = Convert.ToString(cmmdID.ExecuteScalar());
+                elder.name = Convert.ToString(cmmdName.ExecuteScalar());
+                elder.birthday = OtherTools.DateTimeToString(Convert.ToDateTime(cmmdBirthday.ExecuteScalar()));
+                elder.sex = Convert.ToString(cmmdSex.ExecuteScalar());
+                elder.idCard = Convert.ToString(cmmdIdCard.ExecuteScalar());
+                elder.phone = Convert.ToString(cmmdPhone.ExecuteScalar());
+                elder.area = Convert.ToString(cmmdArea.ExecuteScalar());
             }
             catch (InvalidOperationException e)
             {      
@@ -269,14 +269,14 @@ namespace LogingWindow.ToolClass
             }
             SqlCeCommand cmd = new SqlCeCommand("UPDATE ElderBaseData SET [name]=@姓名, [birthday]=@年龄, "
                                                + "[sex]=@性别, [child]=@监护人, [childnum]=@监护人联系方式, [area]=@安全活动范围 "
-                                               + " WHERE  [ID]='" + theMan.elderID + "' ", con);
-            cmd.Parameters.Add("@编号", SqlDbType.NVarChar, 50, "ID").Value = theMan.elderID;
-            cmd.Parameters.Add("@姓名", SqlDbType.NVarChar, 50, "name").Value = theMan.elderName;
-            cmd.Parameters.Add("@性别", SqlDbType.NVarChar, 50, "sex").Value = theMan.elderSex;
-            cmd.Parameters.Add("@年龄", SqlDbType.DateTime, 8, "birthday").Value = Convert.ToDateTime(theMan.elderBirthday);
-            cmd.Parameters.Add("@监护人", SqlDbType.NVarChar, 50, "child").Value = theMan.elderChild;
-            cmd.Parameters.Add("@监护人联系方式", SqlDbType.NVarChar, 50, "childnum").Value = theMan.elderChildNumber;
-            cmd.Parameters.Add("@安全活动范围", SqlDbType.NVarChar, 2000, "area").Value = theMan.elderArea;
+                                               + " WHERE  [ID]='" + theMan.id + "' ", con);
+            cmd.Parameters.Add("@编号", SqlDbType.NVarChar, 50, "ID").Value = theMan.id;
+            cmd.Parameters.Add("@姓名", SqlDbType.NVarChar, 50, "name").Value = theMan.name;
+            cmd.Parameters.Add("@性别", SqlDbType.NVarChar, 50, "sex").Value = theMan.sex;
+            cmd.Parameters.Add("@年龄", SqlDbType.DateTime, 8, "birthday").Value = Convert.ToDateTime(theMan.birthday);
+            cmd.Parameters.Add("@身份证", SqlDbType.NVarChar, 50, "idCard").Value = theMan.idCard;
+            cmd.Parameters.Add("@联系电话", SqlDbType.NVarChar, 50, "phone").Value = theMan.phone;
+            cmd.Parameters.Add("@安全活动范围", SqlDbType.NVarChar, 2000, "area").Value = theMan.area;
             try
             {
                 cmd.ExecuteNonQuery();
@@ -307,14 +307,14 @@ namespace LogingWindow.ToolClass
             }
             SqlCeCommand cmd = new SqlCeCommand("INSERT INTO ElderBaseData VALUES(@编号, @姓名,"
                                                 + "  @年龄, @性别, @监护人, @监护人联系方式, @安全活动范围)", con);
-            cmd.Parameters.Add("@编号", SqlDbType.NVarChar, 50, "ID").Value = theMan.elderID;
-            cmd.Parameters.Add("@姓名", SqlDbType.NVarChar, 50, "name").Value = theMan.elderName;
-            cmd.Parameters.Add("@性别", SqlDbType.NVarChar, 50, "sex").Value = theMan.elderSex;
-            cmd.Parameters.Add("@年龄", SqlDbType.DateTime, 8, "birthday").Value = Convert.ToDateTime(theMan.elderBirthday); ;
-            cmd.Parameters.Add("@监护人", SqlDbType.NVarChar, 50, "child").Value = theMan.elderChild;
-            cmd.Parameters.Add("@监护人联系方式", SqlDbType.NVarChar, 50, "childnum").Value = theMan.elderChildNumber;
-            cmd.Parameters.Add("@安全活动范围", SqlDbType.NVarChar, 2000, "area").Value = theMan.elderArea;
-            string creatRingDataSql = "CREATE TABLE [" + theMan.elderID + "] ( [ID] NVARCHAR(50) NOT NULL,"+
+            cmd.Parameters.Add("@编号", SqlDbType.NVarChar, 50, "ID").Value = theMan.id;
+            cmd.Parameters.Add("@姓名", SqlDbType.NVarChar, 50, "name").Value = theMan.name;
+            cmd.Parameters.Add("@性别", SqlDbType.NVarChar, 50, "sex").Value = theMan.sex;
+            cmd.Parameters.Add("@年龄", SqlDbType.DateTime, 8, "birthday").Value = Convert.ToDateTime(theMan.birthday); ;
+            cmd.Parameters.Add("@身份证", SqlDbType.NVarChar, 50, "idCard").Value = theMan.idCard;
+            cmd.Parameters.Add("@联系电话", SqlDbType.NVarChar, 50, "phone").Value = theMan.phone;
+            cmd.Parameters.Add("@安全活动范围", SqlDbType.NVarChar, 2000, "area").Value = theMan.area;
+            string creatRingDataSql = "CREATE TABLE [" + theMan.id + "] ( [ID] NVARCHAR(50) NOT NULL," +
                                       "[Time] DATETIME  NOT NULL ,[Lng] NVARCHAR(50) NOT NULL,[Lat] NVARCHAR(50) NOT NULL," +
                                       "[HardRate] INT NULL  ) ";
             SqlCeCommand cmmd = new SqlCeCommand(creatRingDataSql,con);
@@ -359,8 +359,8 @@ namespace LogingWindow.ToolClass
             {
                 con.Open();
             }
-            SqlCeCommand cmd = new SqlCeCommand("delete FROM ElderBaseData WHERE [ID]='" + theMan.elderID + "' ", con);
-            SqlCeCommand cmmd = new SqlCeCommand("DROP TABLE "+theMan.elderID+" ",con);
+            SqlCeCommand cmd = new SqlCeCommand("delete FROM ElderBaseData WHERE [ID]='" + theMan.id + "' ", con);
+            SqlCeCommand cmmd = new SqlCeCommand("DROP TABLE " + theMan.id + " ", con);
             try
             {
                 cmd.ExecuteNonQuery();

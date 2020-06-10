@@ -6,6 +6,8 @@ class RingRecord {
 	private String time;    //"2020-06-07 16:27:20"  显示到秒
 }
 
+
+
 class PhysicalData
 {
 	private int heartRate;

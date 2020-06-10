@@ -83,18 +83,18 @@ namespace LogingWindow.Test
             {
                 List<ElderInfor> elderList = new List<ElderInfor>();
                 ElderInfor elder = new ElderInfor();
-                elder.elderID = "KW170001";
-                elder.elderName = "张三";
+                elder.id = "KW170001";
+                elder.name = "张三";
                 for (int i = 0; i < 10;i++ )
                 {
                     ElderInfor elder1 = new ElderInfor();
-                    elder1.elderName = "张三";
-                    elder1.elderID = "KW17000" + Convert.ToString(i);
-                    elder1.elderSex = "男";
-                    elder1.elderBirthday = "1987/6/6 0:00:00";
-                    elder1.elderChild = "张三";
-                    elder1.elderArea = "2520";
-                    elder1.elderChildNumber = "2520";
+                    elder1.name = "张三";
+                    elder1.id = "KW17000" + Convert.ToString(i);
+                    elder1.sex = "男";
+                    elder1.birthday = "1987/6/6 0:00:00";
+                    elder1.idCard = "421545198709232561";
+                    elder1.area = "2520";
+                    elder1.phone = "16945785123";
                     elderList.Add(elder1);
                 }
                 return elderList;

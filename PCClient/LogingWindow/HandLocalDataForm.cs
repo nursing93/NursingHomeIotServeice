@@ -177,21 +177,21 @@ namespace LogingWindow
                     this.BeginInvoke(mcUpdateProgressBar, j);    //TODO 需要同步通信，不可异步通信
                     Console.WriteLine(j);
                 }
-                ElderInfor elder_Select = new ElderInfor(elder.elderID);
-                if (DataBaseHandler.GetElderRecord(elder_Select).elderID == "")
+                ElderInfor elder_Select = new ElderInfor(elder.id);
+                if (DataBaseHandler.GetElderRecord(elder_Select).id == "")
                 {
-                    Console.WriteLine("Has no Elder's Info with id = " + elder.elderID + ", name = " + elder.elderName + ".");
+                    Console.WriteLine("Has no Elder's Info with id = " + elder.id + ", name = " + elder.name + ".");
                     DataBaseHandler.CreatElderRecord(elder);
                 }
                 else if (elder.equals(DataBaseHandler.GetElderRecord(elder_Select)))
                 {
-                    Console.WriteLine("Elder：id = " + elder.elderID + ", name = " + elder.elderName
-                                      + " Info is latest" + ", chileds: " + elder_Select.elderChild);
+                    Console.WriteLine("Elder：id = " + elder.id + ", name = " + elder.name
+                                      + " Info is latest" + ", idCard: " + elder_Select.idCard);
                 }
                 else
                 {
-                    Console.WriteLine("Updating Elder：id = " + elder.elderID + ", name = " + elder.elderName
-                                     + "Info..." + ", childs: " + elder_Select.elderChild);
+                    Console.WriteLine("Updating Elder：id = " + elder.id + ", name = " + elder.name
+                                     + "Info..." + ", idCard: " + elder_Select.idCard);
                     DataBaseHandler.AmendElderRecord(elder);
                 }
             }

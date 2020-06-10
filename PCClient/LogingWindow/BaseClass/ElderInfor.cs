@@ -11,47 +11,60 @@ namespace LogingWindow.BaseClass
     public class ElderInfor
     {
         [DataMember(Order = 0, IsRequired = true)]
-        public string elderID { get; set; }
+        public string id { get; set; }
+
         [DataMember(Order = 1, IsRequired = true)]
-        public string elderName { get; set; }
+        public string name { get; set; }
+
         [DataMember(Order = 2, IsRequired = true)]
-        public string elderBirthday { get; set; }
+        public string sex { get; set; }
+
         [DataMember(Order = 3, IsRequired = true)]
-        public string elderSex { get; set; }
+        public string birthday { get; set; }
+
         [DataMember(Order = 4, IsRequired = true)]
-        public string elderChild { get; set; }
+        public string idCard { get; set; }
+
         [DataMember(Order = 5, IsRequired = true)]
-        public string elderChildNumber { get; set; }
+        public string phone { get; set; }
+
         [DataMember(Order = 6, IsRequired = true)]
-        public string elderArea { get; set; }
+        public string area { get; set; }
+
+        [DataMember(Order = 7, IsRequired = true)]
+        public string nursingDate;    //TODO 持久化、显示
+
+        [DataMember(Order = 8, IsRequired = true)]
+        public Relative[] relatives;    //TODO 持久化、显示
 
         public ElderInfor() { }
 
-        public ElderInfor(string elderID)
+        public ElderInfor(string id)
         {
-            this.elderID = elderID;
+            this.id = id;
         }
 
-        public ElderInfor(string elderID, string elderName, string elderAge, string elderSex, string elderChild, string elderChildNum, string elderArea)
+        public ElderInfor(string id, string name, string birthday, string sex, string idCard, string phone, string area)
         {
-            this.elderID = elderID;
-            this.elderName = elderName;
-            this.elderBirthday = elderAge;
-            this.elderArea = elderArea;
-            this.elderSex = elderSex;
-            this.elderChild = elderChild;
-            this.elderChildNumber = elderChildNum;
+            this.id = id;
+            this.name = name;
+            this.birthday = birthday;
+            this.area = area;
+            this.sex = sex;
+            this.idCard = idCard;
+            this.phone = phone;
         }
 
         public Boolean equals(ElderInfor elder1)
         {
-            bool result = (this.elderID == elder1.elderID) &&
-                   (this.elderName == elder1.elderName) &&
-                   (this.elderSex == elder1.elderSex) &&
-                   (Convert.ToDateTime(this.elderBirthday) == Convert.ToDateTime(elder1.elderBirthday)) &&
-                   (this.elderChild == elder1.elderChild) &&
-                   (this.elderChildNumber == elder1.elderChildNumber) &&
-                   (this.elderArea == elder1.elderArea);
+            bool result = (this.id == elder1.id) &&
+                   (this.name == elder1.name) &&
+                   (this.sex == elder1.sex) &&
+                   (Convert.ToDateTime(this.birthday) == Convert.ToDateTime(elder1.birthday)) &&
+                   (this.idCard == elder1.idCard) &&
+                   (this.phone == elder1.phone) &&
+                   (this.area == elder1.area) &&
+                   (this.nursingDate == elder1.nursingDate);
             return result;
         }
     }

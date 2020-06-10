@@ -19,7 +19,7 @@ namespace LogingWindow.ToolClass
             int year = -1;
             try
             {
-                year = Convert.ToInt32(DateTime.Now.ToString().Substring(0, 4)) - Convert.ToInt32(elder.elderBirthday.Substring(0, 4));
+                year = Convert.ToInt32(DateTime.Now.ToString().Substring(0, 4)) - Convert.ToInt32(elder.birthday.Substring(0, 4));
             }
             catch
             {

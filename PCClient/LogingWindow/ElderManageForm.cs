@@ -222,25 +222,25 @@ namespace LogingWindow
             ElderInfor newElder = new ElderInfor();
             if (boolean==true)
             {       //从新建窗口完善老人信息
-                newElder.elderID = elderIdBox.Text;    //必填
-                newElder.elderName = elderNameBox.Text;   //必填
-                newElder.elderSex = elderSexBox.Text;   //必填
-                newElder.elderBirthday = OtherTools.DateTimeToString(elderBirthBox.Value);   //必填
-                if (elderChildBox.Text == "") { newElder.elderChild = "未填写"; } else { newElder.elderChild = elderChildBox.Text; }  //选填
-                if (elderChildNumBox.Text == "") { newElder.elderChildNumber = "未填写"; }
-                else { newElder.elderChildNumber = elderChildNumBox.Text; } //选填
-                newElder.elderArea = this.AREASTRING;   //必填
+                newElder.id = elderIdBox.Text;    //必填
+                newElder.name = elderNameBox.Text;   //必填
+                newElder.sex = elderSexBox.Text;   //必填
+                newElder.birthday = OtherTools.DateTimeToString(elderBirthBox.Value);   //必填
+                if (idCardBox.Text == "") { newElder.idCard = "未填写"; } else { newElder.idCard = idCardBox.Text; }  //选填
+                if (phoneBox.Text == "") { newElder.phone = "null"; }
+                else { newElder.phone = phoneBox.Text; } //选填
+                newElder.area = this.AREASTRING;   //必填
             }
             else
             {      //从修改窗口完善老人信息
-                newElder.elderID = celderIdBox.Text;    //必填
-                newElder.elderName = celderNameBox.Text;   //必填
-                newElder.elderSex = celderSexBox.Text;   //必填
-                newElder.elderBirthday = OtherTools.DateTimeToString(celderBirthBox.Value);   //必填
-                if (celderChildBox.Text == "") { newElder.elderChild = null; } else { newElder.elderChild = celderChildBox.Text; }  //选填
-                if (celderChildNumBox.Text == "") { newElder.elderChildNumber = null; }
-                else { newElder.elderChildNumber = celderChildNumBox.Text; } //选填
-                newElder.elderArea = this.AREASTRING;   //必填
+                newElder.id = celderIdBox.Text;    //必填
+                newElder.name = celderNameBox.Text;   //必填
+                newElder.sex = celderSexBox.Text;   //必填
+                newElder.birthday = OtherTools.DateTimeToString(celderBirthBox.Value);   //必填
+                if (cidCardBox.Text == "") { newElder.idCard = null; } else { newElder.idCard = cidCardBox.Text; }  //选填
+                if (celderPhone.Text == "") { newElder.phone = null; }
+                else { newElder.phone = celderPhone.Text; } //选填
+                newElder.area = this.AREASTRING;   //必填
             }
 
             //返回该老人对象给调用者
@@ -289,11 +289,11 @@ namespace LogingWindow
             ElderInfor elder = (ElderInfor)NewElderRecord(boolean);  //
             //确保该老人对象信息可靠后方可进行提交操作*********************************有待改善
             int elderYear =OtherTools.BirthdayToYear(elder);       //设置老人年龄的判别字符
-            if (elder.elderSex == "" || elder.elderName == ""||elderYear>150||elderYear<0)    
+            if (elder.sex == "" || elder.name == "" || elderYear > 150 || elderYear < 0)    
             {
-                //*********************************有待改善
-                return;
+                //TODO 有待改善
                 MessageBox.Show( "保存失败\n请确认输入信息\n人员姓名和性别不可为空,出生年月需合理");
+                return;
             }
             //多线程的方式向服务器发起请求
             Object[] objArry = { boolean, elder };
@@ -341,33 +341,30 @@ namespace LogingWindow
                 ElderInfor elder = new ElderInfor(this.scRecordIdBox.Text);    //传入一个老人的ID以新建老人对象
                 DataBaseHandler.GetElderRecord(elder);      //完善该老人的所有信息
                 {//将修改人员窗口的人员信息赋值
-                    this.celderIdBox.Text = elder.elderID;
-                    this.celderNameBox.Text = elder.elderName;
-                    this.celderSexBox.Text = elder.elderSex;
-                    this.celderBirthBox.Value = Convert.ToDateTime(elder.elderBirthday);    //将老人的出生年月赋值给出生年月框
-                    this.celderChildBox.Text = elder.elderChild;
-                    this.celderChildNumBox.Text = elder.elderChildNumber;
-                    this.AREASTRING = elder.elderArea;
+                    this.celderIdBox.Text = elder.id;
+                    this.celderNameBox.Text = elder.name;
+                    this.celderSexBox.Text = elder.sex;
+                    this.celderBirthBox.Value = Convert.ToDateTime(elder.birthday);    //将老人的出生年月赋值给出生年月框
+                    this.cidCardBox.Text = elder.idCard;
+                    this.celderPhone.Text = elder.phone;
+                    this.AREASTRING = elder.area;
                 }
             }
             else 
             {
-                ElderInfor elder = new ElderInfor(this.sdRecordIdBox.Text);    //传入一个老人的ID以新建老人对象
-                DataBaseHandler.GetElderRecord(elder);      //完善该老人的所有信息
-                {//将删除人员窗口的人员信息赋值
-                    this.delderIdBox.Text = elder.elderID;
-                    this.delderNameBox.Text = elder.elderName;
-                    this.delderSexBox.Text = elder.elderSex;
-                    this.delderBirthdayBox.Text = elder.elderBirthday ;
-                    this.delderChildBox.Text = elder.elderChild;
-                    this.delderChildNumberBox.Text = elder.elderChildNumber;
+                ElderInfor elder = new ElderInfor(this.sdRecordIdBox.Text);
+                DataBaseHandler.GetElderRecord(elder);
+                {
+                    this.delderIdBox.Text = elder.id;
+                    this.delderNameBox.Text = elder.name;
+                    this.delderSexBox.Text = elder.sex;
+                    this.delderBirthdayBox.Text = elder.birthday;
+                    this.didCardBox.Text = elder.idCard;
+                    this.delderPhone.Text = elder.phone;
                 }
             }
         }
 
-        /**********************************************
-         * 事件处理代码段
-         * **********************************************/
         private void addRcordBtn_Click(object sender, EventArgs e)
         {
             //异常已经在下一级代码中处理，尚不完善
@@ -381,7 +378,7 @@ namespace LogingWindow
         private void saveRecordBtn_Click(object sender, EventArgs e)
         {
             if(elderIdBox.Text==""){ //id输入框为空时不可提交内容
-                //***************************有待改善，当点击添加按钮时，其他控件才可用
+                //TODO 有待改善，当点击添加按钮时，其他控件才可用
                 MessageBox.Show("请点击“添加”按钮\r以获取ID");
                 return;
             }

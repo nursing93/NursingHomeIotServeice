@@ -79,6 +79,7 @@
     <Compile Include="BaseClass\LogUser.cs" />
     <Compile Include="BaseClass\PhysicalData.cs" />
     <Compile Include="BaseClass\Position.cs" />
+    <Compile Include="BaseClass\Relative.cs" />
     <Compile Include="BaseClass\RingRecord.cs" />
     <Compile Include="ElderManageForm.cs">
       <SubType>Form</SubType>

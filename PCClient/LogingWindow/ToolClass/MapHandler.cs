@@ -43,8 +43,8 @@ namespace LogingWindow.ToolClass
             Object[] objArray = new Object[4];
             objArray[0] = elderRing.lng;
             objArray[1] = elderRing.lat;
-            objArray[2] = elder.elderArea;
-            objArray[3] = elder.elderName;
+            objArray[2] = elder.area;
+            objArray[3] = elder.name;
             webBrowser.Document.InvokeScript("markMap", objArray);
         }
     }

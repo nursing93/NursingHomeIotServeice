@@ -42,8 +42,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.elderNameBox = new System.Windows.Forms.TextBox();
-            this.elderChildBox = new System.Windows.Forms.TextBox();
-            this.elderChildNumBox = new System.Windows.Forms.TextBox();
+            this.idCardBox = new System.Windows.Forms.TextBox();
+            this.phoneBox = new System.Windows.Forms.TextBox();
             this.elderIdBox = new System.Windows.Forms.TextBox();
             this.amendRecord = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -59,7 +59,7 @@
             this.celderSexBox = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
             this.celderIdBox = new System.Windows.Forms.TextBox();
-            this.celderChildNumBox = new System.Windows.Forms.TextBox();
+            this.celderPhone = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.scRecordNameBox = new System.Windows.Forms.ComboBox();
@@ -67,7 +67,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.celderNameBox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.celderChildBox = new System.Windows.Forms.TextBox();
+            this.cidCardBox = new System.Windows.Forms.TextBox();
             this.deleteRecord = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.label21 = new System.Windows.Forms.Label();
@@ -75,8 +75,8 @@
             this.delderNameBox = new System.Windows.Forms.TextBox();
             this.delderSexBox = new System.Windows.Forms.TextBox();
             this.delderBirthdayBox = new System.Windows.Forms.TextBox();
-            this.delderChildBox = new System.Windows.Forms.TextBox();
-            this.delderChildNumberBox = new System.Windows.Forms.TextBox();
+            this.didCardBox = new System.Windows.Forms.TextBox();
+            this.delderPhone = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
@@ -131,8 +131,8 @@
             this.newRecord.Controls.Add(this.label6);
             this.newRecord.Controls.Add(this.label1);
             this.newRecord.Controls.Add(this.elderNameBox);
-            this.newRecord.Controls.Add(this.elderChildBox);
-            this.newRecord.Controls.Add(this.elderChildNumBox);
+            this.newRecord.Controls.Add(this.idCardBox);
+            this.newRecord.Controls.Add(this.phoneBox);
             this.newRecord.Controls.Add(this.elderIdBox);
             this.newRecord.Location = new System.Drawing.Point(4, 22);
             this.newRecord.Name = "newRecord";
@@ -201,11 +201,11 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("微软雅黑", 9.75F);
             this.label5.ForeColor = System.Drawing.Color.Gray;
-            this.label5.Location = new System.Drawing.Point(353, 184);
+            this.label5.Location = new System.Drawing.Point(380, 184);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(113, 19);
+            this.label5.Size = new System.Drawing.Size(74, 19);
             this.label5.TabIndex = 17;
-            this.label5.Text = "监护人联系方式：";
+            this.label5.Text = "联系方式：";
             // 
             // label4
             // 
@@ -238,7 +238,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(61, 19);
             this.label2.TabIndex = 14;
-            this.label2.Text = "监护人：";
+            this.label2.Text = "身份证：";
             // 
             // label6
             // 
@@ -270,19 +270,19 @@
             this.elderNameBox.TabIndex = 5;
             this.elderNameBox.Text = "张三";
             // 
-            // elderChildBox
+            // idCardBox
             // 
-            this.elderChildBox.Location = new System.Drawing.Point(118, 182);
-            this.elderChildBox.Name = "elderChildBox";
-            this.elderChildBox.Size = new System.Drawing.Size(100, 21);
-            this.elderChildBox.TabIndex = 2;
+            this.idCardBox.Location = new System.Drawing.Point(118, 182);
+            this.idCardBox.Name = "idCardBox";
+            this.idCardBox.Size = new System.Drawing.Size(100, 21);
+            this.idCardBox.TabIndex = 2;
             // 
-            // elderChildNumBox
+            // phoneBox
             // 
-            this.elderChildNumBox.Location = new System.Drawing.Point(472, 182);
-            this.elderChildNumBox.Name = "elderChildNumBox";
-            this.elderChildNumBox.Size = new System.Drawing.Size(100, 21);
-            this.elderChildNumBox.TabIndex = 1;
+            this.phoneBox.Location = new System.Drawing.Point(472, 182);
+            this.phoneBox.Name = "phoneBox";
+            this.phoneBox.Size = new System.Drawing.Size(100, 21);
+            this.phoneBox.TabIndex = 1;
             // 
             // elderIdBox
             // 
@@ -331,7 +331,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.celderSexBox);
             this.splitContainer2.Panel2.Controls.Add(this.label13);
             this.splitContainer2.Panel2.Controls.Add(this.celderIdBox);
-            this.splitContainer2.Panel2.Controls.Add(this.celderChildNumBox);
+            this.splitContainer2.Panel2.Controls.Add(this.celderPhone);
             this.splitContainer2.Panel2.Controls.Add(this.label7);
             this.splitContainer2.Panel2.Controls.Add(this.label14);
             this.splitContainer2.Panel2.Controls.Add(this.scRecordNameBox);
@@ -339,7 +339,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.label11);
             this.splitContainer2.Panel2.Controls.Add(this.celderNameBox);
             this.splitContainer2.Panel2.Controls.Add(this.label12);
-            this.splitContainer2.Panel2.Controls.Add(this.celderChildBox);
+            this.splitContainer2.Panel2.Controls.Add(this.cidCardBox);
             this.splitContainer2.Size = new System.Drawing.Size(685, 355);
             this.splitContainer2.SplitterDistance = 61;
             this.splitContainer2.SplitterWidth = 1;
@@ -484,14 +484,14 @@
             this.celderIdBox.Size = new System.Drawing.Size(154, 23);
             this.celderIdBox.TabIndex = 0;
             // 
-            // celderChildNumBox
+            // celderPhone
             // 
-            this.celderChildNumBox.BackColor = System.Drawing.Color.White;
-            this.celderChildNumBox.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.celderChildNumBox.Location = new System.Drawing.Point(395, 186);
-            this.celderChildNumBox.Name = "celderChildNumBox";
-            this.celderChildNumBox.Size = new System.Drawing.Size(146, 23);
-            this.celderChildNumBox.TabIndex = 5;
+            this.celderPhone.BackColor = System.Drawing.Color.White;
+            this.celderPhone.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.celderPhone.Location = new System.Drawing.Point(395, 186);
+            this.celderPhone.Name = "celderPhone";
+            this.celderPhone.Size = new System.Drawing.Size(146, 23);
+            this.celderPhone.TabIndex = 5;
             // 
             // label7
             // 
@@ -565,20 +565,20 @@
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("微软雅黑", 9.75F);
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label12.Location = new System.Drawing.Point(50, 186);
+            this.label12.Location = new System.Drawing.Point(37, 186);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(61, 19);
             this.label12.TabIndex = 10;
-            this.label12.Text = "监护人：";
+            this.label12.Text = "身份证：";
             // 
-            // celderChildBox
+            // cidCardBox
             // 
-            this.celderChildBox.BackColor = System.Drawing.Color.White;
-            this.celderChildBox.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.celderChildBox.Location = new System.Drawing.Point(117, 186);
-            this.celderChildBox.Name = "celderChildBox";
-            this.celderChildBox.Size = new System.Drawing.Size(141, 23);
-            this.celderChildBox.TabIndex = 4;
+            this.cidCardBox.BackColor = System.Drawing.Color.White;
+            this.cidCardBox.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.cidCardBox.Location = new System.Drawing.Point(104, 186);
+            this.cidCardBox.Name = "cidCardBox";
+            this.cidCardBox.Size = new System.Drawing.Size(154, 23);
+            this.cidCardBox.TabIndex = 4;
             // 
             // deleteRecord
             // 
@@ -609,8 +609,8 @@
             this.splitContainer3.Panel2.Controls.Add(this.delderNameBox);
             this.splitContainer3.Panel2.Controls.Add(this.delderSexBox);
             this.splitContainer3.Panel2.Controls.Add(this.delderBirthdayBox);
-            this.splitContainer3.Panel2.Controls.Add(this.delderChildBox);
-            this.splitContainer3.Panel2.Controls.Add(this.delderChildNumberBox);
+            this.splitContainer3.Panel2.Controls.Add(this.didCardBox);
+            this.splitContainer3.Panel2.Controls.Add(this.delderPhone);
             this.splitContainer3.Panel2.Controls.Add(this.label27);
             this.splitContainer3.Panel2.Controls.Add(this.label26);
             this.splitContainer3.Panel2.Controls.Add(this.label25);
@@ -683,27 +683,27 @@
             this.delderBirthdayBox.Size = new System.Drawing.Size(103, 23);
             this.delderBirthdayBox.TabIndex = 31;
             // 
-            // delderChildBox
+            // didCardBox
             // 
-            this.delderChildBox.BackColor = System.Drawing.Color.White;
-            this.delderChildBox.Enabled = false;
-            this.delderChildBox.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.delderChildBox.Location = new System.Drawing.Point(555, 174);
-            this.delderChildBox.Name = "delderChildBox";
-            this.delderChildBox.ReadOnly = true;
-            this.delderChildBox.Size = new System.Drawing.Size(103, 23);
-            this.delderChildBox.TabIndex = 30;
+            this.didCardBox.BackColor = System.Drawing.Color.White;
+            this.didCardBox.Enabled = false;
+            this.didCardBox.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.didCardBox.Location = new System.Drawing.Point(555, 174);
+            this.didCardBox.Name = "didCardBox";
+            this.didCardBox.ReadOnly = true;
+            this.didCardBox.Size = new System.Drawing.Size(103, 23);
+            this.didCardBox.TabIndex = 30;
             // 
-            // delderChildNumberBox
+            // delderPhone
             // 
-            this.delderChildNumberBox.BackColor = System.Drawing.Color.White;
-            this.delderChildNumberBox.Enabled = false;
-            this.delderChildNumberBox.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.delderChildNumberBox.Location = new System.Drawing.Point(555, 218);
-            this.delderChildNumberBox.Name = "delderChildNumberBox";
-            this.delderChildNumberBox.ReadOnly = true;
-            this.delderChildNumberBox.Size = new System.Drawing.Size(103, 23);
-            this.delderChildNumberBox.TabIndex = 29;
+            this.delderPhone.BackColor = System.Drawing.Color.White;
+            this.delderPhone.Enabled = false;
+            this.delderPhone.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.delderPhone.Location = new System.Drawing.Point(555, 218);
+            this.delderPhone.Name = "delderPhone";
+            this.delderPhone.ReadOnly = true;
+            this.delderPhone.Size = new System.Drawing.Size(103, 23);
+            this.delderPhone.TabIndex = 29;
             // 
             // label27
             // 
@@ -743,11 +743,11 @@
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("微软雅黑", 9.75F);
             this.label24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label24.Location = new System.Drawing.Point(406, 222);
+            this.label24.Location = new System.Drawing.Point(445, 222);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(113, 19);
+            this.label24.Size = new System.Drawing.Size(74, 19);
             this.label24.TabIndex = 24;
-            this.label24.Text = "监护人联系方式：";
+            this.label24.Text = "联系方式：";
             // 
             // label23
             // 
@@ -758,7 +758,7 @@
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(61, 19);
             this.label23.TabIndex = 23;
-            this.label23.Text = "监护人：";
+            this.label23.Text = "身份证：";
             // 
             // label19
             // 
@@ -887,8 +887,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox elderNameBox;
-        private System.Windows.Forms.TextBox elderChildBox;
-        private System.Windows.Forms.TextBox elderChildNumBox;
+        private System.Windows.Forms.TextBox idCardBox;
+        private System.Windows.Forms.TextBox phoneBox;
         private System.Windows.Forms.TextBox elderIdBox;
         private System.Windows.Forms.TabPage amendRecord;
         private System.Windows.Forms.TabPage deleteRecord;
@@ -905,7 +905,7 @@
         private System.Windows.Forms.ComboBox celderSexBox;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox celderIdBox;
-        private System.Windows.Forms.TextBox celderChildNumBox;
+        private System.Windows.Forms.TextBox celderPhone;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox scRecordNameBox;
@@ -913,7 +913,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox celderNameBox;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox celderChildBox;
+        private System.Windows.Forms.TextBox cidCardBox;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Button deleteRecordBtn;
@@ -926,8 +926,8 @@
         private System.Windows.Forms.TextBox delderNameBox;
         private System.Windows.Forms.TextBox delderSexBox;
         private System.Windows.Forms.TextBox delderBirthdayBox;
-        private System.Windows.Forms.TextBox delderChildBox;
-        private System.Windows.Forms.TextBox delderChildNumberBox;
+        private System.Windows.Forms.TextBox didCardBox;
+        private System.Windows.Forms.TextBox delderPhone;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label25;

@@ -225,7 +225,7 @@ namespace LogingWindow
             }
             catch (Exception e)
             {
-                Console.WriteLine("Getting User Infomation Failed!");
+                Console.WriteLine("Getting User Infomation Failed!" + e.Message.ToString());
             }
             DataBaseHandler.UserData(user, checkBox.Checked);
         }
