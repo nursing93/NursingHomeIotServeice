@@ -48,7 +48,6 @@ namespace LogingWindow
         }
         private void AdminForm_Load(object sender, EventArgs e)
         {
-            this.nSuperiorBox.Text = this.user.userName;
         }
         /**************************************************
          * 多线程通信处理块
@@ -64,14 +63,13 @@ namespace LogingWindow
             {
                 DataGridViewRow dr = new DataGridViewRow();        //新建dataGridView1行对象
                 dr.CreateCells(dataGridView1);
-                dr.Cells[0].Value = user.userName;
-                dr.Cells[1].Value = user.isAdmin;
-                dr.Cells[2].Value = user.number;
+                dr.Cells[0].Value = user.id;
+                dr.Cells[1].Value = user.role;
+                dr.Cells[2].Value = user.nursHomeId;
                 dr.Cells[3].Value = user.realName;
                 dr.Cells[4].Value = user.sex;
-                dr.Cells[5].Value = user.idCard;
+                dr.Cells[5].Value = user.phone;
                 dr.Cells[6].Value = user.birthday;
-                dr.Cells[7].Value = user.superior;
                 dataGridView1.Rows.Add(dr);                        //向dataGridView1添加新行
             }
         }
@@ -122,7 +120,6 @@ namespace LogingWindow
             else if (tabSelect == WinformName.ADFORMUSERMANAGETAB)
             {
                 this.AdminTabControl.SelectedTab = userManagePage;
-                this.nSuperiorBox.Text = user.userName;
             }
         }
 
@@ -182,13 +179,12 @@ namespace LogingWindow
         private void CreatUser()
         {
             LogUser creatUser = new LogUser();
-            creatUser.superior = this.nSuperiorBox.Text;
-            creatUser.userName = this.nUserNameBox.Text;
-            creatUser.userPassword = this.nPasswordBox.Text;
-            creatUser.number = this.nUserIDBox.Text;
+            creatUser.id = this.nUserIdBox.Text;
+            creatUser.password = this.nPasswordBox.Text;
+            creatUser.nursHomeId = this.nNursingHomeIdBox.Text;
             creatUser.sex = this.nSexBox.Text;
-            creatUser.isAdmin = IsAdminBoxToInt(this.nIsAdminBox.Text);
-            creatUser.idCard = this.nIDCardBox.Text;
+            creatUser.role = IsAdminBoxToInt(this.nIsAdminBox.Text);
+            creatUser.phone = this.nUserPhoneBox.Text;
             creatUser.realName = this.nRealNameBox.Text;
             creatUser.birthday = OtherTools.DateTimeToString(this.nBirthdayBox.Value);
             ParameterizedThreadStart PTHAddUser = new ParameterizedThreadStart(HttpAddUser);
@@ -200,7 +196,7 @@ namespace LogingWindow
         private void HttpDeleteUser(Object objSend)
         {
             LogUser deleteUser = (LogUser)objSend;
-            HttpRequest request = new HttpRequest(HttpURLs.DELETEUSERURL + deleteUser.userName, HttpMethod.GET);
+            HttpRequest request = new HttpRequest(HttpURLs.DELETEUSERURL + deleteUser.id, HttpMethod.GET);
             string deleteUserState = "";
             try
             {
@@ -227,12 +223,11 @@ namespace LogingWindow
         private void DeleteUser()
         {
             LogUser deleteUser = new LogUser();
-            deleteUser.superior = this.dSuperiorBox.Text;
-            deleteUser.userName = this.dUserNameBox.Text;
-            deleteUser.number = this.dUserIDBox.Text;
+            deleteUser.id = this.dUserNameBox.Text;
+            deleteUser.nursHomeId = this.dUserIDBox.Text;
             deleteUser.sex = this.dSexBox.Text;
-            deleteUser.isAdmin = IsAdminBoxToInt(this.dIsAdminBox.Text);
-            deleteUser.idCard = this.dIDCardBox.Text;
+            deleteUser.role = IsAdminBoxToInt(this.dIsAdminBox.Text);
+            deleteUser.phone = this.dIDCardBox.Text;
             deleteUser.realName = this.dRealNameBox.Text;
             deleteUser.birthday = this.dBirthdayBox.Text;
             ParameterizedThreadStart TSDeleteUser = new ParameterizedThreadStart(HttpDeleteUser);
@@ -247,46 +242,40 @@ namespace LogingWindow
             if (e.Button == MouseButtons.Right )
             {
                 usersDetail = new LogUser();
-                usersDetail.userName = this.dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
-                usersDetail.isAdmin = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[1].Value);
-                usersDetail.number = this.dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+                usersDetail.id = this.dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+                usersDetail.role = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[1].Value);
+                usersDetail.nursHomeId = this.dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
                 usersDetail.realName = this.dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
                 usersDetail.sex = this.dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
-                usersDetail.idCard = this.dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
+                usersDetail.phone = this.dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
                 usersDetail.birthday = this.dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
-                usersDetail.superior = this.dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString();
                 contextMenuStrip1.Show(MousePosition.X, MousePosition.Y);
             }
         }
 
         private void ShowDeleteUsersLayout()
         {
-            this.dUserNameBox.Text = usersDetail.userName;
-            this.dIsAdminBox.Text = usersDetail.isAdmin.ToString();
+            this.dUserNameBox.Text = usersDetail.id;
+            this.dIsAdminBox.Text = usersDetail.role.ToString();
             this.dSexBox.Text = usersDetail.sex;
-            this.dIDCardBox.Text = usersDetail.idCard;
+            this.dIDCardBox.Text = usersDetail.phone;
             this.dBirthdayBox.Text = usersDetail.birthday;
-            this.dSuperiorBox.Text = usersDetail.superior;
             this.dRealNameBox.Text = usersDetail.realName;
-            this.dUserIDBox.Text = usersDetail.number;
+            this.dUserIDBox.Text = usersDetail.nursHomeId;
             this.AdminTabControl.SelectedTab = userManagePage;
             this.userManageTabControl.SelectedTab = deleteUserTab;
         }
 
         private int IsAdminBoxToInt(string isAdminStr)
         {
-            int isUserAdmin = -1;    //判断新建用户是否管理员的辅助变量
+            int isUserAdmin = -1;
             if (isAdminStr == "是")
             {
-                isUserAdmin = 1;     //是管理员
+                isUserAdmin = 1;
             }
             else if (isAdminStr == "无")
             {
-                isUserAdmin = 0;    //不是管理员
-            }
-            else
-            {
-                isUserAdmin = -1;
+                isUserAdmin = 0;
             }
             return isUserAdmin;
         }
@@ -336,7 +325,7 @@ namespace LogingWindow
                     }
                 }
             }
-            if (dIsAdminBox.Text == "是" && user.userName != dSuperiorBox.Text)   //如果所操作的用户不是当前用户添加的，则不允许删除
+            if (dIsAdminBox.Text == "是" && user.id != dSuperiorBox.Text)   //如果所操作的用户不是当前用户添加的，则不允许删除
             {
                 MessageBox.Show("对不起，您无权删除该管理员！");
                 return;
@@ -378,19 +367,19 @@ namespace LogingWindow
         }
         private void nUserNameBox_TextChanged(object sender, EventArgs e)    //保证用户名输入框只能输入字母和数字以及特殊字符
         {
-            foreach (char chars in this.nUserNameBox.Text)
+            foreach (char chars in this.nUserIdBox.Text)
             {
                 if (chars>=0x4e00&&chars<=0x9fa5||chars==' ')
                 {
                     //MessageBox.Show("有汉字");
-                    this.nUserNameBox.Text = "";
-                    this.nUserNameBox.AppendText(userNameStr);
+                    this.nUserIdBox.Text = "";
+                    this.nUserIdBox.AppendText(userNameStr);
                     return;
                 }
             }
-            if (this.nUserNameBox.Text!="")
+            if (this.nUserIdBox.Text!="")
             {
-                userNameStr = this.nUserNameBox.Text;
+                userNameStr = this.nUserIdBox.Text;
             }
         }
 

@@ -70,7 +70,7 @@ namespace LogingWindow
         {
             if (state == HttpRspState.AMENDPASSWORD_SUCCESS)
             {
-                user.userPassword = this.pNewPasswordBox.Text;
+                user.password = this.pNewPasswordBox.Text;
                 MessageBox.Show("Change Password Success!");
                 this.pNewPasswordBox.Text = "";
                 this.pConfirmPasswordBox.Text="";
@@ -100,12 +100,12 @@ namespace LogingWindow
         /// </summary>
         private void FillUserDetailsToForm()
         {
-            this.userNameBox.Text = user.userName;
+            this.userNameBox.Text = user.id;
             this.userRealNameBox.Text = user.realName;
-            this.userIDBox.Text = user.number;
+            this.userIDBox.Text = user.nursHomeId;
             this.userBirthdayBox.Text = user.birthday;
             this.userSexBox.Text = user.sex;
-            this.userIDcardBox.Text = user.idCard;
+            this.userIDcardBox.Text = user.phone;
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace LogingWindow
         {
             string newPassw = (string)objSend;
             LogUser puser = user.copy();
-            puser.userPassword = newPassw;
+            puser.password = newPassw;
             string state = "";
             HttpRequest request = new HttpRequest(HttpURLs.AMENDPASSWORDURL, HttpMethod.POST);
             try
@@ -171,7 +171,7 @@ namespace LogingWindow
                 MessageBox.Show("请输入原密码后重试");
                 return;
             }
-            else if(this.pOldPasswordBox.Text!=user.userPassword)
+            else if (this.pOldPasswordBox.Text != user.password)
             {
                 //***********************************有待优化
                 MessageBox.Show("原密码有误，请重新输入后重试");
@@ -230,43 +230,38 @@ namespace LogingWindow
         {
             if (this.userNameBox.Text == "" || this.userRealNameBox.Text == "" || this.userIDBox.Text==""||this.userIDcardBox.Text=="")
             {
-                //***************************************************有待改善，不完整
+                //TODO 有待改善，不完整
                 MessageBox.Show("信息不完整，请补充完整后重试");
                 return;
             }
             LogUser amendUser = new LogUser();
-            amendUser.userName = this.userNameBox.Text;
+            amendUser.id = this.userNameBox.Text;
             amendUser.realName = this.userRealNameBox.Text;
-            amendUser.number = this.userIDBox.Text;
+            amendUser.nursHomeId = this.userIDBox.Text;
             amendUser.birthday = this.userBirthdayBox.Text;
             amendUser.sex = this.userSexBox.Text;
-            amendUser.idCard = this.userIDcardBox.Text;
-            amendUser.superior = this.user.superior;
-            amendUser.userPassword = this.user.userPassword;
-            amendUser.isAdmin = this.user.isAdmin;
+            amendUser.phone = this.userIDcardBox.Text;
+            amendUser.password = this.user.password;
+            amendUser.role = this.user.role;
             ParameterizedThreadStart PTSAmendDetails = new ParameterizedThreadStart(HttpAmendDetails);
             Thread thdAmendDetails = new Thread(PTSAmendDetails);
             thdAmendDetails.IsBackground = true;
             thdAmendDetails.Start(amendUser);
         }
 
-
-        /*****************************************************
-         * 事件处理代码块
-         * **************************************************/
         private void okAmendBtn_Click(object sender, EventArgs e)
         {
-            AmendPassword();    //向服务器请求修改密码
+            AmendPassword();
         }
 
         private void amendPassword_Enter(object sender, EventArgs e)
         {
-            this.pUserNameBox.Text = this.user.userName;   //将用户名输入框的值设为用户名
+            this.pUserNameBox.Text = this.user.id;
         }
 
         private void amendDetailsBtn_Click(object sender, EventArgs e)
         {
-            ControlInfo(true);      //设置相关控件
+            ControlInfo(true);
         }
 
         private void saveDetailsBtn_Click(object sender, EventArgs e)

@@ -93,6 +93,10 @@
     <Compile Include="HandLocalDataForm.Designer.cs">
       <DependentUpon>HandLocalDataForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LocalDataBaseDataSet.cs">
+      <DependentUpon>LocalDataBaseDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="LocalDataBaseDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

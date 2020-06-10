@@ -1352,7 +1352,7 @@ namespace LogingWindow {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class UserListDataTable : global::System.Data.TypedTableBase<UserListRow> {
             
-            private global::System.Data.DataColumn columnname;
+            private global::System.Data.DataColumn columnID;
             
             private global::System.Data.DataColumn columnpassword;
             
@@ -1393,9 +1393,9 @@ namespace LogingWindow {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn nameColumn {
+            public global::System.Data.DataColumn IDColumn {
                 get {
-                    return this.columnname;
+                    return this.columnID;
                 }
             }
             
@@ -1452,10 +1452,10 @@ namespace LogingWindow {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public UserListRow AddUserListRow(string name, string password, int isSavePassword) {
+            public UserListRow AddUserListRow(string ID, string password, int isSavePassword) {
                 UserListRow rowUserListRow = ((UserListRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        name,
+                        ID,
                         password,
                         isSavePassword};
                 rowUserListRow.ItemArray = columnValuesArray;
@@ -1465,9 +1465,9 @@ namespace LogingWindow {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public UserListRow FindByname(string name) {
+            public UserListRow FindByID(string ID) {
                 return ((UserListRow)(this.Rows.Find(new object[] {
-                            name})));
+                            ID})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1487,7 +1487,7 @@ namespace LogingWindow {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnname = base.Columns["name"];
+                this.columnID = base.Columns["ID"];
                 this.columnpassword = base.Columns["password"];
                 this.columnisSavePassword = base.Columns["isSavePassword"];
             }
@@ -1495,17 +1495,17 @@ namespace LogingWindow {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnname = new global::System.Data.DataColumn("name", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnname);
+                this.columnID = new global::System.Data.DataColumn("ID", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnID);
                 this.columnpassword = new global::System.Data.DataColumn("password", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnpassword);
                 this.columnisSavePassword = new global::System.Data.DataColumn("isSavePassword", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnisSavePassword);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnname}, true));
-                this.columnname.AllowDBNull = false;
-                this.columnname.Unique = true;
-                this.columnname.MaxLength = 50;
+                                this.columnID}, true));
+                this.columnID.AllowDBNull = false;
+                this.columnID.Unique = true;
+                this.columnID.MaxLength = 50;
                 this.columnpassword.MaxLength = 50;
                 this.columnisSavePassword.AllowDBNull = false;
             }
@@ -2018,12 +2018,12 @@ namespace LogingWindow {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string name {
+            public string ID {
                 get {
-                    return ((string)(this[this.tableUserList.nameColumn]));
+                    return ((string)(this[this.tableUserList.IDColumn]));
                 }
                 set {
-                    this[this.tableUserList.nameColumn] = value;
+                    this[this.tableUserList.IDColumn] = value;
                 }
             }
             
@@ -3241,7 +3241,7 @@ namespace LogingWindow.LocalDataBaseDataSetTableAdapters {
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "UserList";
-            tableMapping.ColumnMappings.Add("name", "name");
+            tableMapping.ColumnMappings.Add("name", "ID");
             tableMapping.ColumnMappings.Add("password", "password");
             tableMapping.ColumnMappings.Add("isSavePassword", "isSavePassword");
             this._adapter.TableMappings.Add(tableMapping);
@@ -3438,14 +3438,6 @@ namespace LogingWindow.LocalDataBaseDataSetTableAdapters {
                     this.Adapter.UpdateCommand.Connection.Close();
                 }
             }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string password, int isSavePassword, string Original_name) {
-            return this.Update(Original_name, password, isSavePassword, Original_name);
         }
     }
     

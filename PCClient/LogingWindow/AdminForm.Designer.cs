@@ -32,37 +32,27 @@
             this.AdminTabControl = new System.Windows.Forms.TabControl();
             this.userListPage = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.userName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.isAdmin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.number = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.realName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idCard = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.birthday = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.superior = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userManagePage = new System.Windows.Forms.TabPage();
             this.userManageTabControl = new System.Windows.Forms.TabControl();
             this.creatUserTab = new System.Windows.Forms.TabPage();
             this.nSexBox = new System.Windows.Forms.ComboBox();
             this.nIsAdminBox = new System.Windows.Forms.ComboBox();
             this.nBirthdayBox = new System.Windows.Forms.DateTimePicker();
-            this.nUserIDBox = new System.Windows.Forms.TextBox();
+            this.nNursingHomeIdBox = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.nCancleSaveBtn = new System.Windows.Forms.Button();
             this.nSaveUserBtn = new System.Windows.Forms.Button();
-            this.nIDCardBox = new System.Windows.Forms.TextBox();
+            this.nUserPhoneBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.nRealNameBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.nUserNameBox = new System.Windows.Forms.TextBox();
+            this.nUserIdBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.nPasswordBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.nSuperiorBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.deleteUserTab = new System.Windows.Forms.TabPage();
             this.dUserIDBox = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -84,6 +74,13 @@
             this.label12 = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteUser_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.userName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.isAdmin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.number = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.realName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idCard = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.birthday = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AdminTabControl.SuspendLayout();
             this.userListPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -130,8 +127,7 @@
             this.realName,
             this.sex,
             this.idCard,
-            this.birthday,
-            this.superior});
+            this.birthday});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
             this.dataGridView1.Name = "dataGridView1";
@@ -140,68 +136,6 @@
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellMouseEnter);
             this.dataGridView1.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
-            // 
-            // userName
-            // 
-            this.userName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.userName.HeaderText = "用户名";
-            this.userName.Name = "userName";
-            this.userName.ReadOnly = true;
-            this.userName.Width = 66;
-            // 
-            // isAdmin
-            // 
-            this.isAdmin.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.isAdmin.HeaderText = "管理员权限";
-            this.isAdmin.Name = "isAdmin";
-            this.isAdmin.ReadOnly = true;
-            this.isAdmin.Width = 90;
-            // 
-            // number
-            // 
-            this.number.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.number.HeaderText = "工号";
-            this.number.Name = "number";
-            this.number.ReadOnly = true;
-            this.number.Width = 54;
-            // 
-            // realName
-            // 
-            this.realName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.realName.HeaderText = "姓名";
-            this.realName.Name = "realName";
-            this.realName.ReadOnly = true;
-            this.realName.Width = 54;
-            // 
-            // sex
-            // 
-            this.sex.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.sex.HeaderText = "性别";
-            this.sex.Name = "sex";
-            this.sex.ReadOnly = true;
-            this.sex.Width = 54;
-            // 
-            // idCard
-            // 
-            this.idCard.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.idCard.HeaderText = "身份证号";
-            this.idCard.Name = "idCard";
-            this.idCard.ReadOnly = true;
-            this.idCard.Width = 78;
-            // 
-            // birthday
-            // 
-            this.birthday.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.birthday.HeaderText = "生日";
-            this.birthday.Name = "birthday";
-            this.birthday.ReadOnly = true;
-            this.birthday.Width = 54;
-            // 
-            // superior
-            // 
-            this.superior.HeaderText = "添加者";
-            this.superior.Name = "superior";
-            this.superior.ReadOnly = true;
             // 
             // userManagePage
             // 
@@ -234,23 +168,21 @@
             this.creatUserTab.Controls.Add(this.nSexBox);
             this.creatUserTab.Controls.Add(this.nIsAdminBox);
             this.creatUserTab.Controls.Add(this.nBirthdayBox);
-            this.creatUserTab.Controls.Add(this.nUserIDBox);
+            this.creatUserTab.Controls.Add(this.nNursingHomeIdBox);
             this.creatUserTab.Controls.Add(this.label17);
             this.creatUserTab.Controls.Add(this.nCancleSaveBtn);
             this.creatUserTab.Controls.Add(this.nSaveUserBtn);
-            this.creatUserTab.Controls.Add(this.nIDCardBox);
+            this.creatUserTab.Controls.Add(this.nUserPhoneBox);
             this.creatUserTab.Controls.Add(this.label8);
             this.creatUserTab.Controls.Add(this.label7);
             this.creatUserTab.Controls.Add(this.label6);
             this.creatUserTab.Controls.Add(this.nRealNameBox);
             this.creatUserTab.Controls.Add(this.label5);
             this.creatUserTab.Controls.Add(this.label4);
-            this.creatUserTab.Controls.Add(this.nUserNameBox);
+            this.creatUserTab.Controls.Add(this.nUserIdBox);
             this.creatUserTab.Controls.Add(this.label3);
             this.creatUserTab.Controls.Add(this.nPasswordBox);
             this.creatUserTab.Controls.Add(this.label2);
-            this.creatUserTab.Controls.Add(this.nSuperiorBox);
-            this.creatUserTab.Controls.Add(this.label1);
             this.creatUserTab.Location = new System.Drawing.Point(26, 4);
             this.creatUserTab.Name = "creatUserTab";
             this.creatUserTab.Padding = new System.Windows.Forms.Padding(3);
@@ -265,7 +197,7 @@
             this.nSexBox.Items.AddRange(new object[] {
             "男",
             "女"});
-            this.nSexBox.Location = new System.Drawing.Point(100, 192);
+            this.nSexBox.Location = new System.Drawing.Point(100, 139);
             this.nSexBox.Name = "nSexBox";
             this.nSexBox.Size = new System.Drawing.Size(100, 25);
             this.nSexBox.TabIndex = 37;
@@ -285,27 +217,27 @@
             // 
             // nBirthdayBox
             // 
-            this.nBirthdayBox.Location = new System.Drawing.Point(100, 238);
+            this.nBirthdayBox.Location = new System.Drawing.Point(100, 189);
             this.nBirthdayBox.Name = "nBirthdayBox";
             this.nBirthdayBox.Size = new System.Drawing.Size(138, 23);
             this.nBirthdayBox.TabIndex = 35;
             // 
-            // nUserIDBox
+            // nNursingHomeIdBox
             // 
-            this.nUserIDBox.Location = new System.Drawing.Point(388, 136);
-            this.nUserIDBox.Name = "nUserIDBox";
-            this.nUserIDBox.Size = new System.Drawing.Size(100, 23);
-            this.nUserIDBox.TabIndex = 34;
+            this.nNursingHomeIdBox.Location = new System.Drawing.Point(388, 136);
+            this.nNursingHomeIdBox.Name = "nNursingHomeIdBox";
+            this.nNursingHomeIdBox.Size = new System.Drawing.Size(100, 23);
+            this.nNursingHomeIdBox.TabIndex = 34;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(331, 136);
+            this.label17.Location = new System.Drawing.Point(289, 136);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(51, 20);
+            this.label17.Size = new System.Drawing.Size(79, 20);
             this.label17.TabIndex = 33;
-            this.label17.Text = "工号：";
+            this.label17.Text = "机构编号：";
             // 
             // nCancleSaveBtn
             // 
@@ -327,29 +259,29 @@
             this.nSaveUserBtn.UseVisualStyleBackColor = true;
             this.nSaveUserBtn.Click += new System.EventHandler(this.nSaveUserBtn_Click);
             // 
-            // nIDCardBox
+            // nUserPhoneBox
             // 
-            this.nIDCardBox.Location = new System.Drawing.Point(388, 186);
-            this.nIDCardBox.Name = "nIDCardBox";
-            this.nIDCardBox.Size = new System.Drawing.Size(145, 23);
-            this.nIDCardBox.TabIndex = 15;
-            this.nIDCardBox.Text = "302415198605171523";
+            this.nUserPhoneBox.Location = new System.Drawing.Point(388, 186);
+            this.nUserPhoneBox.Name = "nUserPhoneBox";
+            this.nUserPhoneBox.Size = new System.Drawing.Size(100, 23);
+            this.nUserPhoneBox.TabIndex = 15;
+            this.nUserPhoneBox.Text = "13245678912";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(303, 189);
+            this.label8.Location = new System.Drawing.Point(289, 189);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(79, 20);
             this.label8.TabIndex = 14;
-            this.label8.Text = "身份证号：";
+            this.label8.Text = "联系方式：";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(43, 238);
+            this.label7.Location = new System.Drawing.Point(43, 186);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(51, 20);
             this.label7.TabIndex = 12;
@@ -359,7 +291,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(43, 192);
+            this.label6.Location = new System.Drawing.Point(43, 139);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(51, 20);
             this.label6.TabIndex = 10;
@@ -367,7 +299,7 @@
             // 
             // nRealNameBox
             // 
-            this.nRealNameBox.Location = new System.Drawing.Point(100, 136);
+            this.nRealNameBox.Location = new System.Drawing.Point(100, 91);
             this.nRealNameBox.Name = "nRealNameBox";
             this.nRealNameBox.Size = new System.Drawing.Size(100, 23);
             this.nRealNameBox.TabIndex = 9;
@@ -376,7 +308,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(43, 139);
+            this.label5.Location = new System.Drawing.Point(43, 91);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 20);
             this.label5.TabIndex = 8;
@@ -392,27 +324,27 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "管理员权限：";
             // 
-            // nUserNameBox
+            // nUserIdBox
             // 
-            this.nUserNameBox.Location = new System.Drawing.Point(388, 36);
-            this.nUserNameBox.Name = "nUserNameBox";
-            this.nUserNameBox.Size = new System.Drawing.Size(100, 23);
-            this.nUserNameBox.TabIndex = 5;
-            this.nUserNameBox.TextChanged += new System.EventHandler(this.nUserNameBox_TextChanged);
+            this.nUserIdBox.Location = new System.Drawing.Point(100, 39);
+            this.nUserIdBox.Name = "nUserIdBox";
+            this.nUserIdBox.Size = new System.Drawing.Size(100, 23);
+            this.nUserIdBox.TabIndex = 5;
+            this.nUserIdBox.TextChanged += new System.EventHandler(this.nUserNameBox_TextChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(317, 39);
+            this.label3.Location = new System.Drawing.Point(43, 39);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 20);
+            this.label3.Size = new System.Drawing.Size(51, 20);
             this.label3.TabIndex = 4;
-            this.label3.Text = "用户名：";
+            this.label3.Text = "工号：";
             // 
             // nPasswordBox
             // 
-            this.nPasswordBox.Location = new System.Drawing.Point(100, 86);
+            this.nPasswordBox.Location = new System.Drawing.Point(388, 36);
             this.nPasswordBox.Name = "nPasswordBox";
             this.nPasswordBox.Size = new System.Drawing.Size(100, 23);
             this.nPasswordBox.TabIndex = 3;
@@ -421,29 +353,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(15, 89);
+            this.label2.Location = new System.Drawing.Point(289, 42);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 20);
             this.label2.TabIndex = 2;
             this.label2.Text = "初始密码：";
-            // 
-            // nSuperiorBox
-            // 
-            this.nSuperiorBox.Location = new System.Drawing.Point(100, 36);
-            this.nSuperiorBox.Name = "nSuperiorBox";
-            this.nSuperiorBox.ReadOnly = true;
-            this.nSuperiorBox.Size = new System.Drawing.Size(100, 23);
-            this.nSuperiorBox.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(29, 39);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "创建者：";
             // 
             // deleteUserTab
             // 
@@ -651,6 +565,62 @@
             this.deleteUser_ToolStripMenuItem.Text = "删除";
             this.deleteUser_ToolStripMenuItem.Click += new System.EventHandler(this.deleteUser_ToolStripMenuItem_Click);
             // 
+            // userName
+            // 
+            this.userName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.userName.HeaderText = "用户名";
+            this.userName.Name = "userName";
+            this.userName.ReadOnly = true;
+            this.userName.Width = 66;
+            // 
+            // isAdmin
+            // 
+            this.isAdmin.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.isAdmin.HeaderText = "管理员权限";
+            this.isAdmin.Name = "isAdmin";
+            this.isAdmin.ReadOnly = true;
+            this.isAdmin.Width = 90;
+            // 
+            // number
+            // 
+            this.number.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.number.HeaderText = "机构编号";
+            this.number.Name = "number";
+            this.number.ReadOnly = true;
+            this.number.Width = 78;
+            // 
+            // realName
+            // 
+            this.realName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.realName.HeaderText = "姓名";
+            this.realName.Name = "realName";
+            this.realName.ReadOnly = true;
+            this.realName.Width = 54;
+            // 
+            // sex
+            // 
+            this.sex.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.sex.HeaderText = "性别";
+            this.sex.Name = "sex";
+            this.sex.ReadOnly = true;
+            this.sex.Width = 54;
+            // 
+            // idCard
+            // 
+            this.idCard.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.idCard.HeaderText = "联系方式";
+            this.idCard.Name = "idCard";
+            this.idCard.ReadOnly = true;
+            this.idCard.Width = 78;
+            // 
+            // birthday
+            // 
+            this.birthday.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.birthday.HeaderText = "生日";
+            this.birthday.Name = "birthday";
+            this.birthday.ReadOnly = true;
+            this.birthday.Width = 54;
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -680,29 +650,19 @@
         private System.Windows.Forms.TabPage userListPage;
         private System.Windows.Forms.TabPage userManagePage;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn userName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn isAdmin;
-        private System.Windows.Forms.DataGridViewTextBoxColumn number;
-        private System.Windows.Forms.DataGridViewTextBoxColumn realName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sex;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idCard;
-        private System.Windows.Forms.DataGridViewTextBoxColumn birthday;
-        private System.Windows.Forms.DataGridViewTextBoxColumn superior;
         private System.Windows.Forms.TabControl userManageTabControl;
         private System.Windows.Forms.TabPage creatUserTab;
-        private System.Windows.Forms.TextBox nIDCardBox;
+        private System.Windows.Forms.TextBox nUserPhoneBox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox nRealNameBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox nUserNameBox;
+        private System.Windows.Forms.TextBox nUserIdBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox nPasswordBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox nSuperiorBox;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabPage deleteUserTab;
         private System.Windows.Forms.TextBox dIDCardBox;
         private System.Windows.Forms.TextBox dSexBox;
@@ -722,7 +682,7 @@
         private System.Windows.Forms.Button nSaveUserBtn;
         private System.Windows.Forms.Button dCancleDeleteBtn;
         private System.Windows.Forms.Button deleteUserBtn;
-        private System.Windows.Forms.TextBox nUserIDBox;
+        private System.Windows.Forms.TextBox nNursingHomeIdBox;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox dUserIDBox;
         private System.Windows.Forms.Label label11;
@@ -731,5 +691,12 @@
         private System.Windows.Forms.ComboBox nSexBox;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem deleteUser_ToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn userName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn isAdmin;
+        private System.Windows.Forms.DataGridViewTextBoxColumn number;
+        private System.Windows.Forms.DataGridViewTextBoxColumn realName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sex;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idCard;
+        private System.Windows.Forms.DataGridViewTextBoxColumn birthday;
     }
 }

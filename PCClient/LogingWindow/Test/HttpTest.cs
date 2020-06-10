@@ -50,30 +50,28 @@ namespace LogingWindow.Test
                 LogUser user = new LogUser();
 
                 user.realName="张三";
-                user.isAdmin=1;
-                user.number="ww";
-                user.userName="name";
+                user.role = 1;
+                user.nursHomeId = "ww";
+                user.id = "name";
                 user.birthday="1987-10-2";
-                user.superior="superior";
                 user.sex="女";
-                user.idCard = "502412198702134125";
+                user.phone = "502412198702134125";
 
                 for (int i = 0; i < 15; i++)
                 {
                     if(i<=10)
                     {
-                        user.userName += "k";
-                        user.number += "2";
+                        user.id += "k";
+                        user.nursHomeId += "2";
                     }
                     LogUser user1 = new LogUser();
                     user1.realName = user.realName;
-                    user1.userName = user.userName;
-                    user1.isAdmin = user.isAdmin;
-                    user1.number = user.number;
+                    user1.id = user.id;
+                    user1.role = user.role;
+                    user1.nursHomeId = user.nursHomeId;
                     user1.birthday = user.birthday;
-                    user1.superior = user.superior;
                     user1.sex = user.sex;
-                    user1.idCard = user.idCard;
+                    user1.phone = user.phone;
                     userList.Add(user1);
                 }
                 return userList;

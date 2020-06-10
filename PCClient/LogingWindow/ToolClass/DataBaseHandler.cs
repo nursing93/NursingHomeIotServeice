@@ -97,34 +97,34 @@ namespace LogingWindow.ToolClass
                 con.Open();
                 Monitor.Enter(dataBase); 
             }
-            SqlCeCommand cmd = new SqlCeCommand("SELECT [name] FROM  UserList  WHERE [name] = @name", con);
-            cmd.Parameters.Add("@name", SqlDbType.NVarChar, 50, "name").Value = user.userName;
+            SqlCeCommand cmd = new SqlCeCommand("SELECT [ID] FROM  UserList  WHERE [ID] = @ID", con);
+            cmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50, "ID").Value = user.id;
             SqlCeCommand cmmd = null;
             if (Convert.ToString(cmd.ExecuteScalar()) == "")
             {
                 if (isSavePassword)
                 {
-                    //@name--用户名, @password--密码,'1'--是否保存密码的判断位
-                    cmmd = new SqlCeCommand("INSERT INTO UserList  VALUES ( @name, @password,'1' )", con);
+                    //@id--用户名, @password--密码,'1'--是否保存密码的判断位
+                    cmmd = new SqlCeCommand("INSERT INTO UserList  VALUES ( @ID, @password,'1' )", con);
                 }
                 else
                 {
-                    cmmd = new SqlCeCommand("INSERT INTO UserList  VALUES ( @name,null ,'0')", con);
+                    cmmd = new SqlCeCommand("INSERT INTO UserList  VALUES ( @ID, null ,'0')", con);
                 }
             }
             else
             {
                 if (isSavePassword)
                 {
-                    cmmd = new SqlCeCommand("UPDATE UserList SET [name]= @name, [password]=@password ,[isSavePassword]='1'  WHERE [name]=@name", con);
+                    cmmd = new SqlCeCommand("UPDATE UserList SET [ID]= @ID, [password]=@password ,[isSavePassword]='1'  WHERE [ID]=@ID", con);
                 }
                 else
                 {
-                    cmmd = new SqlCeCommand("UPDATE UserList SET [name]= @name, [password]=null , [isSavePassword]='0' WHERE [name]=@name", con);
+                    cmmd = new SqlCeCommand("UPDATE UserList SET [ID]= @ID, [password]=null , [isSavePassword]='0' WHERE [ID]=@ID", con);
                 }
             }
-            cmmd.Parameters.Add("@name", SqlDbType.NVarChar, 50, "name").Value = user.userName;
-            cmmd.Parameters.Add("@password", SqlDbType.NVarChar, 50, "password").Value = user.userPassword;
+            cmmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50, "ID").Value = user.id;
+            cmmd.Parameters.Add("@password", SqlDbType.NVarChar, 50, "password").Value = user.password;
             try
             {
                 cmmd.ExecuteNonQuery();
@@ -152,15 +152,15 @@ namespace LogingWindow.ToolClass
             if (con.State != ConnectionState.Open)
             {
                 con.Open();
-            } 
-            SqlCeCommand cmd = new SqlCeCommand("SELECT [name] FROM UserList ",con);
+            }
+            SqlCeCommand cmd = new SqlCeCommand("SELECT [ID] FROM UserList ", con);
             try
             {
                 SqlCeDataReader dr = cmd.ExecuteReader();
                 comboBox.Items.Clear();
                 while (dr.Read())
                 {
-                    comboBox.Items.Add(dr["name"]);
+                    comboBox.Items.Add(dr["ID"]);
                 }
             }
             catch (InvalidOperationException e)
@@ -183,21 +183,21 @@ namespace LogingWindow.ToolClass
         public static LogUser GetUserObj(LogUser user)
         {
             Monitor.Enter(dataBase);
-            string jiansuo = user.userName;
+            string jiansuo = user.id;
             if (con.State != ConnectionState.Open)
             {
                 con.Open();
             }
-            SqlCeCommand cmdName = new SqlCeCommand("SELECT [name] FROM UserList WHERE [name] = @name ", con);
-            SqlCeCommand cmdPassword = new SqlCeCommand("SELECT [password] FROM UserList WHERE [name] = @name ", con);
-            SqlCeCommand cmdIsSavePassword = new SqlCeCommand("SELECT [isSavePassword] FROM UserList WHERE [name] = @name ", con);
-            cmdName.Parameters.Add("@name", SqlDbType.NVarChar, 50, "name").Value = user.userName;
-            cmdPassword.Parameters.Add("@name", SqlDbType.NVarChar, 50, "@name").Value = user.userName;
-            cmdIsSavePassword.Parameters.Add("@name", SqlDbType.NVarChar, 50, "@name").Value = user.userName;
+            SqlCeCommand cmdName = new SqlCeCommand("SELECT [ID] FROM UserList WHERE [ID] = @ID ", con);
+            SqlCeCommand cmdPassword = new SqlCeCommand("SELECT [password] FROM UserList WHERE [ID] = @ID ", con);
+            SqlCeCommand cmdIsSavePassword = new SqlCeCommand("SELECT [isSavePassword] FROM UserList WHERE [ID] = @ID ", con);
+            cmdName.Parameters.Add("@ID", SqlDbType.NVarChar, 50, "ID").Value = user.id;
+            cmdPassword.Parameters.Add("@ID", SqlDbType.NVarChar, 50, "@ID").Value = user.id;
+            cmdIsSavePassword.Parameters.Add("@ID", SqlDbType.NVarChar, 50, "@ID").Value = user.id;
             try
             {
-                user.userName = Convert.ToString(cmdName.ExecuteScalar());
-                user.userPassword = Convert.ToString(cmdPassword.ExecuteScalar());
+                user.id = Convert.ToString(cmdName.ExecuteScalar());
+                user.password = Convert.ToString(cmdPassword.ExecuteScalar());
                 user.isSavePassword = Convert.ToInt16(cmdIsSavePassword.ExecuteScalar());
             }
             catch (InvalidOperationException e)

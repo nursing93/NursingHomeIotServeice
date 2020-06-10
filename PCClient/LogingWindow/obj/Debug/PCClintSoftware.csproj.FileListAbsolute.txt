@@ -33,7 +33,6 @@ F:\project\NursingPartner\code\IotServerOnly\NursingPartner\PCClient\LogingWindo
 F:\project\NursingPartner\code\IotServerOnly\NursingPartner\PCClient\LogingWindow\obj\Debug\LogingWindow.pdb
 F:\project\NursingPartner\code\IotServerOnly\NursingPartner\PCClient\LogingWindow\bin\Debug\LogingWindow.exe
 F:\project\NursingPartner\code\IotServerOnly\NursingPartner\PCClient\LogingWindow\bin\Debug\LogingWindow.pdb
-F:\project\NursingPartner\code\IotServerOnly\NursingPartner\PCClient\LogingWindow\obj\Debug\PCClintSoftware.csprojResolveAssemblyReference.cache
 F:\project\NursingPartner\code\IotServerOnly\NursingPartner\PCClient\LogingWindow\obj\Debug\LogingWindow.AdminForm.resources
 F:\project\NursingPartner\code\IotServerOnly\NursingPartner\PCClient\LogingWindow\obj\Debug\LogingWindow.AreaSetWindow.resources
 F:\project\NursingPartner\code\IotServerOnly\NursingPartner\PCClient\LogingWindow\obj\Debug\LogingWindow.ElderManageForm.resources

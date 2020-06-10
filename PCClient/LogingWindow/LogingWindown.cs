@@ -159,7 +159,7 @@ namespace LogingWindow
             }
             HttpRequest logRequest = new HttpRequest(HttpURLs.LOGINGURL);
             logRequest.setContentType("application/x-www-form-urlencoded");
-            string loginReqMsg = "username=" + user.userName + "&password=" + user.userPassword;
+            string loginReqMsg = "username=" + user.id + "&password=" + user.password;
             try
             {   //TODO 优化异常处理逻辑
                 HttpResponse response = logRequest.request(loginReqMsg);
@@ -217,7 +217,7 @@ namespace LogingWindow
         }
 
         private void getUserDetails() {
-            HttpRequest request = new HttpRequest(HttpURLs.QUERYUSERDETAILURL + user.userName, HttpMethod.GET);
+            HttpRequest request = new HttpRequest(HttpURLs.QUERYUSERDETAILURL + user.id, HttpMethod.GET);
             try
             {
                 HttpResponse response = request.request();  //TODO 异常处理
@@ -250,9 +250,9 @@ namespace LogingWindow
         private void SetPasswordToBox()
         {
             LogUser user = new LogUser();
-            user.userName = userNameBox.Text;
+            user.id = userNameBox.Text;
             user = DataBaseHandler.GetUserObj(user);
-            this.userPassWordBox.Text = user.userPassword;
+            this.userPassWordBox.Text = user.password;
             if (user.isSavePassword == 1)
             {
                 this.checkBox.Checked = true;
