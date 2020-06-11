@@ -42,3 +42,4 @@ F:\project\NursingPartner\code\IotServerOnly\NursingPartner\PCClient\LogingWindo
 F:\project\NursingPartner\code\IotServerOnly\NursingPartner\PCClient\LogingWindow\obj\Debug\LogingWindow.Properties.Resources.resources
 F:\project\NursingPartner\code\IotServerOnly\NursingPartner\PCClient\LogingWindow\obj\Debug\LogingWindow.UserDetailsForm.resources
 F:\project\NursingPartner\code\IotServerOnly\NursingPartner\PCClient\LogingWindow\obj\Debug\PCClintSoftware.csproj.GenerateResource.Cache
+F:\project\NursingPartner\code\IotServerOnly\NursingPartner\PCClient\LogingWindow\obj\Debug\PCClintSoftware.csprojResolveAssemblyReference.cache

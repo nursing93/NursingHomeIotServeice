@@ -81,6 +81,8 @@
     <Compile Include="BaseClass\Position.cs" />
     <Compile Include="BaseClass\Relative.cs" />
     <Compile Include="BaseClass\RingRecord.cs" />
+    <Compile Include="Data\DataSource.cs" />
+    <Compile Include="Data\ElderDao.cs" />
     <Compile Include="ElderManageForm.cs">
       <SubType>Form</SubType>
     </Compile>
