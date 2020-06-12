@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogingWindow.Test;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace LogingWindow
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LogingWindown());
+
+            //DatabaseTest.test();
         }
     }
 }

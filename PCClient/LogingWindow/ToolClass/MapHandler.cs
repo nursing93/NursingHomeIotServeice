@@ -38,7 +38,7 @@ namespace LogingWindow.ToolClass
             return theAreaString;            
         }
 
-        public static void ShowElderPoint(WebBrowser webBrowser,ElderInfor elder,RingData elderRing)
+        public static void ShowElderPoint(WebBrowser webBrowser,ElderInfo elder,RingData elderRing)
         {
             Object[] objArray = new Object[4];
             objArray[0] = elderRing.lng;

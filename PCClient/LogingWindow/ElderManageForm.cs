@@ -48,7 +48,7 @@ namespace LogingWindow
         /// </summary>
         /// <param name="str">启动多线程所需要的参数,状态字符</param>
         /// <param name="elder">启动多线程所需要的参数，老人对象</param>
-        private delegate void MethodCallerNYY(string str,ElderInfor elder);
+        private delegate void MethodCallerNYY(string str,ElderInfo elder);
         public ElderManageForm()
         {
             InitializeComponent();
@@ -66,7 +66,7 @@ namespace LogingWindow
             this.elderIdBox.Text = strElderID;
         }
 
-        private void InvokeUpdateRecord(string StatuteStr, ElderInfor elder)
+        private void InvokeUpdateRecord(string StatuteStr, ElderInfo elder)
         {
             if (StatuteStr == HttpRspState.ADDELDER_SUCCESS)
             {
@@ -92,7 +92,7 @@ namespace LogingWindow
             }
         }
 
-        private void InvokeDeleteRecord(string stateStr,ElderInfor elder)
+        private void InvokeDeleteRecord(string stateStr,ElderInfo elder)
         {
             if (stateStr == HttpRspState.DELETEELDER_SUCCESS)
                 {
@@ -219,7 +219,7 @@ namespace LogingWindow
         private object NewElderRecord(Boolean boolean) 
         {
             //新建老人对象，并从新建档案窗口完善该老人的信息
-            ElderInfor newElder = new ElderInfor();
+            ElderInfo newElder = new ElderInfo();
             if (boolean==true)
             {       //从新建窗口完善老人信息
                 newElder.id = elderIdBox.Text;    //必填
@@ -251,7 +251,7 @@ namespace LogingWindow
         {
             Object[] objArry = (Object[])objSend;    //将参数转化为对象组后便于利用
             Boolean boolean = (Boolean)objArry[0];
-            ElderInfor elder = (ElderInfor)objArry[1];
+            ElderInfo elder = (ElderInfo)objArry[1];
             HttpRequest request = null;
             if (boolean == true)
             {
@@ -286,7 +286,7 @@ namespace LogingWindow
 
         private void UpdataRecordState(Boolean boolean) 
         {
-            ElderInfor elder = (ElderInfor)NewElderRecord(boolean);  //
+            ElderInfo elder = (ElderInfo)NewElderRecord(boolean);  //
             //确保该老人对象信息可靠后方可进行提交操作*********************************有待改善
             int elderYear =OtherTools.BirthdayToYear(elder);       //设置老人年龄的判别字符
             if (elder.sex == "" || elder.name == "" || elderYear > 150 || elderYear < 0)    
@@ -308,7 +308,7 @@ namespace LogingWindow
         {
             string elderID = (string)objSend;
             if (elderID == "") { return; }
-            ElderInfor elder = new ElderInfor(elderID);
+            ElderInfo elder = new ElderInfo(elderID);
             DataBaseHandler.GetElderRecord(elder);
             HttpRequest request = new HttpRequest(HttpURLs.DELETRECORDURL, HttpMethod.POST);
             string stateStr = "";
@@ -338,7 +338,7 @@ namespace LogingWindow
         {
             if (isAmendTab)
             {
-                ElderInfor elder = new ElderInfor(this.scRecordIdBox.Text);    //传入一个老人的ID以新建老人对象
+                ElderInfo elder = new ElderInfo(this.scRecordIdBox.Text);    //传入一个老人的ID以新建老人对象
                 DataBaseHandler.GetElderRecord(elder);      //完善该老人的所有信息
                 {//将修改人员窗口的人员信息赋值
                     this.celderIdBox.Text = elder.id;
@@ -352,7 +352,7 @@ namespace LogingWindow
             }
             else 
             {
-                ElderInfor elder = new ElderInfor(this.sdRecordIdBox.Text);
+                ElderInfo elder = new ElderInfo(this.sdRecordIdBox.Text);
                 DataBaseHandler.GetElderRecord(elder);
                 {
                     this.delderIdBox.Text = elder.id;

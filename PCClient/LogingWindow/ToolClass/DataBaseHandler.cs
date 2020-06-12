@@ -217,7 +217,7 @@ namespace LogingWindow.ToolClass
             return user;
         }
 
-        public static ElderInfor GetElderRecord(ElderInfor elder)
+        public static ElderInfo GetElderRecord(ElderInfo elder)
         {
             Monitor.Enter(dataBase);
             if (con.State != ConnectionState.Open)
@@ -260,7 +260,7 @@ namespace LogingWindow.ToolClass
             return elder;
         }
 
-        public static void AmendElderRecord(ElderInfor theMan)
+        public static void AmendElderRecord(ElderInfo theMan)
         {
             Monitor.Enter(dataBase);
             if (con.State != ConnectionState.Open)
@@ -297,7 +297,7 @@ namespace LogingWindow.ToolClass
             }
         }
 
-        public static void CreatElderRecord(ElderInfor theMan)
+        public static void CreatElderRecord(ElderInfo theMan)
         {
             Monitor.Enter(dataBase);
             bool IFADDLIST = false;
@@ -352,7 +352,7 @@ namespace LogingWindow.ToolClass
             Monitor.Exit(dataBase);
         }
 
-        public static void DeleteElderRecord(ElderInfor theMan)
+        public static void DeleteElderRecord(ElderInfo theMan)
         {
             Monitor.Enter(dataBase);
             if (con.State != ConnectionState.Open)

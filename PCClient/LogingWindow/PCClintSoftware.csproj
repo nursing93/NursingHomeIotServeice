@@ -118,7 +118,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\DatabaseTest.cs" />
     <Compile Include="Test\HttpTest.cs" />
+    <Compile Include="Test\PojoBuilder.cs" />
     <Compile Include="ToolClass\DataBaseHandler.cs" />
     <Compile Include="ToolClass\MapHandler.cs" />
     <Compile Include="ToolClass\HttpConstant.cs" />

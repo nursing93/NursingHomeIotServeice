@@ -14,7 +14,7 @@ namespace LogingWindow.ToolClass
         /// </summary>
         /// <param name="elder">所需转化年龄的老人对象</param>
         /// <returns></returns>
-        public static int BirthdayToYear(ElderInfor elder)
+        public static int BirthdayToYear(ElderInfo elder)
         {
             int year = -1;
             try

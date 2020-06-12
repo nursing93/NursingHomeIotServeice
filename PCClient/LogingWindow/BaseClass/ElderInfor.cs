@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 namespace LogingWindow.BaseClass
 {
     [DataContract]      //声明该类为DataContract类型，并声明其各个属性用以解析json
-    public class ElderInfor
+    public class ElderInfo
     {
+        private const string INVALIDID = "93000000";
         [DataMember(Order = 0, IsRequired = true)]
         public string id { get; set; }
 
@@ -37,14 +38,14 @@ namespace LogingWindow.BaseClass
         [DataMember(Order = 8, IsRequired = true)]
         public Relative[] relatives;    //TODO 持久化、显示
 
-        public ElderInfor() { }
+        public ElderInfo() { }
 
-        public ElderInfor(string id)
+        public ElderInfo(string id)
         {
             this.id = id;
         }
 
-        public ElderInfor(string id, string name, string birthday, string sex, string idCard, string phone, string area)
+        public ElderInfo(string id, string name, string birthday, string sex, string idCard, string phone, string area)
         {
             this.id = id;
             this.name = name;
@@ -55,7 +56,7 @@ namespace LogingWindow.BaseClass
             this.phone = phone;
         }
 
-        public Boolean equals(ElderInfor elder1)
+        public Boolean equals(ElderInfo elder1)
         {
             bool result = (this.id == elder1.id) &&
                    (this.name == elder1.name) &&
@@ -66,6 +67,18 @@ namespace LogingWindow.BaseClass
                    (this.area == elder1.area) &&
                    (this.nursingDate == elder1.nursingDate);
             return result;
+        }
+
+        public Boolean valid()
+        {
+            return this.id != INVALIDID;
+        }
+
+        public static ElderInfo invalidInst()
+        {
+            ElderInfo info = new ElderInfo();
+            info.id = INVALIDID;
+            return info;
         }
     }
 }

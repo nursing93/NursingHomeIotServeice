@@ -77,15 +77,15 @@ namespace LogingWindow.Test
                 return userList;
             }
 
-            public static List<ElderInfor> getElderList()
+            public static List<ElderInfo> getElderList()
             {
-                List<ElderInfor> elderList = new List<ElderInfor>();
-                ElderInfor elder = new ElderInfor();
+                List<ElderInfo> elderList = new List<ElderInfo>();
+                ElderInfo elder = new ElderInfo();
                 elder.id = "KW170001";
                 elder.name = "张三";
                 for (int i = 0; i < 10;i++ )
                 {
-                    ElderInfor elder1 = new ElderInfor();
+                    ElderInfo elder1 = new ElderInfo();
                     elder1.name = "张三";
                     elder1.id = "KW17000" + Convert.ToString(i);
                     elder1.sex = "男";

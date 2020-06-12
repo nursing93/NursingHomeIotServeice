@@ -137,21 +137,21 @@ namespace LogingWindow
         private void UpdateLocalElderList()
         {
             HttpRequest request = new HttpRequest(HttpURLs.QUERYALLELDERURL, HttpMethod.GET);
-            List<ElderInfor> elderList = null;
+            List<ElderInfo> elderList = null;
             try  //TODO 优化异常处理逻辑
             {
                 HttpResponse response = request.request();
-                elderList = response.getResultAsObj<List<ElderInfor>>();
+                elderList = response.getResultAsObj<List<ElderInfo>>();
             }
             catch (WebException e)
             {
-                elderList = new List<ElderInfor>();
+                elderList = new List<ElderInfo>();
                 Console.Write("Update Failed：\n" + e);
                 MessageBox.Show("Update Failed due to a WebException! Please Try Again...");
             }
             catch (Exception e)
             {
-                elderList = new List<ElderInfor>();
+                elderList = new List<ElderInfo>();
                 MessageBox.Show("Update Failed due to an Unkown Cause!" + e);
                 MessageBox.Show("Update Failed due to an Unkown Cause!");
             }
@@ -161,13 +161,13 @@ namespace LogingWindow
             }
         }
 
-        private void updateElderCache(List<ElderInfor> elderList)
+        private void updateElderCache(List<ElderInfo> elderList)
         {
             MethodCell_INT mcUpdateProgressBar = new MethodCell_INT(UpdateprogressBar);
             MethodCell_S mcUpdateStatus = new MethodCell_S(UpdateStatus);
             int i = 0;
             this.BeginInvoke(mcUpdateStatus, "Updating. . . . . .");
-            foreach (ElderInfor elder in elderList)
+            foreach (ElderInfo elder in elderList)
             {
                 i++;
                 //更新进度条
@@ -177,7 +177,7 @@ namespace LogingWindow
                     this.BeginInvoke(mcUpdateProgressBar, j);    //TODO 需要同步通信，不可异步通信
                     Console.WriteLine(j);
                 }
-                ElderInfor elder_Select = new ElderInfor(elder.id);
+                ElderInfo elder_Select = new ElderInfo(elder.id);
                 if (DataBaseHandler.GetElderRecord(elder_Select).id == "")
                 {
                     Console.WriteLine("Has no Elder's Info with id = " + elder.id + ", name = " + elder.name + ".");

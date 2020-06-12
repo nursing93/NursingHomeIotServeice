@@ -36,7 +36,7 @@ namespace LogingWindow
         /// </summary>
         /// <param name="str">启动多线程所需要的参数,状态字符</param>
         /// <param name="elder">启动多线程所需要的参数，老人对象</param>
-        private delegate void MethodCallerNYY(ElderInfor theElder, RingData theRingDT);
+        private delegate void MethodCallerNYY(ElderInfo theElder, RingData theRingDT);
         /// <summary>
         /// 线程间通信代理——主要用于网络异常报告
         /// </summary>
@@ -115,7 +115,7 @@ namespace LogingWindow
             }
         }
 
-        private void InvokeGetLastRingDT(ElderInfor elder, RingData elderRing)
+        private void InvokeGetLastRingDT(ElderInfo elder, RingData elderRing)
         {
             elderRing = DataBaseHandler.GetRingData(elderRing);        //查询手环的最后一条
             MapHandler.ShowElderPoint(this.mainWebBrowser, elder, elderRing);    //调用人员地图显示函数，参数为通过查询获得的手环信息
@@ -166,7 +166,7 @@ namespace LogingWindow
         {
             Object[] objArry = (Object[])objSend;
             RingData record = (RingData)objArry[0];
-            ElderInfor elder = (ElderInfor)objArry[1];
+            ElderInfo elder = (ElderInfo)objArry[1];
             Boolean hasRecord = false;
             try
             {
@@ -222,7 +222,7 @@ namespace LogingWindow
             //获取所选中行第一列的值，即为所选中列的老人编号
             string selectedElderID = (string)this.dataGridView1.SelectedRows[0].Cells[0].Value;   
             RingData elderRing = new RingData(selectedElderID);
-            ElderInfor elder = new ElderInfor(selectedElderID);
+            ElderInfo elder = new ElderInfo(selectedElderID);
             elder = DataBaseHandler.GetElderRecord(elder);    //通过数据库获取老人信息
             //尝试向服务器请求最新数据，否则度本地缓存的最新数据
             //*********************************设置合适的请求时间，防止等待时间过长
@@ -351,7 +351,7 @@ namespace LogingWindow
             if (e.RowIndex >= 0)
             {
                 string elderIDs = (string)this.dataGridView1.Rows[e.RowIndex].Cells[0].Value;   //获取鼠标划过列的老人ID值
-                ElderInfor elder = new ElderInfor(elderIDs);    //新建对应的老人对象
+                ElderInfo elder = new ElderInfo(elderIDs);    //新建对应的老人对象
                 RingData elderRing = new RingData(elderIDs);
                 elder = DataBaseHandler.GetElderRecord(elder);      //异常已经在下级代码中处理，未完善
                 elderRing = DataBaseHandler.GetRingData(elderRing);   //异常已经在下级代码中处理，未完善
