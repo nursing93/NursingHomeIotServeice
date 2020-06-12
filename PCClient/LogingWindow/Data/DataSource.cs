@@ -47,5 +47,25 @@ namespace LogingWindow.Data
             con.Close();
         }
 
+        public void execSyncNonQuery(SqlCeCommand cmmd)
+        {
+            try
+            {
+                cmmd.ExecuteNonQuery();
+            }
+            catch (InvalidOperationException e)
+            {
+                MessageBox.Show("open data source failed!\n" + e);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("database failed! other exception:\n" + e);
+            }
+            finally
+            {
+                freeSyncSouce();
+            }
+        }
+
     }
 }

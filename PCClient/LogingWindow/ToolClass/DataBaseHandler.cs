@@ -22,7 +22,7 @@ namespace LogingWindow.ToolClass
 
         private static Object dataBase = new Object();
 
-        public static DataTable GetNameList(string searchStr)
+        public static DataTable GetNameList(string searchStr)  //done
         {
             Monitor.Enter(dataBase);
             if (con.State != ConnectionState.Open)
@@ -56,7 +56,7 @@ namespace LogingWindow.ToolClass
             return dt;
         }
 
-        public static DataTable GetNameList_AllColums(string searchStr)
+        public static DataTable GetNameList_AllColums(string searchStr)  //done
         {
             Monitor.Enter(dataBase);
             if (con.State != ConnectionState.Open)
@@ -90,7 +90,7 @@ namespace LogingWindow.ToolClass
             return dt;
         }
 
-        public static void UserData(LogUser user,Boolean isSavePassword)
+        public static void UserData(LogUser user,Boolean isSavePassword)  //done
         {
             if (con.State != ConnectionState.Open)
             {
@@ -145,7 +145,7 @@ namespace LogingWindow.ToolClass
             }
         }
 
-        public static ComboBox GetUserList(ComboBox comboBox)
+        public static ComboBox GetUserList(ComboBox comboBox)  //todo
         {
             Monitor.Enter(dataBase);
             string jiansuo = comboBox.Text;
@@ -180,7 +180,7 @@ namespace LogingWindow.ToolClass
             return comboBox;
         }
 
-        public static LogUser GetUserObj(LogUser user)
+        public static LogUser GetUserObj(LogUser user)    //done
         {
             Monitor.Enter(dataBase);
             string jiansuo = user.id;
@@ -217,7 +217,7 @@ namespace LogingWindow.ToolClass
             return user;
         }
 
-        public static ElderInfo GetElderRecord(ElderInfo elder)
+        public static ElderInfo GetElderRecord(ElderInfo elder)    //done
         {
             Monitor.Enter(dataBase);
             if (con.State != ConnectionState.Open)
@@ -260,7 +260,7 @@ namespace LogingWindow.ToolClass
             return elder;
         }
 
-        public static void AmendElderRecord(ElderInfo theMan)
+        public static void AmendElderRecord(ElderInfo theMan)    //done
         {
             Monitor.Enter(dataBase);
             if (con.State != ConnectionState.Open)
@@ -297,7 +297,7 @@ namespace LogingWindow.ToolClass
             }
         }
 
-        public static void CreatElderRecord(ElderInfo theMan)
+        public static void CreatElderRecord(ElderInfo theMan)    //done
         {
             Monitor.Enter(dataBase);
             bool IFADDLIST = false;
@@ -352,7 +352,7 @@ namespace LogingWindow.ToolClass
             Monitor.Exit(dataBase);
         }
 
-        public static void DeleteElderRecord(ElderInfo theMan)
+        public static void DeleteElderRecord(ElderInfo theMan)    //done
         {
             Monitor.Enter(dataBase);
             if (con.State != ConnectionState.Open)
@@ -394,7 +394,7 @@ namespace LogingWindow.ToolClass
             }
         }
 
-        public static ComboBox ComboBoxDropDown(ComboBox cmBox,string jiansuo,string BOXID)
+        public static ComboBox ComboBoxDropDown(ComboBox cmBox,string jiansuo,string BOXID)    //todo
         {
             Monitor.Enter(dataBase);
             if(con.State!=ConnectionState.Open)
@@ -447,7 +447,7 @@ namespace LogingWindow.ToolClass
             return cmBox;
         }
 
-        public static RingData GetRingData(RingData rdObj)
+        public static RingData GetRingData(RingData rdObj)    //todo
         {
             Monitor.Enter(dataBase);
             if (con.State != ConnectionState.Open)
@@ -486,7 +486,7 @@ namespace LogingWindow.ToolClass
             return rdObj;
         }
 
-        public static RingData GetRingDataByTime(RingData rdObj)
+        public static RingData GetRingDataByTime(RingData rdObj)    //todo
         {
             Monitor.Enter(dataBase);
             if (con.State != ConnectionState.Open)
@@ -526,7 +526,7 @@ namespace LogingWindow.ToolClass
             return rdObj;
         }
 
-        public static void SaveRingData(RingData rdObj)
+        public static void SaveRingData(RingData rdObj)    //todo
         {
             Monitor.Enter(dataBase);
             string jiansuo = rdObj.curID;

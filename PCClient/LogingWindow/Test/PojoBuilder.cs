@@ -39,5 +39,26 @@ namespace LogingWindow.Test
                                       + ", \nidCard:" + info.idCard + ", \nphone:" + info.phone + ", \narea:" + info.area + ".\n---------------\n");
         }
 
+        public LogUser getLogUser(string id, string pass = "123456", Int32 needSavePass = 0)
+        {
+            LogUser user = new LogUser(id, pass);
+            user.isSavePassword = needSavePass;
+            return user;
+        }
+
+        public string printLogUser(LogUser user)
+        {
+            return "Info:\nid:" + user.id + ",\npassword:" + user.password + ",\nisSavePassword:" + user.isSavePassword + ".\n------------------------------\n";
+        }
+
+        public string printLogUserList(List<LogUser> list)
+        {
+            string value = "";
+            foreach (LogUser info in list)
+            {
+                value += printLogUser(info);
+            }
+            return value;
+        }
     }
 }

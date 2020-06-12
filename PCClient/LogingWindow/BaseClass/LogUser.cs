@@ -10,6 +10,8 @@ namespace LogingWindow.BaseClass
     [DataContract]
     public class LogUser
     {
+        private const string INVALIDID = "u000000";
+
         [DataMember(Order = 0, IsRequired = true)]
         public string id { get; set; }
 
@@ -56,6 +58,18 @@ namespace LogingWindow.BaseClass
             newUser.realName = this.realName;
             newUser.sex = this.sex;
             return newUser;
+        }
+
+        public Boolean isValid()
+        {
+            return this.id != INVALIDID;
+        }
+
+        public static LogUser getInvalidInst()
+        {
+            LogUser user = new LogUser();
+            user.id = INVALIDID;
+            return user;
         }
     }
 }

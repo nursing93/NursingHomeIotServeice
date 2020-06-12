@@ -79,7 +79,7 @@ namespace LogingWindow.Data
             SqlCeCommand cmmd = dataSrc.getSyncSqlCeCommand(sql);
             cmmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50, "ID").Value = id;
             SqlCeDataReader dr = cmmd.ExecuteReader();
-            ElderInfo info = dr.Read() ? getElderWithDataReader(dr) : (ElderInfo.invalidInst());
+            ElderInfo info = dr.Read() ? getElderWithDataReader(dr) : (ElderInfo.getInvalidInst());
             dr.Close();
             dataSrc.freeSyncSouce();
             return info;
@@ -105,14 +105,32 @@ namespace LogingWindow.Data
             return info;
         }
 
+        public void create(ElderInfo info)
+        {
+            if (get(info.id).isValid())
+            {
+                MessageBox.Show("elder[id=" + info.id + "] alerady existed! try again with new id!");
+                return;
+            }
+            string sql = "INSERT INTO ElderBaseData VALUES(@ID, @name, @birthday, @sex, @area, @idCard, @phone)";
+            SqlCeCommand cmmd = dataSrc.getSyncSqlCeCommand(sql);
+            cmmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50, "ID").Value = info.id;
+            cmmd.Parameters.Add("@name", SqlDbType.NVarChar, 50, "name").Value = info.name;
+            cmmd.Parameters.Add("@sex", SqlDbType.NVarChar, 50, "sex").Value = info.sex;
+            cmmd.Parameters.Add("@birthday", SqlDbType.DateTime, 8, "birthday").Value = Convert.ToDateTime(info.birthday);
+            cmmd.Parameters.Add("@idCard", SqlDbType.NVarChar, 50, "idCard").Value = info.idCard;
+            cmmd.Parameters.Add("@phone", SqlDbType.NVarChar, 50, "phone").Value = info.phone;
+            cmmd.Parameters.Add("@area", SqlDbType.NVarChar, 2000, "area").Value = info.area;
+            dataSrc.execSyncNonQuery(cmmd);
+        }
+
         public void update(ElderInfo info)
         {
-            if (!get(info.id).valid())
+            if (!get(info.id).isValid())
             {
                 MessageBox.Show("elder[id=" + info.id + "] is not existed! try again with valid id!");
                 return;
             }
-
             string sql = "UPDATE ElderBaseData SET [name]=@name, [birthday]=@birthday, "
                       + "[sex]=@sex, [phone]=@phone, [idCard]=@idCard, [area]=@area "
                       + " WHERE  [ID]=@ID ";
@@ -124,86 +142,20 @@ namespace LogingWindow.Data
             cmmd.Parameters.Add("@idCard", SqlDbType.NVarChar, 50, "idCard").Value = info.idCard;
             cmmd.Parameters.Add("@phone", SqlDbType.NVarChar, 50, "phone").Value = info.phone;
             cmmd.Parameters.Add("@area", SqlDbType.NVarChar, 2000, "area").Value = info.area;
-            try
-            {
-                cmmd.ExecuteNonQuery();
-            }
-            catch (InvalidOperationException e)
-            {
-                MessageBox.Show("open data source failed!\n" + e);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("database failed! other exception:\n" + e);
-            }
-            finally
-            {
-                dataSrc.freeSyncSouce();
-            }
-        }
-
-        public void create(ElderInfo info)
-        {
-            if (get(info.id).valid())
-            {
-                MessageBox.Show("elder[id=" + info.id + "] alerady existed! try again with new id!");
-                return;
-            }
-
-            string sql = "INSERT INTO ElderBaseData VALUES(@ID, @name, @birthday, @sex, @area, @idCard, @phone)";
-            SqlCeCommand cmmd = dataSrc.getSyncSqlCeCommand(sql);
-            cmmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50, "ID").Value = info.id;
-            cmmd.Parameters.Add("@name", SqlDbType.NVarChar, 50, "name").Value = info.name;
-            cmmd.Parameters.Add("@sex", SqlDbType.NVarChar, 50, "sex").Value = info.sex;
-            cmmd.Parameters.Add("@birthday", SqlDbType.DateTime, 8, "birthday").Value = Convert.ToDateTime(info.birthday);
-            cmmd.Parameters.Add("@idCard", SqlDbType.NVarChar, 50, "idCard").Value = info.idCard;
-            cmmd.Parameters.Add("@phone", SqlDbType.NVarChar, 50, "phone").Value = info.phone;
-            cmmd.Parameters.Add("@area", SqlDbType.NVarChar, 2000, "area").Value = info.area;
-            try
-            {
-                cmmd.ExecuteNonQuery();
-            }
-            catch (InvalidOperationException e)
-            {
-                MessageBox.Show("open data source failed!\n" + e);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("database failed! other exception:\n" + e);
-            }
-            finally
-            {
-                dataSrc.freeSyncSouce();
-            }
+            dataSrc.execSyncNonQuery(cmmd);
         }
 
         public void delete(ElderInfo info)
         {
-            if (!get(info.id).valid())
+            if (!get(info.id).isValid())
             {
                 MessageBox.Show("elder[id=" + info.id + "] is not existed!");
                 return;
             }
-
             string sql = "delete FROM ElderBaseData WHERE [ID]=@ID ";
             SqlCeCommand cmmd = dataSrc.getSyncSqlCeCommand(sql);
             cmmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50, "ID").Value = info.id;
-            try
-            {
-                cmmd.ExecuteNonQuery();
-            }
-            catch (InvalidOperationException e)
-            {
-                MessageBox.Show("open data source failed!\n" + e);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("database failed! other exception:\n" + e);
-            }
-            finally
-            {
-                dataSrc.freeSyncSouce();
-            }
+            dataSrc.execSyncNonQuery(cmmd);
         }
 
     }

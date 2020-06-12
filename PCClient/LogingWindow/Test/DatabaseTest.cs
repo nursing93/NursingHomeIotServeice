@@ -19,10 +19,19 @@ namespace LogingWindow.Test
             DatabaseTest t = new DatabaseTest();
             //t.createElder();
             //t.modElder();
-            t.deleteElder();
+            //t.deleteElder();
             //t.getElder();
 
-            t.listElder();
+            //t.listElder();
+            //--------------------------------
+            //t.createLogUser();
+            //t.updateLogUser();
+            //t.deleteLogUser();
+            t.printLogUser();
+
+            t.printLogUserList();
+
+
         }
 
 
@@ -63,6 +72,40 @@ namespace LogingWindow.Test
             MessageBox.Show(pojoBuilder.printElderList(list));
         }
 
+        public void createLogUser()
+        {
+            LogUserDao lDao = new LogUserDao();
+            LogUser user = pojoBuilder.getLogUser("u5458789");
+            lDao.create(user);
+        }
 
+        public void updateLogUser()
+        {
+            LogUserDao lDao = new LogUserDao();
+            LogUser user = pojoBuilder.getLogUser("u5458789");
+            user.password = "999999";
+            lDao.update(user);
+        }
+
+        public void deleteLogUser()
+        {
+            LogUserDao lDao = new LogUserDao();
+            LogUser user = pojoBuilder.getLogUser("u5458789");
+            lDao.delete(user);
+        }
+
+        public void printLogUser()
+        {
+            LogUserDao lDao = new LogUserDao();
+            LogUser user = lDao.get("u5458789");
+            MessageBox.Show(pojoBuilder.printLogUser(user));
+        }
+
+        public void printLogUserList()
+        {
+            LogUserDao lDao = new LogUserDao();
+            List<LogUser> list = lDao.list();
+            MessageBox.Show(pojoBuilder.printLogUserList(list));
+        }
     }
 }

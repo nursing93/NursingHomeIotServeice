@@ -69,12 +69,12 @@ namespace LogingWindow.BaseClass
             return result;
         }
 
-        public Boolean valid()
+        public Boolean isValid()
         {
             return this.id != INVALIDID;
         }
 
-        public static ElderInfo invalidInst()
+        public static ElderInfo getInvalidInst()
         {
             ElderInfo info = new ElderInfo();
             info.id = INVALIDID;
