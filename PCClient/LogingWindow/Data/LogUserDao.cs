@@ -13,7 +13,6 @@ namespace LogingWindow.Data
     class LogUserDao
     {
         DataSource dataSrc;
-
         public LogUserDao()
         {
             dataSrc = new DataSource();

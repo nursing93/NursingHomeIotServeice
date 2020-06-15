@@ -11,8 +11,8 @@ namespace LogingWindow.BaseClass
     class Position
     {
         [DataMember(Order = 0, IsRequired = true)]
-        private double lng { get; set; }
+        public double lng { get; set; }
         [DataMember(Order = 1, IsRequired = true)]
-        private double lat { get; set; }
+        public double lat { get; set; }
     }
 }

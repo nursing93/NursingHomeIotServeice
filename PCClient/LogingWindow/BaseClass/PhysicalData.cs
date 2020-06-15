@@ -11,10 +11,10 @@ namespace LogingWindow.BaseClass
     class PhysicalData
     {
         [DataMember(Order = 0, IsRequired = true)]
-        private int heartRate { get; set; }
+        public int heartRate { get; set; }
         [DataMember(Order = 1, IsRequired = true)]
-        private int bloodPressuer { get; set; }
+        public int bloodPressure { get; set; }
         [DataMember(Order = 2, IsRequired = true)]
-        private double temperature { get; set; }
+        public double temperature { get; set; }
     }
 }

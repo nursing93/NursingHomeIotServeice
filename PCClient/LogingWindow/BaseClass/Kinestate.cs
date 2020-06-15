@@ -11,29 +11,29 @@ namespace LogingWindow.BaseClass
     class Kinestate
     {
         [DataMember(Order = 0, IsRequired = true)]
-        private Acceleration acc { get; set; }
+        public Acceleration acc { get; set; }
         [DataMember(Order = 1, IsRequired = true)]
-        private Palstance pal { get; set; }
+        public Palstance pal { get; set; }
     }
 
     [DataContract]
     class Acceleration
     {
         [DataMember(Order = 0, IsRequired = true)]
-        private double x { get; set; }
+        public double x { get; set; }
         [DataMember(Order = 1, IsRequired = true)]
-        private double y { get; set; }
+        public double y { get; set; }
         [DataMember(Order = 2, IsRequired = true)]
-        private double z { get; set; }
+        public double z { get; set; }
     }
     [DataContract]
     class Palstance
     {
         [DataMember(Order = 0, IsRequired = true)]
-        private double x { get; set; }
+        public double x { get; set; }
         [DataMember(Order = 1, IsRequired = true)]
-        private double y { get; set; }
+        public double y { get; set; }
         [DataMember(Order = 2, IsRequired = true)]
-        private double z { get; set; }
+        public double z { get; set; }
     }
 }

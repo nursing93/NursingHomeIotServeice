@@ -10,19 +10,34 @@ namespace LogingWindow.BaseClass
     [DataContract]
     public class RingRecord
     {
+        private const int INVALIDELDERID = 93000000;
+
         [DataMember(Order = 0, IsRequired = true)]
-        private int id { get; set; }
+        public int id { get; set; }
         [DataMember(Order = 1, IsRequired = true)]
-        private int battery { get; set; }
+        public int battery { get; set; }
         [DataMember(Order = 2, IsRequired = true)]
-        private PhysicalData physical { get; set; }
+        public PhysicalData physical { get; set; }
         [DataMember(Order = 3, IsRequired = true)]
-        private Position position { get; set; }
+        public Position position { get; set; }
         [DataMember(Order = 4, IsRequired = true)]
-        private Kinestate kinestat { get; set; }
+        public Kinestate kinestat { get; set; }
         [DataMember(Order = 5, IsRequired = true)]
-        private KeyEvent keyEvent { get; set; }
-        //TODO time 
+        public KeyEvent keyEvent { get; set; }
+
+        public string time { get; set; }
+
+        public Boolean validRecord()
+        {
+            return id != INVALIDELDERID;
+        }
+
+        public static RingRecord defaultRecord()
+        {
+            RingRecord record = new RingRecord();
+            record.id = INVALIDELDERID;
+            return record;
+        }
     }
 
 
