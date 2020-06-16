@@ -84,6 +84,7 @@
     <Compile Include="Data\DataSource.cs" />
     <Compile Include="Data\ElderDao.cs" />
     <Compile Include="Data\LogUserDao.cs" />
+    <Compile Include="Data\RingRecordDao.cs" />
     <Compile Include="ElderManageForm.cs">
       <SubType>Form</SubType>
     </Compile>

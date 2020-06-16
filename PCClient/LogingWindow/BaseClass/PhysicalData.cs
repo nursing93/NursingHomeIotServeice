@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace LogingWindow.BaseClass
 {
     [DataContract]
-    class PhysicalData
+    public class PhysicalData
     {
         [DataMember(Order = 0, IsRequired = true)]
         public int heartRate { get; set; }

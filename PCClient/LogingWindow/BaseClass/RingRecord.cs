@@ -27,6 +27,14 @@ namespace LogingWindow.BaseClass
 
         public string time { get; set; }
 
+        public RingRecord()
+        {
+            physical = new PhysicalData();
+            position = new Position();
+            kinestat = new Kinestate();
+            keyEvent = KeyEvent.NON;
+        }
+
         public Boolean validRecord()
         {
             return id != INVALIDELDERID;

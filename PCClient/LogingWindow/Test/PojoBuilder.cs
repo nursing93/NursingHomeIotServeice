@@ -60,5 +60,37 @@ namespace LogingWindow.Test
             }
             return value;
         }
+
+        int flag = 0;
+        public RingRecord getRingRecord(int elderid = 9301001)
+        {
+            RingRecord record = new RingRecord();
+            record.id = elderid;
+            record.battery = 83;
+            record.physical.heartRate = (flag++) % 100 ;
+            record.physical.bloodPressure = 90;
+            record.physical.temperature = 36.9;
+            record.position.lng = 108.36547;
+            record.position.lat = 34.58745;
+            record.keyEvent = KeyEvent.NON;
+            record.time = DateTime.Now.ToString(); 
+            return record;
+        }
+
+        public string printRingRecord(RingRecord record)
+        {
+            return "Info:\nid:elderId" + record.id + "\nheartRate" + record.physical.heartRate + "\nbloodPressure" + record.physical.bloodPressure  +
+                "\ntemperature" + record.physical.temperature + "\nposition.lng" + record.position.lng + "\nposition.lat" + record.position.lat + "\ntime" + record.time + "\n----------------------------\n";
+        }
+
+        public string printRingRecordList(List<RingRecord> list)
+        {
+            string result = "";
+            foreach (RingRecord record in list)
+            {
+                result += printRingRecord(record);
+            }
+            return result;
+        }
     }
 }

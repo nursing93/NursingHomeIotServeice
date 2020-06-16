@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace LogingWindow.BaseClass
 {
     [DataContract]
-    class Position
+    public class Position
     {
         [DataMember(Order = 0, IsRequired = true)]
         public double lng { get; set; }

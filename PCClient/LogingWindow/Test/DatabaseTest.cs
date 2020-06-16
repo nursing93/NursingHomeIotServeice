@@ -27,10 +27,18 @@ namespace LogingWindow.Test
             //t.createLogUser();
             //t.updateLogUser();
             //t.deleteLogUser();
-            t.printLogUser();
+            //t.printLogUser();
 
-            t.printLogUserList();
+            //t.printLogUserList();
 
+            //--------------------------------
+
+            //t.createRing();
+            //t.deleteRing();
+            //t.printRecord();
+            //t.printRecordsWithId();
+            //t.printLastRecords();
+            t.printAllRecords();
 
         }
 
@@ -107,5 +115,48 @@ namespace LogingWindow.Test
             List<LogUser> list = lDao.list();
             MessageBox.Show(pojoBuilder.printLogUserList(list));
         }
+
+        public void createRing()
+        {
+            RingRecord record = pojoBuilder.getRingRecord(9301002);
+            RingRecordDao rdao = new RingRecordDao();
+            rdao.create(record);
+        }
+
+        public void deleteRing()
+        {
+            RingRecord record = pojoBuilder.getRingRecord();
+            RingRecordDao rdao = new RingRecordDao();
+            rdao.delete(record);
+        }
+
+        public void printRecord()
+        {
+            RingRecordDao rdao = new RingRecordDao();
+            RingRecord record = rdao.getLast(93010001);
+            MessageBox.Show(pojoBuilder.printRingRecord(record));
+        }
+
+        public void printRecordsWithId()
+        {
+            RingRecordDao rdao = new RingRecordDao();
+            List<RingRecord> list = rdao.list(93010001);
+            MessageBox.Show(pojoBuilder.printRingRecordList(list));
+        }
+
+        public void printLastRecords()
+        {
+            RingRecordDao rdao = new RingRecordDao();
+            List<RingRecord> list = rdao.listLastRecords();
+            MessageBox.Show(pojoBuilder.printRingRecordList(list));
+        }
+
+        public void printAllRecords()
+        {
+            RingRecordDao rdao = new RingRecordDao();
+            List<RingRecord> list = rdao.listAll();
+            MessageBox.Show(pojoBuilder.printRingRecordList(list));
+        }
+
     }
 }

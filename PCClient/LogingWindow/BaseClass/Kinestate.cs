@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace LogingWindow.BaseClass
 {
     [DataContract]
-    class Kinestate
+    public class Kinestate
     {
         [DataMember(Order = 0, IsRequired = true)]
         public Acceleration acc { get; set; }
@@ -17,7 +17,7 @@ namespace LogingWindow.BaseClass
     }
 
     [DataContract]
-    class Acceleration
+    public class Acceleration
     {
         [DataMember(Order = 0, IsRequired = true)]
         public double x { get; set; }
@@ -27,7 +27,7 @@ namespace LogingWindow.BaseClass
         public double z { get; set; }
     }
     [DataContract]
-    class Palstance
+    public class Palstance
     {
         [DataMember(Order = 0, IsRequired = true)]
         public double x { get; set; }
