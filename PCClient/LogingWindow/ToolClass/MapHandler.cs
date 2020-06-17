@@ -38,11 +38,11 @@ namespace LogingWindow.ToolClass
             return theAreaString;            
         }
 
-        public static void ShowElderPoint(WebBrowser webBrowser,ElderInfo elder,RingData elderRing)
+        public static void ShowElderPoint(WebBrowser webBrowser,ElderInfo elder, RingRecord record)
         {
             Object[] objArray = new Object[4];
-            objArray[0] = elderRing.lng;
-            objArray[1] = elderRing.lat;
+            objArray[0] = record.position.lng;
+            objArray[1] = record.position.lat;
             objArray[2] = elder.area;
             objArray[3] = elder.name;
             webBrowser.Document.InvokeScript("markMap", objArray);

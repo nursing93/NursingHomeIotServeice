@@ -12,6 +12,7 @@ using LogingWindow.ToolClass;
 using System.Threading;
 using System.Net;
 using LogingWindow.BaseClass;
+using LogingWindow.Data;
 
 namespace LogingWindow
 {
@@ -140,7 +141,8 @@ namespace LogingWindow
 
         private void IniNameBox()
         {
-            this.userNameBox = DataBaseHandler.GetUserList(this.userNameBox);
+            LogUserDao dao = new LogUserDao();
+            dao.fillLoggingDropList(this.userNameBox);
             if(userNameBox.Items.Count==0)
             {
                 return;
@@ -225,9 +227,24 @@ namespace LogingWindow
             }
             catch (Exception e)
             {
-                Console.WriteLine("Getting User Infomation Failed!" + e.Message.ToString());
+                MessageBox.Show("Getting User Infomation Failed!" + e.Message.ToString());
+                return;
             }
-            DataBaseHandler.UserData(user, checkBox.Checked);
+            updateLoggingBoxUserList(user);
+        }
+
+        private void updateLoggingBoxUserList(LogUser user)
+        {
+            user.isSavePassword = checkBox.Checked ? 1 : 0;
+            LogUserDao dao = new LogUserDao();
+            if (dao.get(user.id).isValid())
+            {
+                dao.update(user);
+            }
+            else
+            {
+                dao.create(user);
+            }
         }
 
         private void logingBtn_Click(object sender, EventArgs e) {
@@ -251,7 +268,8 @@ namespace LogingWindow
         {
             LogUser user = new LogUser();
             user.id = userNameBox.Text;
-            user = DataBaseHandler.GetUserObj(user);
+            LogUserDao dao = new LogUserDao();
+            user = dao.get(user.id);
             this.userPassWordBox.Text = user.password;
             if (user.isSavePassword == 1)
             {

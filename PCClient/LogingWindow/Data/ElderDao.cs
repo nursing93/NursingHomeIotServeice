@@ -158,5 +158,30 @@ namespace LogingWindow.Data
             dataSrc.execSyncNonQuery(cmmd);
         }
 
+        public void fillDropDownBoxWithElderName(ComboBox cmBox, string name)
+        {
+            string sql = "SELECT [name] FROM ElderBaseData WHERE [name] LIKE  @name ";
+            SqlCeCommand cmmd = dataSrc.getSyncSqlCeCommand(sql);
+            cmmd.Parameters.Add("@name", SqlDbType.NVarChar, 50, "name").Value = "%" + name + "%";
+            SqlCeDataReader dr = cmmd.ExecuteReader();
+            cmBox.Items.Clear();
+            while (dr.Read())
+            {
+                cmBox.Items.Add(dr["name"]);
+            }
+        }
+
+        public void fillDropDownBoxWithElderId(ComboBox cmBox, string id)
+        {
+            string sql = "SELECT [ID] FROM ElderBaseData WHERE [name] =  @ID";
+            SqlCeCommand cmmd = dataSrc.getSyncSqlCeCommand(sql);
+            cmmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50, "ID").Value = id;
+            SqlCeDataReader dr = cmmd.ExecuteReader();
+            cmBox.Items.Clear();
+            while (dr.Read())
+            {
+                cmBox.Items.Add(dr["ID"]);
+            }
+        }
     }
 }

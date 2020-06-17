@@ -1,4 +1,5 @@
 ﻿using LogingWindow.BaseClass;
+using LogingWindow.Data;
 using LogingWindow.ToolClass;
 using PCClintSoftware.ToolClass;
 using System;
@@ -92,10 +93,6 @@ namespace LogingWindow
             
         }
         
-        /// <summary>
-        /// 显示本窗口数据的方法体，提供更改本窗口布局的功能
-        /// </summary>
-        /// <param name="ifChange">判断调用该方法时是否要求更改布局，true需要更改，false不需要更改</param>
         private void ChangeLayout(Boolean ifChange)
         {
             if(!ifChange)
@@ -109,7 +106,8 @@ namespace LogingWindow
                 this.changeLayoutBtn.Text = "<<";          //将按钮的样式换成缩小指示
                 this.panel1.Width = this.Width;
                 this.panel2.Width = this.Width - this.panel1.Width;
-                this.dataGridView1.DataSource = DataBaseHandler.GetNameList_AllColums("");     //返回本地数据库的人员列表
+                ElderDao elderDao = new ElderDao();
+                this.dataGridView1.DataSource = elderDao.listAsDataTable("");
                 for (int i = 0; i < this.dataGridView1.Columns.Count; i++)
                 {
                     this.dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -126,7 +124,8 @@ namespace LogingWindow
                 this.changeLayoutBtn.Text = ">>";          //将按钮的样式换成放大指示
                 this.panel1.Width = 170;
                 this.panel2.Width = this.Width - this.panel1.Width;
-                this.dataGridView1.DataSource = DataBaseHandler.GetNameList("");     //返回本地数据库的人员列表
+                ElderDao elderDao = new ElderDao();
+                this.dataGridView1.DataSource = elderDao.listNameAsDataTable("");
                 for (int i = 0; i < this.dataGridView1.Columns.Count; i++)
                 {
                     this.dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -165,6 +164,7 @@ namespace LogingWindow
         {
             MethodCell_INT mcUpdateProgressBar = new MethodCell_INT(UpdateprogressBar);
             MethodCell_S mcUpdateStatus = new MethodCell_S(UpdateStatus);
+            ElderDao dao = new ElderDao();
             int i = 0;
             this.BeginInvoke(mcUpdateStatus, "Updating. . . . . .");
             foreach (ElderInfo elder in elderList)
@@ -177,13 +177,13 @@ namespace LogingWindow
                     this.BeginInvoke(mcUpdateProgressBar, j);    //TODO 需要同步通信，不可异步通信
                     Console.WriteLine(j);
                 }
-                ElderInfo elder_Select = new ElderInfo(elder.id);
-                if (DataBaseHandler.GetElderRecord(elder_Select).id == "")
+                ElderInfo elder_Select = dao.get(elder.id);
+                if (!elder_Select.isValid())
                 {
                     Console.WriteLine("Has no Elder's Info with id = " + elder.id + ", name = " + elder.name + ".");
-                    DataBaseHandler.CreatElderRecord(elder);
+                    dao.create(elder);
                 }
-                else if (elder.equals(DataBaseHandler.GetElderRecord(elder_Select)))
+                else if (elder.equals(elder_Select))
                 {
                     Console.WriteLine("Elder：id = " + elder.id + ", name = " + elder.name
                                       + " Info is latest" + ", idCard: " + elder_Select.idCard);
@@ -192,7 +192,7 @@ namespace LogingWindow
                 {
                     Console.WriteLine("Updating Elder：id = " + elder.id + ", name = " + elder.name
                                      + "Info..." + ", idCard: " + elder_Select.idCard);
-                    DataBaseHandler.AmendElderRecord(elder);
+                    dao.update(elder);
                 }
             }
 
@@ -214,12 +214,12 @@ namespace LogingWindow
             string endTime = (string)objArry[2];
             //TODO URL不全，缺少参数
             HttpRequest request = new HttpRequest(HttpURLs.QEALLRINGDATAURL + elderID + "/" + startTime + "/" + endTime, HttpMethod.GET);
-            List<RingData> ringDataList = new List<RingData>();    
+            List<RingRecord> ringDataList = new List<RingRecord>();    
             //TODO 改善异常处理逻辑
             try
             {
                 HttpResponse response = request.request();
-                ringDataList = response.getResultAsObjList<RingData>();
+                ringDataList = response.getResultAsObjList<RingRecord>();
             }
             catch (WebException e)
             {
@@ -234,14 +234,14 @@ namespace LogingWindow
             updateRingRecordsCache(ringDataList, elderID);
         }
 
-        private void updateRingRecordsCache(List<RingData> ringDataList, string elderID)
+        private void updateRingRecordsCache(List<RingRecord> ringDataList, string elderID)
         {
 
             MethodCell_INT mcUpdateProgressBar = new MethodCell_INT(UpdateprogressBar);
             MethodCell_S mcUpdateStatus = new MethodCell_S(UpdateStatus);
             int i = 0;
             this.BeginInvoke(mcUpdateStatus, "Updating RingRecords for " + elderID + " ...");
-            foreach (RingData elderRing in ringDataList)
+            foreach (RingRecord elderRing in ringDataList)
             {
                 i++;
                 //更新进度条
@@ -251,18 +251,18 @@ namespace LogingWindow
                     this.BeginInvoke(mcUpdateProgressBar, j);    //TODO 需要同步通信，不可异步通信
                     Console.WriteLine(j);
                 }
-                //实际操作
-                RingData ringData = new RingData(elderRing.curID);
-                ringData.datetime = elderRing.datetime;
-                if (DataBaseHandler.GetRingDataByTime(ringData).lat == "")
+
+                RingRecordDao rDao = new RingRecordDao();
+                RingRecord record = rDao.getWithTime(elderRing.id, elderRing.time);
+                if (!record.validRecord())
                 {
-                    Console.WriteLine(elderRing.curID + "  " + elderRing.datetime + "  " + elderRing.lat
-                                      + "  " + elderRing.lng + "  " + elderRing.heartRate);
-                    DataBaseHandler.SaveRingData(elderRing);
+                    Console.WriteLine(elderRing.id + "  " + elderRing.time + "  " + elderRing.position.lat
+                                      + "  " + elderRing.position.lng + "  " + elderRing.physical.heartRate);
+                    rDao.create(elderRing);
                 }
                 else
                 {
-                    Console.WriteLine("RingRecords ElderName = " + this.elderNameBox.Text + " at time = " + elderRing.datetime.ToString() + " Already Existed");
+                    Console.WriteLine("RingRecords ElderName = " + this.elderNameBox.Text + " at time = " + elderRing.time.ToString() + " Already Existed");
                 }
             }
             this.Invoke(mcUpdateStatus, "ElderId = " + elderID + " has Updated " + ringDataList.Count.ToString() + " Records");

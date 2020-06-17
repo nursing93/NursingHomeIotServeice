@@ -1,4 +1,5 @@
 ﻿using LogingWindow.BaseClass;
+using LogingWindow.Data;
 using LogingWindow.ToolClass;
 using PCClintSoftware.ToolClass;
 using System;
@@ -68,9 +69,10 @@ namespace LogingWindow
 
         private void InvokeUpdateRecord(string StatuteStr, ElderInfo elder)
         {
+            ElderDao dao = new ElderDao();
             if (StatuteStr == HttpRspState.ADDELDER_SUCCESS)
             {
-                DataBaseHandler.CreatElderRecord(elder);
+                dao.create(elder);
                 MessageBox.Show("Insert Success!, Local Datas Has been Updated!");
             }
             else if (StatuteStr == HttpRspState.ADDELDER_FAILD)
@@ -79,7 +81,7 @@ namespace LogingWindow
             }
             else if (StatuteStr == HttpRspState.AMENDELDER_SUCCESS)
             {
-                DataBaseHandler.AmendElderRecord(elder);
+                dao.update(elder);
                 MessageBox.Show("Modify Success!  Local Datas Has been Updated!");
             }
             else if (StatuteStr == HttpRspState.AMENDELDER_FAILD)
@@ -94,29 +96,25 @@ namespace LogingWindow
 
         private void InvokeDeleteRecord(string stateStr,ElderInfo elder)
         {
+            ElderDao dao = new ElderDao();
             if (stateStr == HttpRspState.DELETEELDER_SUCCESS)
                 {
-                    DataBaseHandler.DeleteElderRecord(elder);      //根据服务器删除状况决定是否操作本地数据库
-                    MessageBox.Show("服务器删除成功，本地数据库删除成功");
+                    dao.delete(elder);
+                    MessageBox.Show("Delete Elder Infomation Success!");
                 }
             else if (stateStr == HttpRspState.DELETEELDER_FAILD)
                 {
-                    //********************************有待改善，若服务器删除失败，交互内容
-                    MessageBox.Show("服务器删除失败，请重试");
+                    //TODO 有待改善，若服务器删除失败，交互内容
+                    MessageBox.Show("Delete Elder Infomation Failed! Try Again...");
                 }
                 else
                 {
-                    //*******************************待完善该部分代码，应当具备向用户提示服务器报错的情况
-                    MessageBox.Show("服务器没有响应，请重试");
+                    //TODO 待完善该部分代码，应当具备向用户提示服务器报错的情况
+                    MessageBox.Show("Service out of Responsing...");
                     //后续操作。。。。。。若删除成功？删除失败？
                 }
         }
-        /*********************************************
-         * 自定义代码
-         * *******************************************/
-        /// <summary>
-        /// 打开区域设置窗口，同时只能打开一个窗口
-        /// </summary>
+
         private void ShowAreaSetWindow()
         {
             Form form = Application.OpenForms["AreaSetWindow"];
@@ -308,8 +306,8 @@ namespace LogingWindow
         {
             string elderID = (string)objSend;
             if (elderID == "") { return; }
-            ElderInfo elder = new ElderInfo(elderID);
-            DataBaseHandler.GetElderRecord(elder);
+            ElderDao dao = new ElderDao();
+            ElderInfo elder = dao.get(elderID);
             HttpRequest request = new HttpRequest(HttpURLs.DELETRECORDURL, HttpMethod.POST);
             string stateStr = "";
             try
@@ -338,8 +336,8 @@ namespace LogingWindow
         {
             if (isAmendTab)
             {
-                ElderInfo elder = new ElderInfo(this.scRecordIdBox.Text);    //传入一个老人的ID以新建老人对象
-                DataBaseHandler.GetElderRecord(elder);      //完善该老人的所有信息
+                ElderDao dao = new ElderDao();
+                ElderInfo elder = dao.get(this.scRecordIdBox.Text);
                 {//将修改人员窗口的人员信息赋值
                     this.celderIdBox.Text = elder.id;
                     this.celderNameBox.Text = elder.name;
@@ -352,8 +350,8 @@ namespace LogingWindow
             }
             else 
             {
-                ElderInfo elder = new ElderInfo(this.sdRecordIdBox.Text);
-                DataBaseHandler.GetElderRecord(elder);
+                ElderDao dao = new ElderDao();
+                ElderInfo elder = dao.get(this.sdRecordIdBox.Text);
                 {
                     this.delderIdBox.Text = elder.id;
                     this.delderNameBox.Text = elder.name;
@@ -428,24 +426,26 @@ namespace LogingWindow
 
         private void scRecordNameBox_DropDown(object sender, EventArgs e)
         {
-            //this.scRecordIdBox.Items.Clear();     //执行方法之前先将scRecordIdBox框清空，防止ID与姓名不匹配
-            this.scRecordNameBox = DataBaseHandler.ComboBoxDropDown(this.scRecordNameBox, this.scRecordNameBox.Text, ComboBoxDropDownCaller.NameComboBox);
+            ElderDao dao = new ElderDao();
+            dao.fillDropDownBoxWithElderName(this.scRecordNameBox, this.scRecordNameBox.Text);
         }
 
         private void scRecordIdBox_DropDown(object sender, EventArgs e)
         {
-            this.scRecordIdBox = DataBaseHandler.ComboBoxDropDown(this.scRecordIdBox, this.scRecordNameBox.Text, ComboBoxDropDownCaller.IDComboBox);
+            ElderDao dao = new ElderDao();
+            dao.fillDropDownBoxWithElderId(this.scRecordNameBox, this.scRecordNameBox.Text);
         }
 
         private void sdRecordNameBox_DropDown(object sender, EventArgs e)
         {
-            //this.sdRecordIdBox.Items.Clear();        //执行方法之前先将sdRecordIdBox框清空，防止ID与姓名不匹配
-            this.sdRecordNameBox = DataBaseHandler.ComboBoxDropDown(this.sdRecordNameBox, this.sdRecordNameBox.Text, ComboBoxDropDownCaller.NameComboBox);
+            ElderDao dao = new ElderDao();
+            dao.fillDropDownBoxWithElderName(this.sdRecordNameBox, this.sdRecordNameBox.Text);
         }
 
         private void sdRecordIdBox_DropDown(object sender, EventArgs e)
         {
-            this.sdRecordIdBox = DataBaseHandler.ComboBoxDropDown(this.sdRecordIdBox, this.sdRecordNameBox.Text, ComboBoxDropDownCaller.IDComboBox);
+            ElderDao dao = new ElderDao();
+            dao.fillDropDownBoxWithElderId(this.sdRecordNameBox, this.sdRecordNameBox.Text);
         }
 
         private void scRecordNameBox_MouseClick(object sender, MouseEventArgs e)

@@ -123,7 +123,6 @@
     <Compile Include="Test\DatabaseTest.cs" />
     <Compile Include="Test\HttpTest.cs" />
     <Compile Include="Test\PojoBuilder.cs" />
-    <Compile Include="ToolClass\DataBaseHandler.cs" />
     <Compile Include="ToolClass\MapHandler.cs" />
     <Compile Include="ToolClass\HttpConstant.cs" />
     <Compile Include="ToolClass\HttpRequest.cs" />

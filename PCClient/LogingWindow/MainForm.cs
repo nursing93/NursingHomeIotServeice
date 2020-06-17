@@ -1,4 +1,5 @@
 ﻿using LogingWindow.BaseClass;
+using LogingWindow.Data;
 using LogingWindow.ToolClass;
 using PCClintSoftware.ToolClass;
 using System;
@@ -36,7 +37,7 @@ namespace LogingWindow
         /// </summary>
         /// <param name="str">启动多线程所需要的参数,状态字符</param>
         /// <param name="elder">启动多线程所需要的参数，老人对象</param>
-        private delegate void MethodCallerNYY(ElderInfo theElder, RingData theRingDT);
+        private delegate void MethodCallerNYY(ElderInfo theElder);
         /// <summary>
         /// 线程间通信代理——主要用于网络异常报告
         /// </summary>
@@ -115,10 +116,11 @@ namespace LogingWindow
             }
         }
 
-        private void InvokeGetLastRingDT(ElderInfo elder, RingData elderRing)
+        private void InvokeGetLastRingDT(ElderInfo elder)
         {
-            elderRing = DataBaseHandler.GetRingData(elderRing);        //查询手环的最后一条
-            MapHandler.ShowElderPoint(this.mainWebBrowser, elder, elderRing);    //调用人员地图显示函数，参数为通过查询获得的手环信息
+            RingRecordDao dao = new RingRecordDao();
+            RingRecord record =  dao.getLast(Int32.Parse(elder.id));
+            MapHandler.ShowElderPoint(this.mainWebBrowser, elder, record);    //调用人员地图显示函数，参数为通过查询获得的手环信息
         }
 
         public void UserPermission(Boolean boolean,LogUser theUser)
@@ -155,7 +157,8 @@ namespace LogingWindow
                 this.newRecord_ToolStripMenuItem.Visible = false;
                 this.manager_ToolStripMenuItem.Visible = false;
             }
-            this.dataGridView1.DataSource = DataBaseHandler.GetNameList("");//调用静态方法将本窗体的DataGridView内容填充，展示全部人员
+            ElderDao elderDao = new ElderDao();
+            this.dataGridView1.DataSource = elderDao.listNameAsDataTable("");
             for (int i = 0; i < dataGridView1.Columns.Count; i++)     //设定dataGridView1的列宽设定方式
             {
                 this.dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -165,14 +168,14 @@ namespace LogingWindow
         private void HttpGetRingDT(Object objSend)
         {
             Object[] objArry = (Object[])objSend;
-            RingData record = (RingData)objArry[0];
+            RingRecord record = (RingRecord)objArry[0];
             ElderInfo elder = (ElderInfo)objArry[1];
             Boolean hasRecord = false;
             try
             {
-                HttpRequest request = new HttpRequest(HttpURLs.GRRINGDATAURL + record.curID, HttpMethod.GET);
+                HttpRequest request = new HttpRequest(HttpURLs.GRRINGDATAURL + record.id.ToString(), HttpMethod.GET);
                 HttpResponse response = request.request();
-                record = response.getResultAsObj<RingData>();
+                record = response.getResultAsObj<RingRecord>();
                 updateRingRecords(record);
                 hasRecord = true;
             }
@@ -192,24 +195,22 @@ namespace LogingWindow
                 if (hasRecord)
                 {
                     MethodCallerNYY ceGetLastRDT = new MethodCallerNYY(InvokeGetLastRingDT);
-                    this.BeginInvoke(ceGetLastRDT, elder, record);
+                    this.BeginInvoke(ceGetLastRDT, elder);
                 }
             }
         }
 
-        private void updateRingRecords(RingData record)
+        private void updateRingRecords(RingRecord record1)
         {
-            RingData ringData = new RingData(record.curID);
-            ringData.datetime = record.datetime;
-            if (DataBaseHandler.GetRingDataByTime(ringData).lat == "")
+            RingRecordDao rDao = new RingRecordDao();
+            RingRecord record = rDao.getWithTime(record1.id, record1.time);
+            if (!record.validRecord())
             {
-                Console.WriteLine(record.curID + "  " + record.datetime + "  " + record.lat
-                                  + "  " + record.lng + "  " + record.heartRate);
-                DataBaseHandler.SaveRingData(record);
+                rDao.create(record1);
             }
             else
             {
-                Console.WriteLine(record.curID + "  的数据是最新的");
+                Console.WriteLine(record.id + "  的数据是最新的");
             }
         }
 
@@ -220,15 +221,15 @@ namespace LogingWindow
         private void ShowElderPoint()
         {
             //获取所选中行第一列的值，即为所选中列的老人编号
-            string selectedElderID = (string)this.dataGridView1.SelectedRows[0].Cells[0].Value;   
-            RingData elderRing = new RingData(selectedElderID);
-            ElderInfo elder = new ElderInfo(selectedElderID);
-            elder = DataBaseHandler.GetElderRecord(elder);    //通过数据库获取老人信息
+            string selectedElderID = (string)this.dataGridView1.SelectedRows[0].Cells[0].Value;
+            RingRecord record = new RingRecord(Int32.Parse(selectedElderID));
+            ElderDao dao = new ElderDao();
+            ElderInfo elder = dao.get(selectedElderID);
             //尝试向服务器请求最新数据，否则度本地缓存的最新数据
             //*********************************设置合适的请求时间，防止等待时间过长
             this.statusLabel_Main.ForeColor = Color.Blue;
             this.statusLabel_Main.Text = "欢迎使用本系统";
-            Object[] objArry = { elderRing,elder };
+            Object[] objArry = { record, elder };
             Object objSend = objArry;
             ParameterizedThreadStart PTGetRingDT = new ParameterizedThreadStart(HttpGetRingDT);
             Thread thdGetRingDT = new Thread(PTGetRingDT);
@@ -351,24 +352,22 @@ namespace LogingWindow
             if (e.RowIndex >= 0)
             {
                 string elderIDs = (string)this.dataGridView1.Rows[e.RowIndex].Cells[0].Value;   //获取鼠标划过列的老人ID值
-                ElderInfo elder = new ElderInfo(elderIDs);    //新建对应的老人对象
-                RingData elderRing = new RingData(elderIDs);
-                elder = DataBaseHandler.GetElderRecord(elder);      //异常已经在下级代码中处理，未完善
-                elderRing = DataBaseHandler.GetRingData(elderRing);   //异常已经在下级代码中处理，未完善
+                ElderDao dao = new ElderDao();
+                ElderInfo elder = dao.get(elderIDs);
+                RingRecordDao rDao = new RingRecordDao();
+                RingRecord ring = rDao.getLast(Int32.Parse(elderIDs));
                 this.IDLabel.Text = elder.id;
                 this.nameLabel.Text = elder.name;
                 this.yearLabel.Text = Convert.ToString(OtherTools.BirthdayToYear(elder));
-                this.hardRateLabel.Text = Convert.ToString(elderRing.heartRate);
+                this.hardRateLabel.Text = ring.physical.heartRate.ToString();
                 this.sexLabel.Text = elder.sex;
             }
         }
-        /**************************************************************************
-         * 事件处理代码块
-         * **************************************************************/
-        //按姓名检索按钮处理事件
+
         private void searchByNameBut_Click(object sender, EventArgs e)
         {
-            this.dataGridView1.DataSource = DataBaseHandler.GetNameList(searchBox.Text);//调用静态方法将本窗体的DataGridView内容填充
+            ElderDao elderDao = new ElderDao();
+            this.dataGridView1.DataSource = elderDao.listNameAsDataTable(searchBox.Text);
         }
 
         private void dataGridView1_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)

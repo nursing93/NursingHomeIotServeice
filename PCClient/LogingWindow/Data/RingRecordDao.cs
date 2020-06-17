@@ -54,6 +54,18 @@ namespace LogingWindow.Data
             return record;
         }
 
+        public RingRecord getWithTime(int elderId, string dateTime)
+        {
+            string sql = "SELECT [elderId], [heartRate], [bloodPressure], [temperature], [lng], [lat], [time], [keyEvent] FROM  ringRecord WHERE" +
+                        " id=@elderId AND time=@time";
+            SqlCeCommand cmmd = dataSrc.getSyncSqlCeCommand(sql);
+            cmmd.Parameters.Add("@elderId", SqlDbType.NVarChar, 50, "elderId").Value = elderId.ToString();
+            cmmd.Parameters.Add("@time", SqlDbType.DateTime, 8, "time").Value = Convert.ToDateTime(dateTime);
+            SqlCeDataReader dr = cmmd.ExecuteReader();
+            RingRecord record = dr.Read() ? getRingRecordWithDataReader(dr) : RingRecord.defaultRecord();
+            return record;
+        }
+
         private RingRecord getRingRecordWithDataReader(SqlCeDataReader dr)
         {
             RingRecord record = new RingRecord();

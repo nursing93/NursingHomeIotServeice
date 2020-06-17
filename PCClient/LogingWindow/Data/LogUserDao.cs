@@ -103,5 +103,19 @@ namespace LogingWindow.Data
             cmmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50, "ID").Value = user.id;
             dataSrc.execSyncNonQuery(cmmd);
         }
+
+        public void fillLoggingDropList(ComboBox comboBox)
+        {
+            string sql = "SELECT [ID] FROM UserList";
+            SqlCeCommand cmmd = dataSrc.getSyncSqlCeCommand(sql);
+            SqlCeDataReader dr = cmmd.ExecuteReader();
+            comboBox.Items.Clear();
+            while (dr.Read())
+            {
+                comboBox.Items.Add(dr["ID"]);
+            }
+            dr.Close();
+            dataSrc.freeSyncSouce();
+        }
     }
 }

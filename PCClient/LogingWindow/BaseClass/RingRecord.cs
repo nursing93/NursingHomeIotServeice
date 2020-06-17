@@ -35,6 +35,15 @@ namespace LogingWindow.BaseClass
             keyEvent = KeyEvent.NON;
         }
 
+        public RingRecord(int id)
+        {
+            this.id = id;
+            physical = new PhysicalData();
+            position = new Position();
+            kinestat = new Kinestate();
+            keyEvent = KeyEvent.NON;
+        }
+
         public Boolean validRecord()
         {
             return id != INVALIDELDERID;
