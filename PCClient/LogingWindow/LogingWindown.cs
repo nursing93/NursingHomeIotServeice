@@ -161,7 +161,7 @@ namespace LogingWindow
             }
             HttpRequest logRequest = new HttpRequest(HttpURLs.LOGINGURL);
             logRequest.setContentType("application/x-www-form-urlencoded");
-            string loginReqMsg = "username=" + user.id + "&password=" + user.password;
+            string loginReqMsg = "id=" + user.id + "&password=" + user.password;
             try
             {   //TODO 优化异常处理逻辑
                 HttpResponse response = logRequest.request(loginReqMsg);

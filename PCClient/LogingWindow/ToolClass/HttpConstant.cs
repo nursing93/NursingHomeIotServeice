@@ -8,11 +8,11 @@ namespace LogingWindow.ToolClass
 {
     public static class HttpURLs
     {
-        private const string host = "http://localhost:8080/ElderLinkWebServer";
+        private const string host = "http://121.196.47.181:80/NursingHomeSystem";
 
-        public const string LOGINGURL = host + "/login";
+        public const string LOGINGURL = host + "/user/login";
 
-        public const string LOGOUTURL = host + "/logout";
+        public const string LOGOUTURL = host + "/user/logout";
 
         public const string QUERYALLELDERURL = host + "/elder/listAll";
 
