@@ -23,6 +23,9 @@ namespace LogingWindow.BaseClass
         [DataMember(Order = 3, IsRequired = true)]
         public string birthday { get; set; }
 
+        [DataMember(Order = 3, IsRequired = true)]
+        public string joinTime { get; set; }    //TODO 持久化、显示
+
         [DataMember(Order = 4, IsRequired = true)]
         public string idCard { get; set; }
 
@@ -31,9 +34,6 @@ namespace LogingWindow.BaseClass
 
         [DataMember(Order = 6, IsRequired = true)]
         public string area { get; set; }
-
-        [DataMember(Order = 7, IsRequired = true)]
-        public string nursingDate;    //TODO 持久化、显示
 
         [DataMember(Order = 8, IsRequired = true)]
         public Relative[] relatives;    //TODO 持久化、显示
@@ -62,10 +62,10 @@ namespace LogingWindow.BaseClass
                    (this.name == elder1.name) &&
                    (this.sex == elder1.sex) &&
                    (Convert.ToDateTime(this.birthday) == Convert.ToDateTime(elder1.birthday)) &&
+                   (Convert.ToDateTime(this.joinTime) == Convert.ToDateTime(elder1.joinTime)) &&
                    (this.idCard == elder1.idCard) &&
                    (this.phone == elder1.phone) &&
-                   (this.area == elder1.area) &&
-                   (this.nursingDate == elder1.nursingDate);
+                   (this.area == elder1.area);
             return result;
         }
 

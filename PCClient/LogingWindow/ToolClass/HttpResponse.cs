@@ -26,9 +26,19 @@ namespace LogingWindow.ToolClass
             return httpResp.Headers.Get("Set-Cookie");
         }
 
+        public string getToken()
+        {
+            return httpResp.Headers.Get("token");
+        }
+
         public bool needUpdateSession(string oldSession)
         {
             return httpResp.Headers.Get("Set-Cookie") != null && !httpResp.Headers.Get("Set-Cookie").Equals(oldSession);
+        }
+
+        public bool needUpdateToken(string oldSession)
+        {
+            return httpResp.Headers.Get("token") != null && !httpResp.Headers.Get("token").Equals(oldSession);
         }
 
         private void getResultStr()

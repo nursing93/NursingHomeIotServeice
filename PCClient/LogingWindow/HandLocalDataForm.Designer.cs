@@ -149,7 +149,7 @@
             this.eDateTimePicker.Name = "eDateTimePicker";
             this.eDateTimePicker.Size = new System.Drawing.Size(131, 21);
             this.eDateTimePicker.TabIndex = 8;
-            this.eDateTimePicker.Value = new System.DateTime(2018, 8, 20, 23, 59, 0, 0);
+            this.eDateTimePicker.Value = new System.DateTime(2020, 6, 28, 23, 59, 0, 0);
             // 
             // label5
             // 
@@ -167,7 +167,7 @@
             this.sDateTimePicker.Name = "sDateTimePicker";
             this.sDateTimePicker.Size = new System.Drawing.Size(131, 21);
             this.sDateTimePicker.TabIndex = 6;
-            this.sDateTimePicker.Value = new System.DateTime(2018, 4, 1, 0, 0, 0, 0);
+            this.sDateTimePicker.Value = new System.DateTime(2020, 6, 25, 0, 0, 0, 0);
             // 
             // label4
             // 

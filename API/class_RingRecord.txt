@@ -11,7 +11,7 @@ class RingRecord {
 class PhysicalData
 {
 	private int heartRate;
-	private int bloodPressuer;
+	private int bloodPressure;
 	private double temperature;
 }
 

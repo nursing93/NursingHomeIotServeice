@@ -361,6 +361,8 @@ namespace LogingWindow
                 this.yearLabel.Text = Convert.ToString(OtherTools.BirthdayToYear(elder));
                 this.hardRateLabel.Text = ring.physical.heartRate.ToString();
                 this.sexLabel.Text = elder.sex;
+                this.bloodPressureLable.Text = ring.physical.bloodPressure.ToString();
+                this.temperatureLable.Text = ring.physical.temperature.ToString();
             }
         }
 

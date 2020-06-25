@@ -89,6 +89,10 @@
             this.sdRecordNameBox = new System.Windows.Forms.ComboBox();
             this.sdRecordIdBox = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.joinTimeBox = new System.Windows.Forms.DateTimePicker();
+            this.label29 = new System.Windows.Forms.Label();
+            this.cjoinTimeBox = new System.Windows.Forms.DateTimePicker();
             this.manTab.SuspendLayout();
             this.newRecord.SuspendLayout();
             this.amendRecord.SuspendLayout();
@@ -119,6 +123,8 @@
             // 
             // newRecord
             // 
+            this.newRecord.Controls.Add(this.joinTimeBox);
+            this.newRecord.Controls.Add(this.label28);
             this.newRecord.Controls.Add(this.elderBirthBox);
             this.newRecord.Controls.Add(this.elderSexBox);
             this.newRecord.Controls.Add(this.addRcordBtn);
@@ -168,7 +174,7 @@
             // 
             // addRcordBtn
             // 
-            this.addRcordBtn.Location = new System.Drawing.Point(357, 258);
+            this.addRcordBtn.Location = new System.Drawing.Point(359, 289);
             this.addRcordBtn.Name = "addRcordBtn";
             this.addRcordBtn.Size = new System.Drawing.Size(75, 23);
             this.addRcordBtn.TabIndex = 20;
@@ -178,7 +184,7 @@
             // 
             // saveRecordBtn
             // 
-            this.saveRecordBtn.Location = new System.Drawing.Point(497, 258);
+            this.saveRecordBtn.Location = new System.Drawing.Point(497, 289);
             this.saveRecordBtn.Name = "saveRecordBtn";
             this.saveRecordBtn.Size = new System.Drawing.Size(75, 23);
             this.saveRecordBtn.TabIndex = 19;
@@ -188,7 +194,7 @@
             // 
             // setAreaBtn
             // 
-            this.setAreaBtn.Location = new System.Drawing.Point(68, 258);
+            this.setAreaBtn.Location = new System.Drawing.Point(68, 236);
             this.setAreaBtn.Name = "setAreaBtn";
             this.setAreaBtn.Size = new System.Drawing.Size(92, 23);
             this.setAreaBtn.TabIndex = 18;
@@ -201,7 +207,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("微软雅黑", 9.75F);
             this.label5.ForeColor = System.Drawing.Color.Gray;
-            this.label5.Location = new System.Drawing.Point(380, 184);
+            this.label5.Location = new System.Drawing.Point(380, 236);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(74, 19);
             this.label5.TabIndex = 17;
@@ -279,7 +285,7 @@
             // 
             // phoneBox
             // 
-            this.phoneBox.Location = new System.Drawing.Point(472, 182);
+            this.phoneBox.Location = new System.Drawing.Point(472, 234);
             this.phoneBox.Name = "phoneBox";
             this.phoneBox.Size = new System.Drawing.Size(100, 21);
             this.phoneBox.TabIndex = 1;
@@ -320,6 +326,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.BackColor = System.Drawing.Color.White;
+            this.splitContainer2.Panel2.Controls.Add(this.cjoinTimeBox);
+            this.splitContainer2.Panel2.Controls.Add(this.label29);
             this.splitContainer2.Panel2.Controls.Add(this.celderBirthBox);
             this.splitContainer2.Panel2.Controls.Add(this.csaveRecordBtn);
             this.splitContainer2.Panel2.Controls.Add(this.csetAreaBtn);
@@ -370,7 +378,7 @@
             // 
             // csaveRecordBtn
             // 
-            this.csaveRecordBtn.Location = new System.Drawing.Point(470, 233);
+            this.csaveRecordBtn.Location = new System.Drawing.Point(470, 243);
             this.csaveRecordBtn.Name = "csaveRecordBtn";
             this.csaveRecordBtn.Size = new System.Drawing.Size(92, 23);
             this.csaveRecordBtn.TabIndex = 20;
@@ -380,7 +388,7 @@
             // 
             // csetAreaBtn
             // 
-            this.csetAreaBtn.Location = new System.Drawing.Point(54, 243);
+            this.csetAreaBtn.Location = new System.Drawing.Point(316, 243);
             this.csetAreaBtn.Name = "csetAreaBtn";
             this.csetAreaBtn.Size = new System.Drawing.Size(92, 23);
             this.csetAreaBtn.TabIndex = 19;
@@ -565,7 +573,7 @@
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("微软雅黑", 9.75F);
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label12.Location = new System.Drawing.Point(37, 186);
+            this.label12.Location = new System.Drawing.Point(37, 226);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(61, 19);
             this.label12.TabIndex = 10;
@@ -575,7 +583,7 @@
             // 
             this.cidCardBox.BackColor = System.Drawing.Color.White;
             this.cidCardBox.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.cidCardBox.Location = new System.Drawing.Point(104, 186);
+            this.cidCardBox.Location = new System.Drawing.Point(104, 222);
             this.cidCardBox.Name = "cidCardBox";
             this.cidCardBox.Size = new System.Drawing.Size(154, 23);
             this.cidCardBox.TabIndex = 4;
@@ -843,6 +851,50 @@
             this.label8.TabIndex = 4;
             this.label8.Text = "检索栏：";
             // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("微软雅黑", 9.75F);
+            this.label28.ForeColor = System.Drawing.Color.Gray;
+            this.label28.Location = new System.Drawing.Point(380, 180);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(74, 19);
+            this.label28.TabIndex = 23;
+            this.label28.Text = "入院时间：";
+            // 
+            // joinTimeBox
+            // 
+            this.joinTimeBox.Location = new System.Drawing.Point(472, 182);
+            this.joinTimeBox.MaxDate = new System.DateTime(2500, 12, 31, 0, 0, 0, 0);
+            this.joinTimeBox.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.joinTimeBox.Name = "joinTimeBox";
+            this.joinTimeBox.Size = new System.Drawing.Size(122, 21);
+            this.joinTimeBox.TabIndex = 24;
+            this.joinTimeBox.Value = new System.DateTime(2020, 7, 1, 0, 0, 0, 0);
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("微软雅黑", 9.75F);
+            this.label29.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label29.Location = new System.Drawing.Point(24, 190);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(74, 19);
+            this.label29.TabIndex = 24;
+            this.label29.Text = "入院时间：";
+            // 
+            // cjoinTimeBox
+            // 
+            this.cjoinTimeBox.Enabled = false;
+            this.cjoinTimeBox.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.cjoinTimeBox.Location = new System.Drawing.Point(104, 187);
+            this.cjoinTimeBox.MaxDate = new System.DateTime(2500, 12, 31, 0, 0, 0, 0);
+            this.cjoinTimeBox.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.cjoinTimeBox.Name = "cjoinTimeBox";
+            this.cjoinTimeBox.Size = new System.Drawing.Size(154, 23);
+            this.cjoinTimeBox.TabIndex = 25;
+            this.cjoinTimeBox.Value = new System.DateTime(1950, 1, 1, 0, 0, 0, 0);
+            // 
             // ElderManageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -936,5 +988,9 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.DateTimePicker elderBirthBox;
         private System.Windows.Forms.DateTimePicker celderBirthBox;
+        private System.Windows.Forms.DateTimePicker joinTimeBox;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.DateTimePicker cjoinTimeBox;
+        private System.Windows.Forms.Label label29;
     }
 }

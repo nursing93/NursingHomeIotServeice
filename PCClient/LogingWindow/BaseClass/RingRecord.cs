@@ -20,11 +20,11 @@ namespace LogingWindow.BaseClass
         public PhysicalData physical { get; set; }
         [DataMember(Order = 3, IsRequired = true)]
         public Position position { get; set; }
-        [DataMember(Order = 4, IsRequired = true)]
+        //[DataMember(Order = 4, IsRequired = true)]
         public Kinestate kinestat { get; set; }
-        [DataMember(Order = 5, IsRequired = true)]
+        //[DataMember(Order = 5, IsRequired = true)]
         public KeyEvent keyEvent { get; set; }
-
+        [DataMember(Order = 6, IsRequired = true)]
         public string time { get; set; }
 
         public RingRecord()

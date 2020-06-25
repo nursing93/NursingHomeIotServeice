@@ -224,6 +224,7 @@ namespace LogingWindow
                 newElder.name = elderNameBox.Text;   //必填
                 newElder.sex = elderSexBox.Text;   //必填
                 newElder.birthday = OtherTools.DateTimeToString(elderBirthBox.Value);   //必填
+                newElder.joinTime = OtherTools.DateTimeToString(joinTimeBox.Value);   //必填
                 if (idCardBox.Text == "") { newElder.idCard = "未填写"; } else { newElder.idCard = idCardBox.Text; }  //选填
                 if (phoneBox.Text == "") { newElder.phone = "null"; }
                 else { newElder.phone = phoneBox.Text; } //选填
@@ -235,6 +236,7 @@ namespace LogingWindow
                 newElder.name = celderNameBox.Text;   //必填
                 newElder.sex = celderSexBox.Text;   //必填
                 newElder.birthday = OtherTools.DateTimeToString(celderBirthBox.Value);   //必填
+                newElder.joinTime = OtherTools.DateTimeToString(cjoinTimeBox.Value);   //必填
                 if (cidCardBox.Text == "") { newElder.idCard = null; } else { newElder.idCard = cidCardBox.Text; }  //选填
                 if (celderPhone.Text == "") { newElder.phone = null; }
                 else { newElder.phone = celderPhone.Text; } //选填
@@ -343,6 +345,7 @@ namespace LogingWindow
                     this.celderNameBox.Text = elder.name;
                     this.celderSexBox.Text = elder.sex;
                     this.celderBirthBox.Value = Convert.ToDateTime(elder.birthday);    //将老人的出生年月赋值给出生年月框
+                    //this.cjoinTimeBox.Value = Convert.ToDateTime(elder.joinTime);
                     this.cidCardBox.Text = elder.idCard;
                     this.celderPhone.Text = elder.phone;
                     this.AREASTRING = elder.area;
@@ -433,7 +436,7 @@ namespace LogingWindow
         private void scRecordIdBox_DropDown(object sender, EventArgs e)
         {
             ElderDao dao = new ElderDao();
-            dao.fillDropDownBoxWithElderId(this.scRecordNameBox, this.scRecordNameBox.Text);
+            dao.fillDropDownBoxWithElderId(this.scRecordIdBox, this.scRecordNameBox.Text);
         }
 
         private void sdRecordNameBox_DropDown(object sender, EventArgs e)
@@ -445,7 +448,7 @@ namespace LogingWindow
         private void sdRecordIdBox_DropDown(object sender, EventArgs e)
         {
             ElderDao dao = new ElderDao();
-            dao.fillDropDownBoxWithElderId(this.sdRecordNameBox, this.sdRecordNameBox.Text);
+            dao.fillDropDownBoxWithElderId(this.sdRecordIdBox, this.sdRecordNameBox.Text);
         }
 
         private void scRecordNameBox_MouseClick(object sender, MouseEventArgs e)

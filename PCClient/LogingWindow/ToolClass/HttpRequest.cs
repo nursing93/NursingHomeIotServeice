@@ -11,7 +11,7 @@ namespace LogingWindow.ToolClass
 {
     class HttpRequest
     {
-        private static string session = "";
+        private static string token = "";
         private UTF8Encoding encoding = new UTF8Encoding(false);   //注明utf-8去除BOM
         private HttpWebRequest httpReq = null;
         private HttpResponse response = null;
@@ -24,7 +24,7 @@ namespace LogingWindow.ToolClass
             httpReq.ProtocolVersion = HttpVersion.Version11;
             setContentType("application/json");
             //TODO 部分情况下需要将session清空
-            setSession(session);
+            setToken(token);
         }
 
         public void setMethod(string method)
@@ -40,6 +40,11 @@ namespace LogingWindow.ToolClass
         private void setSession(string session)
         {
             httpReq.Headers.Add("Cookie", session);
+        }
+
+        private void setToken(string token)
+        {
+            httpReq.Headers.Add("token", token);
         }
 
         public HttpResponse request(Object obj)
@@ -70,9 +75,9 @@ namespace LogingWindow.ToolClass
                 myStreamWriter.Close();
             }
             response = new HttpResponse((HttpWebResponse)httpReq.GetResponse());
-            if (response.needUpdateSession(session))
+            if (response.needUpdateToken(token))
             {
-                session = response.getSession();
+                token = response.getToken();
             }
             return response;
         }

@@ -171,11 +171,11 @@ namespace LogingWindow.Data
             }
         }
 
-        public void fillDropDownBoxWithElderId(ComboBox cmBox, string id)
+        public void fillDropDownBoxWithElderId(ComboBox cmBox, string name)
         {
-            string sql = "SELECT [ID] FROM ElderBaseData WHERE [name] =  @ID";
+            string sql = "SELECT [ID] FROM ElderBaseData WHERE [name] = @name";
             SqlCeCommand cmmd = dataSrc.getSyncSqlCeCommand(sql);
-            cmmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50, "ID").Value = id;
+            cmmd.Parameters.Add("@name", SqlDbType.NVarChar, 50, "name").Value = name;
             SqlCeDataReader dr = cmmd.ExecuteReader();
             cmBox.Items.Clear();
             while (dr.Read())

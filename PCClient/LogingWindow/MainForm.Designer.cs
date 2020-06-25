@@ -72,6 +72,8 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel_Main = new System.Windows.Forms.ToolStripStatusLabel();
             this.layoutControlBtn = new System.Windows.Forms.Button();
+            this.bloodPressureLable = new System.Windows.Forms.Label();
+            this.temperatureLable = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -366,6 +368,8 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.temperatureLable);
+            this.panel3.Controls.Add(this.bloodPressureLable);
             this.panel3.Controls.Add(this.hardRateLabel);
             this.panel3.Controls.Add(this.yearLabel);
             this.panel3.Controls.Add(this.sexLabel);
@@ -380,7 +384,7 @@
             // hardRateLabel
             // 
             this.hardRateLabel.AutoSize = true;
-            this.hardRateLabel.Location = new System.Drawing.Point(19, 94);
+            this.hardRateLabel.Location = new System.Drawing.Point(19, 82);
             this.hardRateLabel.Name = "hardRateLabel";
             this.hardRateLabel.Size = new System.Drawing.Size(29, 12);
             this.hardRateLabel.TabIndex = 4;
@@ -389,7 +393,7 @@
             // yearLabel
             // 
             this.yearLabel.AutoSize = true;
-            this.yearLabel.Location = new System.Drawing.Point(94, 57);
+            this.yearLabel.Location = new System.Drawing.Point(94, 46);
             this.yearLabel.Name = "yearLabel";
             this.yearLabel.Size = new System.Drawing.Size(29, 12);
             this.yearLabel.TabIndex = 3;
@@ -398,7 +402,7 @@
             // sexLabel
             // 
             this.sexLabel.AutoSize = true;
-            this.sexLabel.Location = new System.Drawing.Point(19, 57);
+            this.sexLabel.Location = new System.Drawing.Point(19, 46);
             this.sexLabel.Name = "sexLabel";
             this.sexLabel.Size = new System.Drawing.Size(29, 12);
             this.sexLabel.TabIndex = 2;
@@ -462,6 +466,24 @@
             this.layoutControlBtn.Text = "<<";
             this.layoutControlBtn.UseVisualStyleBackColor = true;
             this.layoutControlBtn.Click += new System.EventHandler(this.layoutControlBtn_Click);
+            // 
+            // bloodPressureLable
+            // 
+            this.bloodPressureLable.AutoSize = true;
+            this.bloodPressureLable.Location = new System.Drawing.Point(94, 82);
+            this.bloodPressureLable.Name = "bloodPressureLable";
+            this.bloodPressureLable.Size = new System.Drawing.Size(29, 12);
+            this.bloodPressureLable.TabIndex = 5;
+            this.bloodPressureLable.Text = "血压";
+            // 
+            // temperatureLable
+            // 
+            this.temperatureLable.AutoSize = true;
+            this.temperatureLable.Location = new System.Drawing.Point(19, 109);
+            this.temperatureLable.Name = "temperatureLable";
+            this.temperatureLable.Size = new System.Drawing.Size(29, 12);
+            this.temperatureLable.TabIndex = 6;
+            this.temperatureLable.Text = "体温";
             // 
             // MainForm
             // 
@@ -541,5 +563,7 @@
         private System.Windows.Forms.ToolStripMenuItem exit_ToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel_Main;
+        private System.Windows.Forms.Label bloodPressureLable;
+        private System.Windows.Forms.Label temperatureLable;
     }
 }

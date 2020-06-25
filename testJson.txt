@@ -3,7 +3,7 @@
 	"battery": 90,
 	"physical": {
 		"heartRate": 75,
-		"bloodPressuer": 120,
+		"bloodPressure": 120,
 		"temperature": 36
 	},
 	"position": {
@@ -25,5 +25,5 @@
 	"keyEvent":0
 }
 
-{"id": 93010001,"battery": 90,"physical": {"heartRate": 75,"bloodPressuer": 120,"temperature": 36},"position": {"lng": 108.33265,"lat": 34.21254},"kinestat": {"acc":{"x":10,"y":20,"z":30},"pal":{"x":0,"y":0,"z":0}},"keyEvent":0}
+{"id": 93010001,"battery": 90,"physical": {"heartRate": 75,"bloodPressure": 120,"temperature": 36},"position": {"lng": 108.33265,"lat": 34.21254},"kinestat": {"acc":{"x":10,"y":20,"z":30},"pal":{"x":0,"y":0,"z":0}},"keyEvent":0}
 
